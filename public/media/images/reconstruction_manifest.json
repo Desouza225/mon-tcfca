@@ -1,0 +1,915 @@
+{
+  "CO_T01_Q01.jpg": {
+    "output_file": "CO_T01_Q01C.jpg",
+    "dimensions": "1194x800",
+    "prompt": "A black and white vector line-art illustration with halftone screentone shading depicting an office interior. On the left, a standing male visitor wearing a jacket faces right. On the right, an office executive wearing a shirt and tie stands beside his desk, gesturing with an open palm toward an office chair, inviting the visitor to sit down. The room features a curved executive desk with documents, a rolling executive chair behind the desk on the right, a visitor chair on the left, and a large multi-pane window in the background. Clean comic textbook style with crisp outlines and halftone texture shading All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:25:41"
+  },
+  "CO_T01_Q02.jpg": {
+    "output_file": "CO_T01_Q02C.jpg",
+    "dimensions": "1215x800",
+    "prompt": "A clean, modern vector textbook illustration for a French language proficiency exam depicting an information desk in a transit terminal. On the left, a closed door features a small glass panel and a sign reading \"BUREAU\". In the center, a modern semi-enclosed reception booth with glass panels houses a female receptionist in a professional jacket who is pointing her arm toward the door on the left. On the right, a male traveler carrying a shoulder bag and pulling a rolling suitcase stands in front of the counter, looking at the receptionist. Crisp line art, flat bright colors, ultra-clear educational graphics style, sharp details All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:26:02"
+  },
+  "CO_T02_Q01.jpg": {
+    "output_file": "CO_T02_Q01C.jpg",
+    "dimensions": "536x531",
+    "prompt": "A crisp black-and-white vector illustration in an educational textbook style depicting a French post office scene. \n\nIn the center, a woman with short dark hair and glasses stands in profile at a service counter, wearing a knee-length dress. She is handing a large stamped envelope, featuring French postage details, to a male postal worker seated behind the counter. The male clerk, wearing glasses, a shirt, and a tie, reaches out to take the document from behind his desk. \n\nOn the left side of the counter stands a large desktop computer monitor, and a small black handbag rests on the counter ledge. To the far right foreground, a tall display rack holds various promotional pamphlets and postcards labeled \"BROCHURES\". The background wall features horizontal paneling and a sign clearly displaying \"LA POSTE - GUICHET 1\". Clean linework, neutral shading, clear spatial layout, no English text All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:26:24"
+  },
+  "CO_T02_Q02.jpg": {
+    "output_file": "CO_T02_Q02C.jpg",
+    "dimensions": "1095x800",
+    "prompt": "**Image Generation Prompt:**\n\nA clean, black-and-white comic textbook illustration with halftone shading set on a French outdoor patio. \n\n* **Foreground & Left:** A standing adult man in a casual jacket and jeans holds the top of a metal bistro chair with one hand, gesturing welcomingly. Behind him is an open doorway with wooden shutters.\n* **Center:** A round iron bistro table surrounded by two ornate, curved-back metallic chairs on a tiled terrace floor.\n* **Right:** A young child wearing a jacket and boots runs happily toward the table and chair from the right side, where a wooden shed structure stands.\n* **Background:** A stone house wall with a small tiled roof overhang, styled in a crisp, educational line-art aesthetic. No text present All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:26:43"
+  },
+  "CO_T02_Q03.jpg": {
+    "output_file": "CO_T02_Q03C.jpg",
+    "dimensions": "1261x800",
+    "prompt": "A vintage comic-style halftone illustration of a French restaurant entrance. On the left, a male customer in a long overcoat stands in profile, holding an umbrella while speaking to a waiter. On the right, a formal waiter in a suit jacket, bow tie, and long white apron stands attentively with his hands behind his back. Between them is a wooden reception counter topped with a potted plant. The background shows a dining room with seated patrons, set tables with white tablecloths and wine glasses, and a waiter walking in the distance. Clean graphic linework, monochromatic halftone shading, and a classic language textbook aesthetic All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:27:04"
+  },
+  "CO_T02_Q39.jpg": {
+    "output_file": "CO_T02_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:27:07"
+  },
+  "CO_T03_Q01.jpg": {
+    "output_file": "CO_T03_Q01C.jpg",
+    "dimensions": "1198x800",
+    "prompt": "A clean, modern vector illustration for a French language textbook showing an airport boarding gate scene. On the left, a large window reveals airplanes parked on the tarmac outside. In the center, a boarding door is marked with a sign reading \"EMBARQUEMENT\" alongside a check-in podium labeled \"ACCUEIL\". A female traveler wearing a beret, jacket, and cross-body shoulder bag stands facing the counter, handing her boarding pass to a smiling female airline agent dressed in a professional blazer uniform with her hair tied in a neat updo. In the foreground on the right, a metal queue stanchion barrier directs passengers. Crisp lines, balanced lighting, and flat modern colors in a clear pedagogical comic graphic style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:27:28"
+  },
+  "CO_T03_Q02.jpg": {
+    "output_file": "CO_T03_Q02C.jpg",
+    "dimensions": "1230x800",
+    "prompt": "A clean, modern educational vector illustration in crisp black-and-white line art depicting a clothing store fitting room area. On the left, a row of dressing cubicles features fabric curtains and doors, with a sign reading \"CABINES D'ESSAYAGE\". A low round padded ottoman stool rests in the foreground center. In the middle, a female customer in a casual shirt and trousers stands looking toward a polite store assistant on the right. The sales assistant, wearing a blazer and knee-length skirt, gestures welcomingly with an open hand toward an open fitting room door marked \"CABINE 1\". The scene has a clear layout, balanced lighting, and modern textbook graphic aesthetic All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:27:50"
+  },
+  "CO_T03_Q39.jpg": {
+    "output_file": "CO_T03_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:27:53"
+  },
+  "CO_T04_Q01.jpg": {
+    "output_file": "CO_T04_Q01C.jpg",
+    "dimensions": "978x800",
+    "prompt": "A monochrome comic-book graphic illustration in black and white screentone art style set inside a modern French art gallery. In the center foreground, a crouching abstract human-figure bronze sculpture rests on stacked block pedestals. On the left, a woman with a ponytail, striped short-sleeved top, dark skirt, and shoulder bag stands with folded arms, looking toward the artwork. On the right, a second woman with straight long hair and bangs, wearing a long-sleeved collared shirt and matching flared trousers, stands with hands on her hips, smiling down at the sculpture. The minimalist gallery background features open doorways, framed wall art, and a small gallery plaque reading strictly in French \"ART CONTEMPORAIN\". Clean visual-textbook line art, balanced gray tones, sharp educational graphic style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:28:10"
+  },
+  "CO_T04_Q02.jpg": {
+    "output_file": "CO_T04_Q02C.jpg",
+    "dimensions": "1176x800",
+    "prompt": "A black-and-white comic book style vector illustration of an indoor public swimming pool scene for a French language exam. On the right, a male lifeguard in a white t-shirt, swim trunks, and a whistle around his neck stands with both arms outstretched in a clear \"stop\" gesture. In the foreground, two young boys in swim trunks are running along the wet tiled deck; the lead boy runs toward the lifeguard while the trailing boy carries a pool float noodle. In the background, a high diving platform features a boy preparing to dive into the pool, while large glass windows line the rear wall. A prominent French safety sign mounted on the wall clearly reads \"DÉFENSE DE COURIR\" alongside a notice reading \"BAIGNADE SURVEILLÉE\". Crisp line art, halftone shading, clean educational visual style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:28:32"
+  },
+  "CO_T04_Q39.jpg": {
+    "output_file": "CO_T04_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:28:35"
+  },
+  "CO_T05_Q01.jpg": {
+    "output_file": "CO_T05_Q01C.jpg",
+    "dimensions": "1188x800",
+    "prompt": "A monochromatic halftone graphic illustration for an educational textbook depicting a heartwarming living room scene. On the left, a young girl with a ponytail stands in profile, handing a small ribbon-wrapped gift box to a woman seated on a large sofa. The woman, with long hair, wearing a casual top, cropped pants, and sandals, smiles warmly as she receives the present. To the left stands a tall glass-front display cabinet filled with bottles and figurines, beside a low coffee table with a teacup, saucer, and book. In the background between them is a potted plant on a small table, while a cat sleeps peacefully on the right side of the couch. Clean vector line art with screentone shading and grayscale tones All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:28:52"
+  },
+  "CO_T05_Q02.jpg": {
+    "output_file": "CO_T05_Q02C.jpg",
+    "dimensions": "1193x800",
+    "prompt": "A clean comic book illustration in monochromatic slate gray tones with halftone dot shading depicting a bustling French office reception lobby:\n\n- **Right Foreground**: A middle-aged businessman in a dark suit and tie smiles while shaking hands with a woman wearing a stylish trench coat, trousers, a hat, and a shoulder bag.\n- **Left Foreground & Midground**: A prominent white standing sign on a metal base displays French text reading \"ACCUEIL\" and \"PROGRAMME\". Behind it, a receptionist sits at a wooden counter labeled \"RÉCEPTION\".\n- **Center Background**: Tall open doorway leading into a conference room where silhouettes of visitors sit on chairs around a table. A directional wall sign with an arrow points right, marked \"SALLE DE RÉUNION\".\n- **Visual Style**: Sharp graphic comic line art, halftone dot shading, crisp shadows, clear educational language exam illustration style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:29:19"
+  },
+  "CO_T05_Q03.jpg": {
+    "output_file": "CO_T05_Q03C.jpg",
+    "dimensions": "1208x800",
+    "prompt": "A clean grayscale screentone comic illustration capturing the interior of a French metro train, styled in classic textbook line art with halftone shading. \n\nOn the right, an elderly woman with short wavy hair, glasses, and a long trench coat stands in the aisle with a shoulder bag. She smiles and gestures with an outstretched hand toward an empty seat beside a young blonde woman wearing a blazer and skirt who sits holding a purse on her lap. \n\nOn the left, several seated passengers are arranged in rowed seats: in the immediate foreground, a professional woman reads an open book; behind her, a dark-haired man wearing glasses reads a newspaper with a small rolling suitcase placed beside his seat. Large glass train windows frame the background, revealing the train interior structure and a subtle French transit map above reading \"LIGNE 1 - RÉSEAU MÉTRO\" All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:29:44"
+  },
+  "CO_T05_Q04.jpg": {
+    "output_file": "CO_T05_Q04C.jpg",
+    "dimensions": "1259x800",
+    "prompt": "A crisp black-and-white comic book graphic illustration in a French language exam style depicting a crowded French train terminal. In the background and center, a group of passengers stands behind a glass wall, looking up at digital information screens displaying French text reading \"HORAIRES DES TRAINS\" and \"INFORMATIONS\". In the foreground, metal queuing barriers guide the crowd. On the right side, a young man with dark hair gestures with open hands while speaking to a blonde man standing next to him with arms folded. The image features clean ink outlines, halftone shading, balanced contrast, and a modern pedagogical graphic style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:30:04"
+  },
+  "CO_T05_Q05.jpg": {
+    "output_file": "CO_T05_Q05C.jpg",
+    "dimensions": "909x800",
+    "prompt": "A crisp black-and-white ink sketch illustration in a retro comic book style featuring a business presentation. On the right, a smiling businessman in a suit and tie stands gesturing enthusiastically toward a large chart on the wall behind him. The chart displays a prominent, sharply rising line graph labeled with French financial gridlines showing positive growth. In the bottom-left foreground, two seated audience members, seen in profile, look up attentively at the speaker. Bold black outlines, cross-hatching shading, and a subtle halftone dot background texture give it a clean, educational textbook aesthetic All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:30:22"
+  },
+  "CO_T05_Q06.jpg": {
+    "output_file": "CO_T05_Q06C.jpg",
+    "dimensions": "1083x800",
+    "prompt": "A vintage monochrome comic-book style illustration with halftone dot shading depicting a French medical consultation room (\"CABINET MÉDICAL\"). \n\nIn the foreground on the left, there is an office desk with a computer monitor and a simple office chair beside it. In the center, a shirtless male patient sits on an adjustable padded medical examination table with his back turned to the viewer. Standing directly behind him, a male doctor wearing a light collared shirt and stethoscope around his neck carefully examines the patient's back. \n\nIn the background, a small swivel rolling stool stands next to an IV pole near vertical privacy curtains. On the right wall hangs a framed medical diploma reading \"DIPLÔME DE MÉDECINE\". The scene is rendered in crisp ink linework with a purple-gray halftone texture, clean graphic educational textbook aesthetic, balanced lighting, and precise spatial composition All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:30:43"
+  },
+  "CO_T05_Q07.jpg": {
+    "output_file": "CO_T05_Q07C.jpg",
+    "dimensions": "1261x800",
+    "prompt": "A modern comic textbook illustration in a black-and-white halftone screentone style depicting the entrance of an elegant French restaurant. On the left, a male guest in a long trench coat holds a folded umbrella while speaking to a waiter. On the right, the waiter stands attentively in a bow tie, suit jacket, and long white apron with his hands behind his back. Between them sits a wooden reception counter labeled with a brass sign reading \"ACCUEIL\", topped with a potted palm plant. In the background, a dining area shows set tables with chairs, white tablecloths, wine glasses, and seated diners All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:31:06"
+  },
+  "CO_T05_Q08.jpg": {
+    "output_file": "CO_T05_Q08C.jpg",
+    "dimensions": "1105x800",
+    "prompt": "A black-and-white comic-style graphic illustration for a French language textbook depicting the inside of a crowded cinema theater. In the background, a large blank projection screen dominates the wall. Rows of theater seats are filled with patrons viewed from behind. In the right aisle, a male cinema usher in a button-up shirt gestures toward an available seat row, guiding a patron wearing a hooded jacket down the aisle. The artwork features crisp ink linework, halftone screentone shading, and a clean, high-contrast educational graphic style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:31:29"
+  },
+  "CO_T05_Q39.jpg": {
+    "output_file": "CO_T05_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:31:32"
+  },
+  "CO_T06_Q01.jpg": {
+    "output_file": "CO_T06_Q01C.jpg",
+    "dimensions": "1208x800",
+    "prompt": "A monochrome grayscale comic-book illustration in a halftone pop-art style depicting the interior of a French commuter train car. On the right, a smiling young seated woman in a blazer gestures invitingly toward the empty seat beside her, offering it to an elderly woman standing with glasses, a trench coat, and a cross-body bag. On the left foreground, a blonde woman reads a book while seated. Next to her, a man in a light shirt reads a French newspaper titled \"LE FIGARO\" with a rolling suitcase placed on the floor beside him. Background details include train windows, vertical metal poles, and a small interior sign overhead reading \"PRIORITÉ AUX PERSONNES ÂGÉES\". Sharp linework, halftones, and cross-hatching detail throughout All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:31:50"
+  },
+  "CO_T06_Q02.jpg": {
+    "output_file": "CO_T06_Q02C.jpg",
+    "dimensions": "1261x800",
+    "prompt": "A black-and-white vintage comic book illustration with halftone shading and cross-hatching, featuring a French restaurant reception scene. On the left, a male guest in profile, wearing a long trench coat and holding a dark umbrella, speaks to the host. On the right stands an attentive waiter in profile facing him, dressed in a formal tuxedo jacket, bow tie, vest, and a long white apron with his hands neatly behind his back. In the center, a wooden reception podium sits between them with a potted palm plant and a small wooden plaque reading \"ACCUEIL\" on top. In the background corridor, silhouettes of restaurant patrons sit at dining tables while a server walks by. To the far right, a set dining table features a white tablecloth, elegant wine glasses, and a floral centerpiece. Clean graphic novel linework, classic educational exam illustration style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:32:34"
+  },
+  "CO_T06_Q39.jpg": {
+    "output_file": "CO_T06_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:32:37"
+  },
+  "CO_T07_Q01.jpg": {
+    "output_file": "CO_T07_Q01C.jpg",
+    "dimensions": "978x800",
+    "prompt": "A clean black-and-white comic book style illustration set inside a modern French art gallery, depicting two women looking at an abstract bronze sculpture. On the left, a woman with tied-back hair, wearing a striped shirt, a dark skirt, and carrying a tote bag, stands with her arms crossed. In the center foreground, a dark modern sculpture of a crouching human figure sits atop a layered square pedestal. On the right, a second woman with long bangs, wearing a buttoned blouse, trousers, and a pendant necklace, stands with her hands resting on her hips, observing the artwork. In the background, abstract paintings hang on the gallery walls, along with a minimalist door and a small wall placard reading \"EXPOSITION D'ART CONTEMPORAIN\". The artwork features sharp linework, halftone shading textures, and a crisp educational graphic aesthetic All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:32:51"
+  },
+  "CO_T07_Q02.jpg": {
+    "output_file": "CO_T07_Q02C.jpg",
+    "dimensions": "1301x643",
+    "prompt": "A black-and-white comic line art illustration with subtle halftone shading, featuring three adjacent boutique display windows in a row. On the left, a middle-aged man carrying shopping bags stops to look into a shoe store window marked \"CHAUSSURES\", displaying women's high heels and boots on display stands. In the central window display marked \"MODE\", a stylish woman in a wide-brimmed hat and dress poses next to perfume bottles and accessories. The rightmost display window marked \"BIJOUX\" is empty, showing only pristine glass shelves and display pedestals. The style is a clean, graphic French language textbook comic illustration with sharp black ink outlines and balanced monochromatic contrast All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:33:12"
+  },
+  "CO_T07_Q39.jpg": {
+    "output_file": "CO_T07_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:33:15"
+  },
+  "CO_T08_Q01.jpg": {
+    "output_file": "CO_T08_Q01C.jpg",
+    "dimensions": "1154x800",
+    "prompt": "Monochrome halftone comic book style graphic illustration in a muted purple-grey and black ink palette, depicting a suburban park playground scene. In the foreground left, a sad young woman with shoulder-length dark hair wearing an open hooded jacket over a light top and jeans walks forward, holding the hand of a small toddler in a striped shirt who pulls back, looking toward the playground. In the center background stands a large wooden playground fort with a gabled roof and a curved slide, filled with young children playing, climbing, and sliding down. Simple suburban houses and tree silhouettes line the background. Sharp black ink outlines, dense halftone screentone shading, crisp educational graphic style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:33:31"
+  },
+  "CO_T08_Q02.jpg": {
+    "output_file": "CO_T08_Q02C.jpg",
+    "dimensions": "1099x800",
+    "prompt": "A black and white comic book style illustration with halftone textures depicting a dining scene inside a home. On the left, a man wearing a striped long-sleeve shirt sits on a chair, leaning forward over the table with a concerned expression. On the right, a young boy sits on a chair, looking down sadly while clutching his stomach with both hands. A rectangular wooden dining table sits in the center with three chairs in total: one occupied by the man on the left, one occupied by the boy on the right, and an empty chair in the foreground facing the table. On the table are two plates of soup, glasses of water, a bread basket, and a large steaming serving pot with a ladle, with visible steam coiling upward. In the background, a window with a radiator underneath is on the left, and a small wall shelf holds books, a classic teapot, and a manual coffee grinder All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:34:04"
+  },
+  "CO_T08_Q03.jpg": {
+    "output_file": "CO_T08_Q03C.jpg",
+    "dimensions": "1242x800",
+    "prompt": "A monochrome grayscale comic book illustration in a clean vector pop-art halftone style. On the left sidewalk, a man with glasses in a casual jacket and trousers holds a shopping basket and points his right arm toward a storefront display window containing clothing mannequins. A promotional sign reading \"SOLDES\" in French is visible in the shop window display. Standing beside him is a woman with shoulder-length dark hair wearing a jacket, skirt, and shoulder bag, looking in the same direction. On the right, the rear of a dark parked car rests alongside the curb. Background features a stone building facade and distant urban structures with fine screen-tone dot patterns and sharp black ink lines All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:34:31"
+  },
+  "CO_T08_Q04.jpg": {
+    "output_file": "CO_T08_Q04C.jpg",
+    "dimensions": "1209x800",
+    "prompt": "A monochrome black-and-white graphic illustration in a classic etched comic style with halftone dot shading, depicting two male hikers on a rugged mountain path. In the right foreground, an exhausted hiker wearing a cap, short-sleeved shirt, shorts, heavy boots, and a large backpack wipes sweat from his face while gesturing back in weariness. Slightly behind him on the trail walks a serene second hiker wearing a brimmed hat, polo shirt, shorts, and a backpack. The background shows a winding dirt trail through rocky terrain with sparse bushes, a small alpine chalet in the valley, pine trees along a hillside ridge, and a distant mountain peak under a stylized sun All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:34:57"
+  },
+  "CO_T08_Q05.jpg": {
+    "output_file": "CO_T08_Q05C.jpg",
+    "dimensions": "1112x800",
+    "prompt": "A monochromatic comic-style illustration with halftone screentone shading for a language textbook. In a sunny park, a young couple sits on a slatted wooden bench. On the left, a young man leans back contentedly with his eyes closed and hands behind his head, wearing a V-neck shirt and shorts. On the right, a smiling young woman with long hair and a flower accessory looks fondly at him, wearing a striped top and skirt. The background includes grass, small flowers, a shining sun overhead, a distant tree on the left horizon, and tree branches in the upper right All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:35:23"
+  },
+  "CO_T08_Q39.jpg": {
+    "output_file": "CO_T08_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:35:26"
+  },
+  "CO_T09_Q39.jpg": {
+    "output_file": "CO_T09_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:35:26"
+  },
+  "CO_T10_Q01.jpg": {
+    "output_file": "CO_T10_Q01C.jpg",
+    "dimensions": "1219x800",
+    "prompt": "A monochrome comic-book style vector illustration for a French language examination. On the right foreground, a middle-aged man with a mustache in a business suit warmly shakes hands with a smiling woman wearing a trench coat, trousers, heels, and carrying a shoulder bag. On the left, a large freestanding sign display reads \"ACCUEIL\" in clear bold French text, placed in front of a reception desk where a male receptionist sits on an office chair. In the background, an open doorway reveals people seated in chairs, flanked by a directional arrow sign reading \"SALLE D'ATTENTE\" pointing left and a poster stand. Classical interior architectural detailing, clean black ink outlines, and subtle halftone shading All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:35:44"
+  },
+  "CO_T10_Q02.jpg": {
+    "output_file": "CO_T10_Q02C.jpg",
+    "dimensions": "350x248",
+    "prompt": "A clean, black-and-white language textbook line art illustration depicting the interior of a French restaurant. In the center foreground, two young women are seated across from each other at a dining table covered with a white tablecloth. The woman on the left, with long dark hair in a ponytail and wearing a sleeveless dress, holds up a restaurant menu cover featuring a dish and cutlery graphic, labeled \"CARTE DES PLATS\". The woman on the right, with fair hair in a small side ponytail, points her finger at the open pages of her menu labeled \"MENU DU JOUR\". They sit on wooden high-backed chairs, with a handbag slung over the right chair post and a small bag on the left post. In the background to the left, a young man with curly hair sits on a wooden chair at a separate table with a glass and plate, eating his meal. The background wall features a framed picture of a flower vase on the left, an oval ceiling lamp overhead, and a framed portrait on the right. Decorative potted bushes sit in the lower-left foreground All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:36:04"
+  },
+  "CO_T10_Q03.jpg": {
+    "output_file": "CO_T10_Q03C.jpg",
+    "dimensions": "430x284",
+    "prompt": "A clean grayscale line-art textbook illustration of a modern office building lobby, designed for a French language exam. \n\n**Left Foreground:** A female receptionist in a tailored suit jacket stands behind a curved reception counter, featuring a computer screen, a document scanner, and an office chair behind the counter.\n\n**Center Background:** A large glass cylindrical revolving entrance door. A small waiting area with a sofa sits in the background to the right.\n\n**Right Foreground:** A middle-aged businessman wearing a suit, necktie, and an ID badge stands holding a briefcase, waiting beside a set of modern elevator doors marked with a small wall sign reading \"ASCENSEUR\". \n\n**Visual Style:** Crisp black-and-white vector comic illustration with clean linework, flat shading, and balanced composition typical of European language textbook graphics All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:36:21"
+  },
+  "CO_T10_Q04.jpg": {
+    "output_file": "CO_T10_Q04C.jpg",
+    "dimensions": "424x279",
+    "prompt": "Clean 2D vector textbook illustration of a French street scene outside a flower shop, featuring a sign above the canvas awning reading \"FLEURISTE\". On the left sidewalk, a young man with short dark hair has his arm around a woman's shoulders while gesturing with his pointed right hand towards the store. A male shopkeeper wearing a full apron stands in the open doorway facing them. Outside the large glass shop windows, various potted plants, small cypress topiaries, and potted flowers are arranged along the pavement and on low wooden display stands. Crisp black ink outlines with clean vector styling, perfect for a language exam illustration All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:36:46"
+  },
+  "CO_T10_Q39.jpg": {
+    "output_file": "CO_T10_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:36:49"
+  },
+  "CO_T11_Q01.jpg": {
+    "output_file": "CO_T11_Q01C.jpg",
+    "dimensions": "804x523",
+    "prompt": "Monochrome blue-grey graphic illustration in a retro French textbook comic style set inside a post office branch. On the right, a woman with short dark hair, glasses, and a skirt suit stands profile-view handing a stamped envelope across a counter marked \"GUICHET\". Her black handbag sits on the counter ledge. Behind the counter, a male clerk with dark hair, glasses, and a suit jacket reaches out to receive the letter, seated near a computer monitor. To the left stands an automated teller machine labeled \"DISTRIBUTEUR\", and to the right is a vertical rotating display rack holding cards labeled \"CARTES POSTALES\". Clean vector linework, flat shading, clear educational visual layout All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:37:09"
+  },
+  "CO_T11_Q02.jpg": {
+    "output_file": "CO_T11_Q02C.jpg",
+    "dimensions": "805x516",
+    "prompt": "A clean vector comic illustration in a monochrome blue-gray palette depicting a living room scene. On the left, a woman with short hair and large dangling earrings sits cross-legged on a large sofa, rummaging through her open handbag while holding out a compact mirror toward a young child. On the right, a child with straight hair and bangs sits on the same sofa, drinking from a teacup held above a small saucer. In the foreground left, a low coffee table holds a wooden tray with a teapot and a teacup. The background includes a tripod floor lamp on the far left, a framed picture on the wall, and small photo frames alongside a potted houseplant on a sideboard to the right. Sharp linework, educational textbook illustration style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:37:28"
+  },
+  "CO_T11_Q39.jpg": {
+    "output_file": "CO_T11_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:37:31"
+  },
+  "CO_T12_Q01.jpg": {
+    "output_file": "CO_T12_Q01C.jpg",
+    "dimensions": "533x415",
+    "prompt": "A black-and-white comic textbook illustration in a first-person perspective, showing hands holding and pointing at a printed photograph. In the foreground, a left hand holds the edge of the physical photo, while a right hand points its index finger toward the center of the picture. Inside the photograph, a smiling male hiker in his 30s walks along a rocky mountain trail. He wears a outdoor jacket with a belt, long trousers, sturdy hiking boots, a large backpack, and holds a trekking pole in each hand. The photo's background shows rugged, snow-capped alpine mountains and pine trees. Clean black-and-white line art with subtle cross-hatch shading, styled as an educational graphic for a French language examination All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:37:46"
+  },
+  "CO_T12_Q02.jpg": {
+    "output_file": "CO_T12_Q02C.jpg",
+    "dimensions": "699x516",
+    "prompt": "A monochrome halftone graphic novel illustration of a doctor's consultation room (\"CABINET MÉDICAL\"). On the foreground left, a wooden desk with a computer monitor and an office chair. In the center, a male doctor in a white lab coat (\"blouse blanche\") uses a stethoscope to examine the bare back of a shirtless male patient sitting on an adjustable medical examination table. Beside the table stands a round swivel stool, with a tall medical stand on the left and a hanging privacy curtain in the background. Crisp black-and-white line art style with subtle halftone dot shading All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:38:06"
+  },
+  "CO_T12_Q39.jpg": {
+    "output_file": "CO_T12_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:38:09"
+  },
+  "CO_T13_Q01.jpg": {
+    "output_file": "CO_T13_Q01C.jpg",
+    "dimensions": "727x548",
+    "prompt": "A modern, clean educational vector illustration in a French language textbook style. On the left, a woman with dark hair styled in a neat bun, wearing a grey formal blouse and trousers, holds a briefcase while shaking hands. On the right, a middle-aged man with short curly hair, wearing a blue dress shirt with dark cuffs, a white necktie, and dark trousers, smiles as he shakes her hand in a professional greeting. Background features a large office window revealing a silhouette of the Paris skyline, complete with the Eiffel Tower. Crisp line art, flat harmonious colors, and clear pedagogical graphic style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:38:26"
+  },
+  "CO_T13_Q02.jpg": {
+    "output_file": "CO_T13_Q02C.jpg",
+    "dimensions": "815x551",
+    "prompt": "A monochrome blue-tinted graphic illustration showing hands holding a printed family photograph, with a hand on the right pointing its index finger into the photo toward a small toddler. Inside the snapshot, a multi-generational family relaxes outdoors under a large tree: on the left, a young boy sits on the grass next to a soccer ball in front of a young man; in the center, a grandmother holds a toddler girl in a dress next to a grandfather sitting beside a young boy; on the right, a blonde woman stands smiling. Clean line art, blue and grey duotone vector shading, educational language exam style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:38:50"
+  },
+  "CO_T13_Q03.jpg": {
+    "output_file": "CO_T13_Q03C.jpg",
+    "dimensions": "931x432",
+    "prompt": "A clean, modern educational illustration for a French language textbook showing a fitting room area (\"CABINES D'ESSAYAGE\") in a clothing store. \n\n**Center:** A man with dark hair stands wearing a fitted grey suit jacket, white shirt, grey trousers, and black shoes, adjusting his jacket while looking down. Opposite him stands a blonde female sales assistant in a dark suit, gesturing toward him with an open hand as she speaks.\n\n**Background:** Behind them are fitting room stalls with dark curtains and coat hooks on the wall. To the right is a wall-mounted mirror and a clothing rack with hung jackets.\n\n**Foreground (Right):** Low grey ottomans with folded garments placed on top.\n\n**Style:** Crisp 2D vector graphic illustration with sharp outlines, muted greyish-blue tones, flat shading, and soft ambient lighting. All signage in the store environment, if visible, must be strictly in French (e.g., \"CABINES D'ESSAYAGE\") All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:39:12"
+  },
+  "CO_T13_Q39.jpg": {
+    "output_file": "CO_T13_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:39:15"
+  },
+  "CO_T14_Q01.jpg": {
+    "output_file": "CO_T14_Q01C.jpg",
+    "dimensions": "619x465",
+    "prompt": "A clean, grey-toned educational comic-style illustration featuring a man and a woman sitting together on a low stone wall in a rural countryside setting. On the left, a young man with medium-length blonde hair and a goatee, dressed in an open casual jacket, t-shirt, and jeans, holds and plays an acoustic guitar. On the right, a young woman with short hair and sunglasses perched on her head, wearing a tank top and dark fitted trousers, sits cross-legged beside him, smiling and listening attentively. The background consists of rolling grassy hills under a soft sky, with a small stone cottage visible on the distant left hill and a single tall tree on the right hill. Clean outlines, balanced shading, monochromatic graphic textbook art style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:39:28"
+  },
+  "CO_T14_Q02.jpg": {
+    "output_file": "CO_T14_Q02C.jpg",
+    "dimensions": "644x517",
+    "prompt": "A clean grayscale educational vector illustration depicting the interior of a train car. On the right, an elderly woman with short curly white hair, glasses, and a trench coat stands in the aisle, reaching out to gently touch the shoulder of a seated blonde woman wearing a skirt suit with a handbag on her lap. On the left, another seated blonde woman reads a book, while a man in a shirt sits beside a vertical metal handrail pole reading a newspaper, with a small rolling suitcase placed in the aisle next to him. Large train windows form the background. Crisp black line art, neutral shading, clear French textbook illustration style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:39:46"
+  },
+  "CO_T14_Q03.jpg": {
+    "output_file": "CO_T14_Q03C.jpg",
+    "dimensions": "638x411",
+    "prompt": "A clean, modern vector line-art illustration for an educational textbook depicting a photo studio scene. On the left, a smiling young couple poses together: a woman holding a baby in her arms, and a young man in a jacket standing next to her. In the center, a large black studio lighting umbrella on a tall tripod stand points toward the family. On the right, a male photographer wearing a shirt and trousers leans forward, looking through a camera mounted on a tripod aimed directly at the subjects. Minimalist greyscale vector graphic style with sharp line art, flat gray shading, and a plain studio background All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:40:04"
+  },
+  "CO_T14_Q04.jpg": {
+    "output_file": "CO_T14_Q04C.jpg",
+    "dimensions": "638x426",
+    "prompt": "A sepia-toned vector line-art illustration for a French language textbook depicting a street scene. On the left sidewalk, a man carrying a shopping basket filled with baguettes points his hand down the road to give directions to a dark-haired woman standing beside him with a shoulder bag. They stand in front of a storefront with large glass display windows. On the right foreground, the rear of a parked car is visible on the street. Down the paved sidewalk in the background stands a modern civic building with a sign marked \"MAIRIE\". Crisp vector outlines, flat monochrome tones, and clean educational visual style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:40:24"
+  },
+  "CO_T14_Q39.jpg": {
+    "output_file": "CO_T14_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:40:27"
+  },
+  "CO_T15_Q01.jpg": {
+    "output_file": "CO_T15_Q01C.jpg",
+    "dimensions": "364x303",
+    "prompt": "A clean 2D vector educational illustration of a museum tour in an art gallery. On the right, a smiling male museum guide wearing a shirt with a badge labeled \"GUIDE\" stands gesturing toward a large framed landscape painting of snowy mountains, a river, and pine trees. A small wall plaque beside the artwork reads \"EXPOSITION: LES ALPES\". On the left, a group of four visitors—a young blonde girl, a young man, a balding older man, and a Black woman with her hair in a high bun—attentively listen to the guide. A protective chain barrier on stanchions separates the visitors from the gallery wall. Crisp cartoon line art with flat, harmonious coloring in a modern French language textbook style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:40:43"
+  },
+  "CO_T15_Q02.jpg": {
+    "output_file": "CO_T15_Q02C.jpg",
+    "dimensions": "339x345",
+    "prompt": "A clean 2D educational textbook line-art illustration in a muted lavender-gray vector style. On the left foreground, a kneeling father hands a school backpack to his young son standing before him. Behind them, large windows of a French primary school display children's stick-figure drawings taped to the glass. In the background archway labeled \"ÉCOLE\", two young girls with backpacks walk inside. On the right, a triangular school zone traffic sign displaying child silhouettes stands near the entrance. Simple vector linework, flat harmonious shading, and clear pedagogical graphic style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:41:07"
+  },
+  "CO_T15_Q39.jpg": {
+    "output_file": "CO_T15_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:41:10"
+  },
+  "CO_T16_Q01.jpg": {
+    "output_file": "CO_T16_Q01C.jpg",
+    "dimensions": "327x241",
+    "prompt": "A clean 2D educational vector illustration in a minimalist textbook graphic style with crisp black outlines and muted neutral tones. On the left, a man with short black hair and a mustache, wearing a button-down shirt, holds two neckties against his collar—one dark-and-light striped tie and one solid light-colored tie—asking for an opinion. On the right, a woman with a ponytail and hoop earring stands in side profile, resting her hand on her chin in a thoughtful, contemplating posture while looking at the ties. The background is simple with a subtle silhouette of a potted plant on a shelf to the far left All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:41:29"
+  },
+  "CO_T16_Q39.jpg": {
+    "output_file": "CO_T16_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:41:32"
+  },
+  "CO_T17_Q01.jpg": {
+    "output_file": "CO_T17_Q01C.jpg",
+    "dimensions": "792x549",
+    "prompt": "A clean, professional modern comic-style vector illustration for a French language proficiency exam (such as DELF or TCF), depicting an airport check-in or boarding gate scene. \n\n**Composition & Spatial Layout:**\n- **Left Foreground/Background:** A large floor-to-ceiling glass window looking out onto an airport tarmac, with a commercial passenger airplane taking off in the sky and the tail fin of another airplane parked outside.\n- **Center:** An airport check-in counter desk made of light grey laminate. Standing to the left of the counter is a female traveler in her 30s with dark hair tied back, wearing glasses, a light-colored trench coat, dark trousers, and carrying a shoulder bag; she is handing her boarding pass and passport over the counter. Standing behind the counter to the right is an airline gate agent with blonde hair tied back in a bun, wearing a dark uniform jacket and skirt, smiling as she accepts the travel documents. In the background between them, a shadowy silhouette of a traveler stands waiting.\n- **Right Foreground:** A retractable queue barrier with silver metal stanchions and dark blue/black belt straps forming a queue line. On the right wall hangs a framed poster depicting an abstract travel or portrait scene. A circular wall clock is mounted high on the back wall above the counter.\n- **Visual Style:** Sharp black linework, flat harmonious modern color tones in a soft corporate palette (greys, whites, dark blue), clean educational textbook illustration style, highly legible, with no photographic artifacts or blur All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:41:49"
+  },
+  "CO_T17_Q02.jpg": {
+    "output_file": "CO_T17_Q02C.jpg",
+    "dimensions": "762x549",
+    "prompt": "A clean two-tone comic vector illustration for a language exam featuring a couple having breakfast on an outdoor wooden patio at night. \n\nOn the left, a blonde woman sits in a white curved patio chair, holding an open book. On the right, a dark-haired man sits in a matching white patio chair, holding and eating a croissant. Between them is a round metal bistro table set with two coffee cups, a bottle of milk, a jam jar with a spoon, a plate with a croissant, a spotted milk pitcher, and a small device. \n\nIn the bottom right foreground, a small white cartoon dog sits on the deck, looking up at the man. In the background grass area, two white lounge chairs sit on the lawn next to dark garden bushes and a stone wall under a night sky. \n\nThe style features strong dark outlines, muted purple and navy shadows, and flat white highlights in a clean, modern educational graphic style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:42:13"
+  },
+  "CO_T17_Q03.jpg": {
+    "output_file": "CO_T17_Q03C.jpg",
+    "dimensions": "787x563",
+    "prompt": "A modern, clean vector line-art illustration in a monochromatic blue-grey palette for a French language textbook. In a cozy attic bedroom with a slanted skylight ceiling, a young boy sleeps peacefully in a bed on the left, tucked under a duvet. Beside the bed is a small nightstand with a mushroom lamp and an alarm clock, with a plush stuffed dog resting on a wall shelf above. In the background center, a woman in a dark professional suit holds open the bedroom door handle, smiling softly at the sleeping child. Next to the door stands a three-drawer chest of drawers topped with a teddy bear. To the right, a study corner contains a wooden desk with a matching chair, a desk lamp, a pencil cup with stationery, a school backpack on the floor, and a world map poster on the wall labeled \"CARTE DU MONDE\". Crisp linework, balanced flat shading, and clear pedagogical graphic style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:42:44"
+  },
+  "CO_T17_Q04.jpg": {
+    "output_file": "CO_T17_Q04C.jpg",
+    "dimensions": "793x546",
+    "prompt": "A clean visual textbook illustration of a movie theater interior. In the background, a large blank screen is set under overhead stage spotlights, with a left wall featuring mounted speakers and an exit door marked with a green sign reading \"SORTIE\". Multiple rows of theater seats are filled with seated audience members facing the screen. In the right aisle, a young man in a light button-up shirt gestures toward open seats, guiding a young woman with glasses and a jacket holding a handbag. The scene features crisp vector line art and muted flat colors in an educational graphic style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:43:06"
+  },
+  "CO_T17_Q39.jpg": {
+    "output_file": "CO_T17_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:43:09"
+  },
+  "CO_T18_Q01.jpg": {
+    "output_file": "CO_T18_Q01C.jpg",
+    "dimensions": "619x465",
+    "prompt": "A grayscale educational textbook vector illustration featuring a young couple sitting outdoors on a low stone wall in a rural countryside setting. On the left, a man with shoulder-length blonde hair and a goatee, dressed in an open jacket, t-shirt, and trousers, sits playing an acoustic guitar. To his right, a young woman with short wavy hair and sunglasses pushed up on her head sits cross-legged on the same stone wall, wearing a white sleeveless top and dark pants, smiling towards the camera. The background shows rolling grassy hills, a small cottage in the far upper left distance, and a tree branch framing the upper right. Rendered in clean line art with monochrome shading All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:43:23"
+  },
+  "CO_T18_Q02.jpg": {
+    "output_file": "CO_T18_Q02C.jpg",
+    "dimensions": "350x248",
+    "prompt": "A clean textbook vector illustration of a cozy restaurant interior. In the center foreground, two young women sit across from each other at a square dining table with a white tablecloth. The woman on the left, with long dark tied-back hair and a sleeveless dress, studies a black menu cover marked \"MENU\". The woman on the right, with blonde hair in a ponytail, holds an open menu and points at a specific dish listed inside. Both women are seated on high-backed wooden chairs, each featuring a handbag hanging from the outer corner post. In the left background, a man sits alone at a small table eating with a fork beside a wine glass. Framed artwork decorates the background walls, including a floral painting and a portrait. A potted plant sits in the bottom-left foreground. Crisp black line art style, bright educational graphic aesthetic, clear French text elements All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:48:21"
+  },
+  "CO_T18_Q39.jpg": {
+    "output_file": "CO_T18_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:48:24"
+  },
+  "CO_T19_Q01.jpg": {
+    "output_file": "CO_T19_Q01C.jpg",
+    "dimensions": "533x415",
+    "prompt": "Black and white educational illustration of hands holding and pointing at a printed photograph. On the left, a hand holds the edge of the photo, while on the right, a hand with long manicured nails points toward the center. Inside the photo frame, a smiling male hiker wearing a cap, outdoor jacket, trousers, sturdy boots, and a large backpack walks along a rocky mountain trail using two trekking poles. The background of the photo features tall pine trees and majestic alpine mountain peaks under a clear sky. Clean, monochrome textbook line art style with crisp outlines and subtle shading All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:48:40"
+  },
+  "CO_T19_Q02.jpg": {
+    "output_file": "CO_T19_Q02C.jpg",
+    "dimensions": "482x388",
+    "prompt": "A clean black-and-white line-art comic illustration for a French language exam set in a suburban town. On the left sidewalk, a woman with short hair carrying a handbag and a man in a trench coat holding a briefcase stand at a bus stop next to a sign reading \"ARRÊT DE BUS\". In the center foreground, a two-lane paved street features a zebra pedestrian crossing marked on the asphalt. On the right, a traffic light pole stands beside a sidewalk guardrail. In the background, a public city bus drives past suburban French houses and trees. Crisp grayscale vector illustration, clear outline art, educational textbook style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:49:06"
+  },
+  "CO_T19_Q39.jpg": {
+    "output_file": "CO_T19_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:49:10"
+  },
+  "CO_T20_Q01.jpg": {
+    "output_file": "CO_T20_Q01C.jpg",
+    "dimensions": "506x499",
+    "prompt": "A black-and-white halftone comic-style textbook illustration of a living room scene. On the left, a young girl with a ponytail, wearing a t-shirt and cropped pants, stands and warmly hands a wrapped gift box topped with a bow to her mother. On the right, a smiling woman with long blonde hair, dressed in a short-sleeved polo shirt, cropped pants, and sandals, sits on a couch, extending both hands to accept the present. In the background on the left stands a tall display cabinet filled with wine glasses and books. A potted plant sits on a small table between them in the center background. Clean line art, halftone dot shading, balanced composition, educational graphic style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:49:27"
+  },
+  "CO_T20_Q39.jpg": {
+    "output_file": "CO_T20_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:49:30"
+  },
+  "CO_T21_Q01.jpg": {
+    "output_file": "CO_T21_Q01C.jpg",
+    "dimensions": "560x351",
+    "prompt": "A clean educational vector illustration for a French language proficiency exam. In an outdoor supermarket parking lot during rainy weather, a woman with her hair tied back, wearing a patterned mid-length coat and skirt, stands beside a full metal shopping cart (\"chariot de supermarché\") loaded with grocery bags. She is bending slightly, actively loading grocery items into the open open trunk of a hatchback car parked on the right. Beside her, a young child wearing a hooded coat pulls the hood tightly around their face to shield against the cold rain. In the soft-focus background, a storefront sign clearly displays the French word \"SUPERMARCHÉ\". Crisp linework, flat harmonious colors, and clear textbook graphic style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:49:51"
+  },
+  "CO_T21_Q39.jpg": {
+    "output_file": "CO_T21_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:49:54"
+  },
+  "CO_T22_Q01.jpg": {
+    "output_file": "CO_T22_Q01C.jpg",
+    "dimensions": "804x523",
+    "prompt": "A retro monochrome blue-grey comic illustration for a French language exam depicting a post office interior. On the right, a woman with short dark hair and glasses, wearing a short-sleeved dress, stands at a service counter labeled \"GUICHET\" and hands a large envelope to a male clerk. The clerk, wearing glasses, a shirt, and a tie, sits behind the counter reaching for the document. On the counter, a handbag rests next to a bulky desktop monitor, with an automated postal terminal visible on the far left marked \"LA POSTE\". On the far right, a display rack holds postcards and brochures. The scene is drawn in a clean, vintage 1960s textbook graphic style with crisp line art and balanced shading All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:50:47"
+  },
+  "CO_T22_Q39.jpg": {
+    "output_file": "CO_T22_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:50:50"
+  },
+  "CO_T23_Q01.jpg": {
+    "output_file": "CO_T23_Q01C.jpg",
+    "dimensions": "1013x671",
+    "prompt": "A clean comic-book vector illustration of a scene inside a French pharmacy (\"PHARMACIE\"). In the center behind a curved glass service counter, a female pharmacist around 30 years old with short light hair and glasses, wearing a white tunic badge, holds a small medicine box labeled in French and gestures with her open hand to explain its use. On the counter sits a computer monitor turned toward her and display trays with small box items. To the right, a male customer wearing a coat and scarf stands in profile listening attentively. In the background, fully stocked wooden shelves hold neatly arranged medicine boxes and bottles. On the back wall behind the pharmacist, a prominent dark pharmacy cross emblem (\"CROIX VERTE\") and a Bowl of Hygieia symbol (\"COUPE D'HYGIE\") are displayed. Sharp line art, muted educational textbook colors, balanced lighting, crisp clean style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:51:10"
+  },
+  "CO_T23_Q02.jpg": {
+    "output_file": "CO_T23_Q02C.jpg",
+    "dimensions": "1000x540",
+    "prompt": "A greyscale comic-style educational illustration depicting a dental examination room. On the left, a male dentist with a dark beard and surgical cap wears a white lab coat over a shirt as he leans forward, holding a dental drill tool aimed toward a patient's mouth. On the right, a patient reclines in an adjustable dental examination chair with head tilted back and mouth wide open. An overhead examination lamp hangs above the scene. In the background, a wall poster on the left displays bold French text reading \"CHIRURGIEN DENTISTE\", while the rear wall features storage cabinets, a tiled backsplash with medicine bottles on the counter, and a rinse sink with a faucet on the far right. Clean black ink linework with soft monochromatic grey shading in a clear French textbook graphic style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:51:33"
+  },
+  "CO_T23_Q39.jpg": {
+    "output_file": "CO_T23_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:51:36"
+  },
+  "CO_T24_Q01.jpg": {
+    "output_file": "CO_T24_Q01C.jpg",
+    "dimensions": "1210x782",
+    "prompt": "A clean, educational 2D vector comic-style illustration depicting the interior of a French post office. In the center, a woman in a short-sleeved blue skirt suit and glasses stands at a counter marked \"GUICHET\", handing a large white envelope to a male postal clerk wearing glasses seated behind the service counter desk. Her handbag rests on the counter shelf between them. To the left, a large automated postal service terminal with a keypad stands against the wall. On the right foreground, a multi-tiered display rack holds various promotional pamphlets and brochures under a small overhead sign reading \"TARIFS\". Drawn in a crisp retro-modern textbook graphic style with clean line art and a muted palette of soft gray-blues and warm beige tones All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:51:58"
+  },
+  "CO_T24_Q02.jpg": {
+    "output_file": "CO_T24_Q02C.jpg",
+    "dimensions": "987x667",
+    "prompt": "A clean 2D vector textbook illustration in a muted slate-blue and pale-yellow dual-color style depicting the crowded interior of a French metro car. On the left, a young man in a dark suit sits with a briefcase on his lap, smiling and offering his seat with an open hand gesture. Standing in the center facing him, an elderly woman with curly white hair, glasses, a coat, and a scarf holds an overhead hand strap with one hand while carrying a shopping tote containing a French baguette. Surrounding them are silhouettes and figures of other commuters standing and sitting, including a woman in a cream jacket with a crossbody bag seen from behind. Ceiling grab straps hang overhead near large train windows and doors in a clear, flat-graphic educational art style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:52:20"
+  },
+  "CO_T24_Q03.jpg": {
+    "output_file": "CO_T24_Q03C.jpg",
+    "dimensions": "996x672",
+    "prompt": "A clean vector comic illustration in muted blue-gray and pale cream tones depicting two university students conversing outside a modern glass-walled library with a entrance sign reading \"BIBLIOTHÈQUE\". In the foreground right, a young man with light messy hair, a hoodie, and a messenger bag holds a book under his arm while gesturing with his thumb toward the automatic glass doors. Facing him in the foreground left, a young woman wearing a flat cap, jacket, and shoulder bag stands listening attentively. Visible through the large multi-story glass facade is the building interior: on the ground floor left, a patron stands browsing books along tall library shelves; on the upper floor right, a quiet study nook contains a table with two office chairs, one occupied by a person using a laptop, set against rows of bookshelves. Sharp linework, flat modern coloring, and balanced composition designed for an educational language test All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:52:46"
+  },
+  "CO_T24_Q04.jpg": {
+    "output_file": "CO_T24_Q04C.jpg",
+    "dimensions": "891x592",
+    "prompt": "A clean monochrome French textbook vector illustration set inside a public indoor swimming pool (\"PISCINE\"). In the foreground right, a male lifeguard (\"MAÎTRE-NAGEUR\") wearing a t-shirt, swim trunks, a cap, and a whistle stands on the tiled pool deck, holding his hand up in a firm \"stop\" gesture aimed at two young boys. In the foreground left and center, two boys in swim trunks run along the wet deck; the boy on the far left carries a flipper. On the background wall, a clear safety sign reads \"INTERDICTION DE COURIR\". In the background, a figure prepares to dive from a high diving board, children play near a slide, and large paneled glass windows line the back wall. Crisp line art, balanced shading, black-and-white graphic novel style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:53:42"
+  },
+  "CO_T24_Q39.jpg": {
+    "output_file": "CO_T24_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:53:45"
+  },
+  "CO_T25_Q01.jpg": {
+    "output_file": "CO_T25_Q01C.jpg",
+    "dimensions": "1013x671",
+    "prompt": "A clean educational vector illustration of a French pharmacy interior for a TCF/TEF language exam context. In the center behind a curved service counter, a female pharmacist with short hair and glasses wearing a white uniform holds a medicine box labeled in French and gestures with her open hand to explain it. On the right, a male customer in a coat and scarf stands listening attentively. The counter features a computer monitor and an adjacent glass display case filled with small medical products. Background shelves are neatly lined with boxed pharmaceuticals, framed by a prominent green pharmacy cross symbol and a Bowl of Hygieia emblem on the back wall. Crisp line art textbook style with clean flat shading and all text strictly in French All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:54:09"
+  },
+  "CO_T25_Q02.jpg": {
+    "output_file": "CO_T25_Q02C.jpg",
+    "dimensions": "1000x540",
+    "prompt": "A monochrome grayscale comic illustration for a French language textbook depicting a dental exam room scene. On the left, a male dentist with a dark beard wearing a medical scrub cap and white coat leans over a patient, holding a dental drill tool towards the patient's mouth. On the right, a young patient lies back in a reclining dental chair with their head rested back and mouth open. In the background on the far left hangs a poster partially showing the French text \"DENTISTE\". Overhead surgical lights hang above, and a background counter holds small medical bottles next to a sink with a faucet on the far right. Clean line art, educational textbook style with gray shading tones All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:54:30"
+  },
+  "CO_T25_Q39.jpg": {
+    "output_file": "CO_T25_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:54:33"
+  },
+  "CO_T26_Q01.jpg": {
+    "output_file": "CO_T26_Q01C.jpg",
+    "dimensions": "619x465",
+    "prompt": "A black-and-white vector line art illustration in a French textbook comic style, depicting a young couple sitting outdoors in the countryside. On the left, a man with blonde shaggy hair and a small goatee, wearing a denim jacket over a t-shirt and jeans, sits on a low rustic stone wall while playing an acoustic guitar. To his right, on the same stone wall, a woman with short brown hair and sunglasses resting on her head sits with her legs crossed, wearing a light tank top and fitted trousers. Both smile towards the viewer. The background features rolling grassy hills with a small rural cottage visible on the far left and a tree on the right, rendered in crisp monochrome grayscale All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:54:53"
+  },
+  "CO_T26_Q02.jpg": {
+    "output_file": "CO_T26_Q02C.jpg",
+    "dimensions": "335x246",
+    "prompt": "A crisp monochrome vector illustration in a French educational textbook style depicting the interior of a passenger train car. \n\n**Layout & Setting:** \nLooking down the central aisle toward the rear double doors of a train carriage. On both sides are paired passenger seats with high headrests, large side windows, and long overhead luggage racks running along the ceiling. A door sign at the back reads \"VOITURE 3\".\n\n**Characters & Actions:**\n- **Center Aisle:** A standing woman with short hair, wearing a jacket over a light top, holds the handle of a rolling suitcase on the aisle floor while pointing her raised arm toward an upper overhead luggage rack.\n- **Right Side Seats:** In the foreground, a seated man with glasses and a mustache in a short-sleeved plaid shirt looks toward the aisle. Behind him sits a young girl leaning her chin on her hands.\n- **Left Side Seats:** A seated man in a dark sweater looks up at the standing woman. Another seated passenger with glasses sits behind him, and a man's face is visible in the immediate foreground.\n- **Background:** Additional passengers are seated throughout the train carriage under soft interior lighting All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:55:23"
+  },
+  "CO_T26_Q03.jpg": {
+    "output_file": "CO_T26_Q03C.jpg",
+    "dimensions": "1095x800",
+    "prompt": "A clean black-and-white comic-style textbook illustration with screentone dot shading, designed for a French language exam. \n\nOn a tiled outdoor patio, an adult man standing on the left in a casual jacket pulls out an ornate wrought-iron bistro chair, gesturing to invite a young child on the right to sit. In the center sits a round metal bistro table accompanied by two additional decorative wrought-iron chairs with scrollwork backs. The background shows a house exterior with shuttered French doors on the left, a textured plaster wall under a tiled roof overhang in the center, and a wooden fence structure on the right All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:55:40"
+  },
+  "CO_T26_Q04.jpg": {
+    "output_file": "CO_T26_Q04C.jpg",
+    "dimensions": "1209x800",
+    "prompt": "A monochromatic vintage comic-style graphic illustration in grey tones and halftone shading depicting two male hikers on a winding mountain trail. In the right foreground, an exhausted hiker wearing a cap, short-sleeved shirt, cargo shorts, and a backpack sweats profusely while gesturing tiredly. Behind him on the dirt path, a second hiker wearing a bucket hat, polo shirt, shorts, and a backpack walks calmly with a cheerful expression. The surrounding alpine landscape features sparse shrubs, pine trees on a slope, distant snow-capped mountain peaks, a small wooden mountain shelter in the valley, and a haloed sun in a shaded sky. Crisp ink line-art vector style with a clear educational textbook aesthetic All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:56:01"
+  },
+  "CO_T26_Q05.jpg": {
+    "output_file": "CO_T26_Q05C.jpg",
+    "dimensions": "1112x800",
+    "prompt": "A halftone comic illustration in black-and-white depicting a young couple relaxing on a wooden park bench on a sunny day. On the left, a young man sits back with eyes closed and hands clasped behind his head, wearing a V-neck t-shirt and cargo shorts. Beside him on the right, a smiling young woman with a flower in her long hair turns toward him, wearing a striped short-sleeved top, a dress skirt, and sandals. The park background features grassy ground with small flowers, a bright sun overhead, a distant horizon tree on the far left, and a leafy tree canopy framing the top right. The style uses clean ink lines and halftone dot shading for an educational comic graphic All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:56:19"
+  },
+  "CO_T26_Q39.jpg": {
+    "output_file": "CO_T26_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:56:22"
+  },
+  "CO_T27_Q01.jpg": {
+    "output_file": "CO_T27_Q01C.jpg",
+    "dimensions": "926x482",
+    "prompt": "A clean monochrome vector textbook illustration of a classroom scene. On the left foreground, a smiling male teacher in a polo shirt stands near a blackboard mounted with a large ruler and set square, next to a chalk tray holding an eraser. He holds a piece of chalk and points toward the students. Behind him, a closed door displays a small sign reading \"SALLE 102\". In the center background, a low wooden cabinet supports a projector beneath framed wall posters displaying French educational charts titled \"CALENDRIER\". On the right, two students sit in wooden chairs at a shared desk writing in notebooks, while a student on the far right raises a hand. The style features clean black-and-white line art with subtle grayscale shading All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:56:39"
+  },
+  "CO_T27_Q39.jpg": {
+    "output_file": "CO_T27_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:56:43"
+  },
+  "CO_T28_Q01.jpg": {
+    "output_file": "CO_T28_Q01C.jpg",
+    "dimensions": "798x557",
+    "prompt": "A clean, blue-monochrome vector illustration for a French language textbook depicting a gym reception area (\"SALLE DE SPORT\"). On the right foreground, a male receptionist in a tracksuit standing behind a curved counter with a computer monitor hands a paper brochure to a blonde woman with a ponytail in a jacket and jeans; a wall sign above the counter reads \"ACCUEIL\". In the center foreground, electronic entry turnstiles separate the reception area from the workout room, with leafy foliage framing the far left. In the background, gym members are actively exercising, including a man and woman on stationary bikes, a man lifting weights, and a woman running on a treadmill. The image features crisp line art, smooth blue and grey tones, and a balanced educational comic style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:56:59"
+  },
+  "CO_T28_Q02.jpg": {
+    "output_file": "CO_T28_Q02C.jpg",
+    "dimensions": "638x426",
+    "prompt": "A clean monochrome line-art vector illustration for a French language textbook. On a city sidewalk on the left, a man wearing glasses, a casual jacket, and trousers holds a market basket with vegetables while pointing his arm toward a distant building across the street. Beside him, a woman with shoulder-length dark hair, a skirt, and a shoulder bag looks on while holding a map. They stand in front of a building facade with large display windows and a narrow door marked with French text reading \"COMMERCE\". Across the street on the upper right, a modern civic building with steps features a French tricolor flag and a sign reading \"HÔTEL DE VILLE\". In the foreground on the right, the rear view of a dark car is parked along the curb displaying a French license plate reading \"123 AB 75\". Crisp, clear educational comic style with clean linework and muted grey tones All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:57:21"
+  },
+  "CO_T28_Q39.jpg": {
+    "output_file": "CO_T28_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:57:24"
+  },
+  "CO_T29_Q01.jpg": {
+    "output_file": "CO_T29_Q01C.jpg",
+    "dimensions": "608x401",
+    "prompt": "A clean, modern educational vector illustration set in a hospital reception hall for a French language textbook. In the left foreground, a male doctor wearing a white lab coat with a stethoscope around his neck stands in profile, gesturing welcomingly with an open arm toward a patient. In the center foreground, a young woman with dark hair stands holding her injured wrist with a concerned expression. In the background, a glass-walled reception counter displays a prominent overhead sign reading \"ACCUEIL\" and a wall banner reading \"URGENCES\". Behind the counter, reception staff sit working at computers, while to the far right background, a medical staff member stands near a patient sitting in a wheelchair. The artwork features clear outlines, balanced neutral lighting, crisp shapes, and a clean 2D graphic style ideal for comprehension exams All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:57:45"
+  },
+  "CO_T29_Q02.jpg": {
+    "output_file": "CO_T29_Q02C.jpg",
+    "dimensions": "1261x800",
+    "prompt": "A vintage black-and-white graphic novel illustration featuring a halftone screentone aesthetic inside an upscale French restaurant. On the left, a male patron in a long trench coat and dark trousers stands facing right, conversing while holding a folded umbrella. On the right, an attentive waiter wearing a tux jacket, bow tie, and long white apron stands with hands behind his back. Between them sits a wooden reception podium topped with a potted palm plant and a small desktop plaque reading \"RÉSERVATION\". In the background, an archway leads to a dining hall filled with seated patrons and set tables with white tablecloths and wine glasses. Rendered with clean line art, subtle cross-hatching, and monochrome comic textbook shading All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:58:05"
+  },
+  "CO_T29_Q39.jpg": {
+    "output_file": "CO_T29_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:58:08"
+  },
+  "CO_T30_Q01.jpg": {
+    "output_file": "CO_T30_Q01C.jpg",
+    "dimensions": "1024x704",
+    "prompt": "A monochromatic blue vector line art illustration for a French language textbook showing an outdoor village market stall scene. \n\nIn the center behind a wooden stall counter, a smiling male vendor with a distinct mustache, wearing a sweater and vest, stands ready to serve. On the counter, various wooden crates hold produce like apples and leeks, each labeled with French price tags reading \"POMMES 2,50 €\", \"POIRES 3,00 €\", and \"LÉGUMES 1,80 €\". Dark reusable bags hang from the metal frame canopy overhead. \n\nIn the right foreground, a male customer wearing a coat points directly at a crate of produce to make his selection. Standing next to him in the background, a female customer with glasses thoughtfully observes the selection. The background features a European village street with traditional houses, a white van, and a church steeple under a clear sky. Clear linework, clean educational graphic style, light blue shading All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:58:29"
+  },
+  "CO_T30_Q39.jpg": {
+    "output_file": "CO_T30_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:58:32"
+  },
+  "CO_T31_Q01.jpg": {
+    "output_file": "CO_T31_Q01C.jpg",
+    "dimensions": "535x356",
+    "prompt": "A clean, black-and-white vector line-art illustration for a French language textbook depicting a roadside car breakdown. In the center-right foreground, a white sedan is parked along a rural road with its hood open, releasing a plume of smoke from the engine. On the left, a woman in smart attire leans forward and points directly at the smoking engine compartment. Standing next to her, a man with hands on his hips leans forward, looking concernedly at the open hood. The background features rolling hills with tall cypress trees and a large French chateau with a tower situated on a hilltop. Minimalist grayscale educational comic style with sharp outlines All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:58:48"
+  },
+  "CO_T31_Q02.jpg": {
+    "output_file": "CO_T31_Q02C.jpg",
+    "dimensions": "551x397",
+    "prompt": "A clean black-and-white line-art textbook illustration depicting a school drop-off scene outside a French school building. On the left sidewalk, a crouched man in a short-sleeved shirt hands a school backpack to a young boy wearing shorts and a t-shirt. Small cylindrical bollards line the pavement. In the background, large school windows display children's stick-figure artwork, while two schoolgirls wearing backpacks enter through an open doorway. On the far right stands a triangular school zone traffic sign featuring a pedestrian pictogram. Crisp vector graphic style, balanced grayscale tones, and simple educational illustration layout All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:59:08"
+  },
+  "CO_T31_Q03.jpg": {
+    "output_file": "CO_T31_Q03C.jpg",
+    "dimensions": "548x364",
+    "prompt": "A crisp, high-definition photograph capturing a high-angle view of a French multi-lane highway (\"autoroute\") cutting through a rural countryside. In the foreground on the left lanes, a dark sedan towing a white caravan trailer drives along the asphalt alongside other moving cars, delivery vans, and semi-trucks. Opposite lanes on the right are separated by a central concrete barrier. On the roadside, a French speed limit sign reads \"RAPPEL 130\". The background features flat green fields, distant tree lines, and tall metal power pylons under a bright, clear sky All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:59:35"
+  },
+  "CO_T31_Q39.jpg": {
+    "output_file": "CO_T31_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:59:38"
+  },
+  "CO_T32_Q01.jpg": {
+    "output_file": "CO_T32_Q01C.jpg",
+    "dimensions": "420x323",
+    "prompt": "A clean black-and-white vector textbook illustration depicting an airport security checkpoint scene. On the left, a uniformed male security officer wearing a short-sleeved collared shirt with epaulets and a tie stands beside a rope stanchion barrier, gesturing with his arm toward the baggage conveyor belt. On the right, a young male traveler wearing a jacket and trousers stands facing the officer while holding the handle of a rolling suitcase. In the background, there are walk-through metal detectors and a conveyor X-ray scanner with another security guard sitting behind it. Overhead signs clearly display French text reading \"SÉCURITÉ\" and \"CONTRÔLE BAGAGES\". The visual style is crisp, high-contrast monochrome line art with clear pedagogical formatting All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 18:59:54"
+  },
+  "CO_T32_Q02.jpg": {
+    "output_file": "CO_T32_Q02C.jpg",
+    "dimensions": "420x390",
+    "prompt": "A clean, monochrome educational graphic in a crisp vector textbook style depicting a restaurant scene. On the left, a standing male waiter wearing a vest and collared shirt holds a small notepad and pen, taking an order. In the center, a woman with short bobbed hair is seated at a table covered with a tablecloth, holding open a dining menu with French text reading \"MENU\". Her table is set with a glass, napkin, fork, and knife. To the right, an empty adjacent table with a matching tablecloth and high-backed chair is set with cutlery and a water glass. The background features a large window with diagonal light reflections. Sharp black line art with soft gray shading, formatted for a French language proficiency test All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 19:00:16"
+  },
+  "CO_T32_Q03.jpg": {
+    "output_file": "CO_T32_Q03C.jpg",
+    "dimensions": "555x409",
+    "prompt": "A clean French educational textbook illustration of a luggage and handbag store labeled \"MAROQUINERIE\". On the left behind a glass display counter, a friendly male shopkeeper in a collared shirt and tie smiles and gestures toward leather satchels laid out on top. On the counter rests a vintage cash register labeled \"CAISSE\". On the right, a blonde female customer in a trench coat with her hair in a ponytail stands holding a purse, looking at the offered bags. Background wall shelves are fully stacked with diverse handbags, backpacks, and leather goods. Sharp line art style, balanced lighting, and flat harmonious colors All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 19:00:40"
+  },
+  "CO_T32_Q04.jpg": {
+    "output_file": "CO_T32_Q04C.jpg",
+    "dimensions": "551x408",
+    "prompt": "A clean, black-and-white vector textbook illustration depicting a street scene in France. On the left sidewalk, a male taxi driver with a mustache, wearing a suit jacket and trousers, leans forward with outstretched hands toward a large rolling suitcase. In the center, a female passenger in a coat and skirt stands with her back partially turned, gesturing toward the luggage near the open trunk of a parked taxi. On the right, the modern sedan features a roof sign clearly reading \"TAXI\". The background features a Haussmannian French building entrance with carved details and a street sign displaying a taxi emblem. Crisp line art, flat grayscale tones, clear educational graphic visual style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 19:01:00"
+  },
+  "CO_T32_Q39.jpg": {
+    "output_file": "CO_T32_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 19:01:03"
+  },
+  "CO_T33_Q01.jpg": {
+    "output_file": "CO_T33_Q01C.jpg",
+    "dimensions": "968x636",
+    "prompt": "A clean French textbook comic line illustration in a blue-gray monochrome style depicting a children's bedroom scene. On the left, an angry mother wearing a blazer, striped shirt, and jeans stands in an open doorway, pointing sternly while scolding her children. Scattered on the floor near the entrance are loose papers and pencils. In the center stands a large wooden bunk bed with an attached ladder, bedding, and a teddy bear resting on the lower bed, beside a small wooden nightstand with a table lamp. On the right, under a window with a horizontal blind, two young boys kneel on a floor rug, actively fighting over and tugging on a small toy dog held between them All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 19:01:19"
+  },
+  "CO_T33_Q02.jpg": {
+    "output_file": "CO_T33_Q02C.jpg",
+    "dimensions": "707x445",
+    "prompt": "A grayscale, halftone vector textbook illustration of a city street scene for a French language exam. On the left sidewalk, a man wearing glasses and a jacket holds a shopping basket while pointing his right arm forward toward a building. Next to him, a woman in a blazer and skirt holds an open map titled \"CARTE DE LA VILLE\". They stand beside a stone storefront featuring large display windows and a door marked \"ENTRÉE\". On the right foreground, the rear of a parked car is visible along the curb. In the background, a modern concrete building stands under a clear sky. The illustration uses clean monochrome line art, subtle cross-hatching, and balanced contrast All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 19:01:38"
+  },
+  "CO_T33_Q39.jpg": {
+    "output_file": "CO_T33_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 19:01:41"
+  },
+  "CO_T34_Q01.jpg": {
+    "output_file": "CO_T34_Q01C.jpg",
+    "dimensions": "295x300",
+    "prompt": "A black-and-white vintage etching and woodcut illustration depicting a young French chef in a commercial kitchen washing dishes. In the center, the young man wears a tall pleated chef's hat (\"toque blanche\"), a white chef jacket, and a dark apron, bent over a stainless steel sink while washing a plate under a curved running faucet. To the left, a tiled wall features a shelf holding a tall stack of clean plates, with hanging utensils like spatulas and ladles underneath, and a soap bottle by the sink basin. To the right, open wooden shelving racks are filled with vertically stacked ceramic plates and saucers. Crisp hatching lines, detailed cross-hatching, clear black-and-white graphic art style suitable for a French language educational exam All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 19:02:01"
+  },
+  "CO_T34_Q39.jpg": {
+    "output_file": "CO_T34_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 19:02:04"
+  },
+  "CO_T35_Q01.jpg": {
+    "output_file": "CO_T35_Q01C.jpg",
+    "dimensions": "719x565",
+    "prompt": "A crisp, clean black-and-white graphic illustration in a classic French language textbook comic style depicting an art gallery scene. \n\nIn the center stands a stylized, modern bronze sculpture of a crouching, thoughtful figure mounted on a multi-tiered pedestal with a small plinth plaque marked in French: \"L'HOMME PENSIF\". \n\nOn the left, a young woman with a ponytail, wearing a striped polo shirt, knee-length dark skirt, and carrying a shoulder bag, stands with folded arms, looking cheerfully at the sculpture. \n\nOn the right, another young woman with long straight hair and bangs, dressed in a long-sleeved top and flared trousers, stands with her hands behind her back, intently studying the artwork. \n\nIn the background, abstract framed paintings hang on the gallery walls, and a wall plaque reads \"EXPOSITION D'ART MODERNE\". The lighting is balanced with sharp vector outlines and neat cross-hatching textures All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 19:02:47"
+  },
+  "CO_T35_Q02.jpg": {
+    "output_file": "CO_T35_Q02C.jpg",
+    "dimensions": "1024x704",
+    "prompt": "A clean, blue-tinted monochrome vector illustration in an educational language textbook style depicting an outdoor French village market. On the left behind a metal-framed produce stall, a smiling male vendor with a prominent mustache and vest stands beside wooden crates filled with fresh fruits and vegetables. Small French price signs marked \"POMMES 2,50 €/kg\" and \"LÉGUMES FRAIS\" are displayed on the crates containing apples, grapes, potatoes, and leeks. In the foreground right, a male customer in a jacket points his arm directly at a wooden crate of produce while holding a bag. Standing behind him, a woman with short hair and glasses carries a shopping bag marked \"MARCHÉ\". The background features traditional French village houses, a parked van, bare trees, and a distant church spire under a clear sky. Clear linework, flat shading, strict French signage All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 19:03:05"
+  },
+  "CO_T35_Q03.jpg": {
+    "output_file": "CO_T35_Q03C.jpg",
+    "dimensions": "884x414",
+    "prompt": "A monochrome greyscale graphic illustration for a French language textbook. In the center, a man stands in a clothing store fitting area trying on a dark suit jacket over a light shirt, carefully adjusting his lapels. Facing him, a blonde saleswoman in a dark pantsuit offers advice, gesturing with an open palm while her other hand rests in her pocket. \n\nThe background features fitting room cabins on the left with pulled-back dark curtains and wall hooks. To the right, a large rectangular wall mirror hangs near a clothing rack with hung suits, accompanied by low padded seating ottomans in the foreground. Drawn in a clean visual vector style with crisp outlines and balanced grey tones All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 19:03:29"
+  },
+  "CO_T35_Q39.jpg": {
+    "output_file": "CO_T35_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 19:03:32"
+  },
+  "CO_T36_Q01.jpg": {
+    "output_file": "CO_T36_Q01C.jpg",
+    "dimensions": "775x512",
+    "prompt": "A clean greyscale comic textbook line art illustration depicting a busy French train station interior. On the left, a male ticket agent in a shirt and tie sits behind a glass ticket counter signed \"GUICHET\". A woman with dark curly hair and glasses, wearing a fur-trimmed parka coat and boots, stands at the counter leaning forward to speak with him. Pamphlet holders rest on the desk. In the center foreground, several pieces of luggage, including a large duffel bag and a rolling suitcase, sit on the floor. To the right, two male travelers stand together: a young Black man wearing headphones and a long coat looks down at his phone, while a tall man in a business suit stands beside him with arms crossed. In the background through an open glass doorway, a uniformed train conductor with a cap stands on the platform beside a high-speed train. Crisp outlines, balanced flat grey shading, clear educational visual style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 19:03:54"
+  },
+  "CO_T36_Q02.jpg": {
+    "output_file": "CO_T36_Q02C.jpg",
+    "dimensions": "787x515",
+    "prompt": "A clean educational vector illustration for a French exam featuring a modern hospital corridor scene. In the foreground left, a tall male doctor wearing a white coat and stethoscope extends his open hand in a welcoming gesture. In the foreground center, a distressed young woman holds her injured arm at the elbow, displaying pain lines. In the background, a curved modern reception counter displays a sign reading \"ACCUEIL\" with reception staff working at computers. To the right background, an elderly patient sits in a wheelchair while a nurse stands nearby holding a clipboard. The image has crisp outlines, neutral tones, and a clear textbook graphic art style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 19:04:15"
+  },
+  "CO_T36_Q03.jpg": {
+    "output_file": "CO_T36_Q03C.jpg",
+    "dimensions": "792x521",
+    "prompt": "A monochromatic black-and-white ink illustration for an educational language textbook depicting two hikers on a winding dirt trail in a mountainous landscape under a solar eclipse with a bright ring corona in the upper-left sky. In the foreground on the right, an exhausted male hiker wearing a baseball cap, t-shirt, cargo shorts, hiking boots, and a backpack sweats profusely and gestures with an open palm. Walking down the path behind him, a second composed hiker wears a bucket hat, polo shirt, shorts, and a backpack. The scene is surrounded by rocky alpine terrain, sparse vegetation, pine trees on a slope to the right, and a small mountain chalet set against distant snow-capped peaks. Clean line art graphic style with crisp hatching and high contrast All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 19:04:36"
+  },
+  "CO_T36_Q39.jpg": {
+    "output_file": "CO_T36_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 19:04:39"
+  },
+  "CO_T37_Q01.jpg": {
+    "output_file": "CO_T37_Q01C.jpg",
+    "dimensions": "800x800",
+    "prompt": "A clean, monochromatic blue-gray educational vector illustration depicting a theater performance. In the foreground audience, four spectators sit in theater seats seen from behind; in the center, a dark-haired man wearing glasses turns to smile at the woman beside him while giving a thumbs-up gesture as they whisper together. On the wooden stage, framed by heavy draped curtains, two 17th-century musketeer-style actors engage in a sword duel: the actor on the left wears a wide-brimmed feathered hat and features a prominent long nose in a Cyrano de Bergerac style, while the actor on the right lunges forward pointing a rapier. The artwork features crisp outlines, flat blue tones, and a clear comic textbook aesthetic All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 19:04:57"
+  },
+  "CO_T37_Q39.jpg": {
+    "output_file": "CO_T37_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 19:05:00"
+  },
+  "CO_T38_Q01.jpg": {
+    "output_file": "CO_T38_Q01C.jpg",
+    "dimensions": "1285x495",
+    "prompt": "A clean, two-panel educational comic illustration depicting a modern French fitness center (\"CENTRE DE REMISE EN FORME\").\n\n**Right Foreground (Reception Area):** A young woman with a blond ponytail wearing a dark jacket and shoulder bag stands at a reception counter with a desktop computer monitor. Behind the desk, a smiling male receptionist in a athletic track jacket hands her a French informational flyer. A subtle desk sign reads \"ACCUEIL\".\n\n**Left Background (Gym Area):** A bustling gym workout room filled with exercise equipment. A man works out on a stationary exercise bike, a woman trains on an elliptical cross-trainer, a man in a doorway lifts a barbell with weights near a weight rack, and another woman runs on a treadmill. Tropical plant leaves frame the far-left edge.\n\n**Visual Style:** Crisp graphic novel vector style for a language textbook, featuring sharp linework, muted slate-blue and warm cream tones, clear spatial layout, and flat balanced lighting All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 19:05:20"
+  },
+  "CO_T38_Q02.jpg": {
+    "output_file": "CO_T38_Q02C.jpg",
+    "dimensions": "898x595",
+    "prompt": "A clean 2D comic illustration in a monochrome blue-grey palette with black line art, styled for a French language textbook. On the left, a nightstand holds a small round alarm clock with a face and a small book. In the center, a sick young boy sits up in bed propped against a large white pillow, covered with a striped blanket. He has his arms crossed over his chest and wears a grumpy, reluctant expression. On the right, his smiling mother sits beside him on a wooden chair, leaning forward encouragingly. She holds a small glass medicine bottle labeled in French \"SIROP\" in one hand and extends a spoonful of syrup toward the boy's mouth. Plain light background All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 19:05:47"
+  },
+  "CO_T38_Q03.jpg": {
+    "output_file": "CO_T38_Q03C.jpg",
+    "dimensions": "897x602",
+    "prompt": "A clean 2D educational vector illustration in muted blue, grey, and beige tones depicting a bedroom scene. In the center, an elderly man with short grey hair lies sick under a dark blue blanket in a large bed, resting against pillows and looking toward the door. On the left nightstand sits a small table lamp alongside French newspapers with subtle text reading \"L'ACTUALITÉ\", with slippers on a rug beside the bed. On the right nightstand sits another matching lamp. On the right, a woman in a grey jacket and necklace enters through an open doorway, holding a glass of water for the man. Framed artwork hangs on the light grey wall behind the bed, drawn with clear lines and soft flat shading suitable for a French language textbook graphic All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 19:06:09"
+  },
+  "CO_T38_Q39.jpg": {
+    "output_file": "CO_T38_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 19:06:12"
+  },
+  "CO_T39_Q01.jpg": {
+    "output_file": "CO_T39_Q01C.jpg",
+    "dimensions": "827x537",
+    "prompt": "A black and white line art illustration in a clean graphic comic style with halftone dot shading, suited for a French language exam textbook. In the center, a young girl with a ponytail, wearing a t-shirt and cropped pants, stands and hands a small wrapped gift box with a bow to a woman sitting on a large comfortable sofa. On the right, the smiling woman with shoulder-length hair receives the present; a sleeping cat is curled up beside her on the sofa armrest. On the left, a wooden display cabinet with glass doors contains bottles, glasses, and books, while a low coffee table in the foreground holds a vase of flowers, a book, and a teacup on a saucer. A potted plant sits on a small table in the background between the characters All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 19:06:35"
+  },
+  "CO_T39_Q39.jpg": {
+    "output_file": "CO_T39_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 19:06:38"
+  },
+  "CO_T40_Q01.jpg": {
+    "output_file": "CO_T40_Q01C.jpg",
+    "dimensions": "568x423",
+    "prompt": "A clean, 2D vector educational graphic illustration depicting a transaction inside a French post office (\"LA POSTE\"). On the left stands an automated mailing machine clearly labeled \"AFFRANCHISSEMENT AUTOMATIQUE\". At the central service counter, marked with a sign reading \"GUICHET 1\", a male postal clerk wearing glasses, a suit jacket, and a tie stands behind the high desk equipped with a desktop monitor. On the right, a female customer with glasses and short styled dark hair, dressed in a short-sleeved skirt suit, stands in profile handing a large envelope marked \"LETTRE PRIORITAIRE\" across the counter. Her handbag rests on the counter ledge. A rotating display rack holding items labeled \"CARTES POSTALES\" is situated on the far right. Crisp linework, balanced grayscale tones, and clear textbook illustration style All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 19:06:54"
+  },
+  "CO_T40_Q02.jpg": {
+    "output_file": "CO_T40_Q02C.jpg",
+    "dimensions": "537x470",
+    "prompt": "A clean, black-and-white vector line art illustration in a classic French language textbook style depicting a sandy beach scene. In the foreground on the left, a young curly-haired child in a swimsuit crouches on the sand next to a small sandcastle, pointing toward the sea. On the right, a woman in a swimsuit and sunhat sits on the sand facing away, holding a small plastic toy rake. Scattered on the sand around them are beach toys, including buckets, small spades, and sand molds. In the upper right background, a distant swimmer floats in the calm ocean water under a clear sky All visible text, signage, storefront names, notices, badges, and posters in the image must be written strictly in French (no English words allowed).",
+    "status": "SUCCESS",
+    "timestamp": "2026-08-19 19:07:17"
+  },
+  "CO_T01_Q39.jpg": {
+    "output_file": "CO_T01_Q39C.jpg",
+    "type": "SVG_BANNER",
+    "status": "COPIED_VECTOR",
+    "timestamp": "2026-08-19 18:26:05"
+  }
+}
