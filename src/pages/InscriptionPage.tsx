@@ -283,7 +283,7 @@ export default function InscriptionPage() {
                 >
                   {COUNTRIES.map((c) => (
                     <option key={c.code} value={c.code}>
-                      {c.flag} {c.name} ({c.dialCode})
+                      {c.name} ({c.dialCode})
                     </option>
                   ))}
                 </select>

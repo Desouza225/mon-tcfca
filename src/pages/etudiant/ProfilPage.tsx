@@ -176,29 +176,36 @@ export default function ProfilPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="profil-pays" className="text-sm font-normal">Pays de résidence</Label>
-              <select
-                id="profil-pays"
-                value={form.pays}
-                onChange={e => {
-                  const val = e.target.value;
-                  const country = findCountryByName(val);
-                  setForm(f => {
-                    // Si le téléphone était vide ou ne contenait qu'un indicatif, proposer le nouvel indicatif
-                    if (country && (!f.telephone || f.telephone.startsWith('+'))) {
-                      return { ...f, pays: val, telephone: country.dialCode + ' ' };
-                    }
-                    return { ...f, pays: val };
-                  });
-                }}
-                className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm cursor-pointer"
-              >
-                <option value="">Sélectionner un pays</option>
-                {COUNTRIES.map(c => (
-                  <option key={c.code} value={c.name}>
-                    {c.flag} {c.name} ({c.dialCode})
-                  </option>
-                ))}
-              </select>
+              <div className="relative">
+                <select
+                  id="profil-pays"
+                  value={form.pays}
+                  onChange={e => {
+                    const val = e.target.value;
+                    const country = findCountryByName(val);
+                    setForm(f => {
+                      // Si le téléphone était vide ou ne contenait qu'un indicatif, proposer le nouvel indicatif
+                      if (country && (!f.telephone || f.telephone.startsWith('+'))) {
+                        return { ...f, pays: val, telephone: country.dialCode + ' ' };
+                      }
+                      return { ...f, pays: val };
+                    });
+                  }}
+                  className={`w-full h-10 px-3 ${form.pays ? 'pl-9' : ''} rounded-md border border-input bg-background text-sm cursor-pointer`}
+                >
+                  <option value="">Sélectionner un pays</option>
+                  {COUNTRIES.map(c => (
+                    <option key={c.code} value={c.name}>
+                      {c.name} ({c.dialCode})
+                    </option>
+                  ))}
+                </select>
+                {form.pays && (
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none flex items-center select-none">
+                    <CountryFlag country={form.pays} />
+                  </div>
+                )}
+              </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="profil-telephone" className="text-sm font-normal">Numéro de téléphone</Label>

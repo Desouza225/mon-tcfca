@@ -185,7 +185,7 @@ export default function HomePage() {
       {/* 1. Header / Navigation */}
       <header className="sticky top-0 z-40 bg-[#f8f9ff]/95 backdrop-blur-md border-b border-[#e2e8f0] shadow-xs">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-20 sm:h-24 flex items-center justify-between py-2">
-          <Link to="/" className="flex items-center py-1">
+          <Link to="/" className="flex items-center py-1 shrink-0">
             <BrandLogo size="lg" />
           </Link>
 
