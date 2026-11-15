@@ -317,6 +317,9 @@ export default defineConfig(({ mode }) => {
         },
       }),
     ],
+    build: {
+      emptyOutDir: true,
+    },
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
