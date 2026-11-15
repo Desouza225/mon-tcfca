@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useNotifications } from '@/hooks/useNotifications';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Bell, BellOff, CheckCheck } from 'lucide-react';
+import { BellOff, CheckCheck, RefreshCw } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export default function NotificationsPage() {
@@ -55,9 +55,24 @@ export default function NotificationsPage() {
                     {new Date(notif.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' })}
                   </p>
                   {notif.lien && (
-                    <Link to={notif.lien} className="text-xs text-primary hover:underline mt-1 inline-block">
-                      Voir les détails →
-                    </Link>
+                    <div className="mt-2.5 flex items-center gap-2">
+                      {notif.lien.includes('abonnement') || notif.lien.includes('renew') ? (
+                        <Button
+                          asChild
+                          size="sm"
+                          className="rounded-xl bg-[#e53e3e] hover:bg-[#c53030] text-white font-heading font-bold text-xs gap-1.5 shadow-sm shadow-[#e53e3e]/20 h-8 px-3"
+                        >
+                          <Link to={notif.lien}>
+                            <RefreshCw className="w-3.5 h-3.5" />
+                            <span>Renouveler mon abonnement</span>
+                          </Link>
+                        </Button>
+                      ) : (
+                        <Link to={notif.lien} className="text-xs text-primary hover:underline font-medium inline-block">
+                          Voir les détails →
+                        </Link>
+                      )}
+                    </div>
                   )}
                 </div>
               </CardContent>

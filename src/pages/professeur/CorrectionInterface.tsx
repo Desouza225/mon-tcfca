@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/db/supabase';
 import { useAuth } from '@/contexts/AuthContext';
 import { resolvePlayableAudioUrl, fetchAudioBlobUrl, getAudioClaritySetting, attachAudioClarityProcessor } from '@/lib/audioProcessing';
@@ -18,13 +18,12 @@ import {
 import {
   Play, Pause, Loader2, ChevronLeft, CheckCircle, Mic,
   BarChart2, XCircle, FileText, User, Clock, CheckCircle2,
-  Volume2, FastForward, HelpCircle, Info, Sparkles, BookOpen,
-  Check, Award, Download, RotateCcw,
+  Volume2, FastForward, HelpCircle, Info, BookOpen,
+  Award, Download, RotateCcw,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import type { Production, Profile, NiveauCECRL } from '@/types/index';
 import {
-  pctToCECRL,
   scoreEeToCECRL,
   scoreEeToCECRLLabel,
   scoreEoToCECRL,
@@ -47,11 +46,6 @@ function scoreToNiveau(score: number): NiveauCECRL {
   if (score >= 301) return 'B1';
   if (score >= 226) return 'A2';
   return 'A1';
-}
-
-/** Convertit un score brut de tâche en niveau CECRL */
-function tacheToNiveau(score: number, max: number): NiveauCECRL {
-  return pctToCECRL(Math.round((score / max) * 100));
 }
 
 export interface CritereGrille {
@@ -297,6 +291,7 @@ function AudioPlayerCorrection({ url, label }: { url: string; label?: string }) 
     <div className="flex flex-col gap-3 p-4 bg-muted/60 border border-border rounded-xl">
       <div className="flex items-center gap-3">
         <button
+          type="button"
           onClick={handleTogglePlay}
           disabled={error || loadingAudio || !playableUrl}
           className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground shrink-0 shadow-sm hover:opacity-90 transition-opacity disabled:opacity-40"
@@ -413,17 +408,31 @@ function AudioPlayerCorrection({ url, label }: { url: string; label?: string }) 
           onTimeUpdate={e => setCurrentTime(e.currentTarget.currentTime || 0)}
           onEnded={() => setPlaying(false)}
           onError={handleAudioError}
-        />
+        >
+          <track kind="captions" />
+        </audio>
       )}
     </div>
   );
 }
 
+type ProductionWithRelations = Omit<Production, 'etudiant' | 'session'> & {
+  etudiant?: Profile | null;
+  session?: {
+    id: string;
+    created_at: string;
+    mode?: string;
+    duree_expression_ecrite?: number | null;
+  } | null;
+};
+
 export default function CorrectionInterface() {
   const { id } = useParams<{ id: string }>();
-  const { user } = useAuth();
+  const { user, isAdmin, isProfesseur } = useAuth();
   const navigate = useNavigate();
-  const [production, setProduction] = useState<Production | null>(null);
+  const location = useLocation();
+  const basePath = location.pathname.startsWith('/admin') ? '/admin/corrections' : '/professeur/corrections';
+  const [production, setProduction] = useState<ProductionWithRelations | null>(null);
   const [etudiant, setEtudiant] = useState<Profile | null>(null);
   const [tache, setTache] = useState<{ consigne: string; duree_secondes: number | null; reference?: string | null } | null>(null);
   const [loading, setLoading] = useState(true);
@@ -465,7 +474,7 @@ export default function CorrectionInterface() {
     const load = async () => {
       setLoading(true);
       try {
-        let prodData: any = null;
+        let prodData: ProductionWithRelations | null = null;
         const { data: prod, error: prodErr } = await supabase
           .from('productions')
           .select('*, etudiant:profiles!etudiant_id(*), session:sessions_examen!session_id(id, created_at, mode, duree_expression_ecrite)')
@@ -484,17 +493,17 @@ export default function CorrectionInterface() {
               rawProd.session_id ? supabase.from('sessions_examen').select('id, created_at, mode, duree_expression_ecrite').eq('id', rawProd.session_id).maybeSingle() : Promise.resolve({ data: null }),
             ]);
             prodData = {
-              ...rawProd,
-              etudiant: etudRes.data,
+              ...(rawProd as Production),
+              etudiant: etudRes.data as Profile | null,
               session: sessRes.data,
             };
           }
         } else {
-          prodData = prod;
+          prodData = prod as ProductionWithRelations;
         }
 
         setProduction(prodData);
-        if (prodData?.etudiant) setEtudiant(prodData.etudiant as unknown as Profile);
+        if (prodData?.etudiant) setEtudiant(prodData.etudiant);
 
         if (prodData?.grille_notation) {
           try {
@@ -505,7 +514,7 @@ export default function CorrectionInterface() {
               const cleanNotes: Record<string, number> = {};
               Object.entries(parsed).forEach(([k, v]) => {
                 const num = Number(v);
-                if (!isNaN(num)) cleanNotes[k] = num;
+                if (!Number.isNaN(num)) cleanNotes[k] = num;
               });
               setNotes(cleanNotes);
             }
@@ -518,8 +527,7 @@ export default function CorrectionInterface() {
         if (prodData?.raison_refus) setRaisonRefus(prodData.raison_refus);
 
         if (prodData?.epreuve === 'expression_ecrite') {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          setDureeEE((prodData as any).session?.duree_expression_ecrite ?? null);
+          setDureeEE(prodData.session?.duree_expression_ecrite ?? null);
         }
 
         // ─── Chargement du sujet exact de la tâche ─────────────────────────────
@@ -727,6 +735,14 @@ export default function CorrectionInterface() {
 
   const handleSubmit = async () => {
     if (!production || !id) return;
+    if (!isAdmin && !isProfesseur) {
+      toast.error('Action réservée aux enseignants et administrateurs.');
+      return;
+    }
+    if (Object.keys(notes).length === 0) {
+      toast.error('Veuillez renseigner au moins un critère de la grille d\'évaluation avant de valider la correction.');
+      return;
+    }
     setSubmitting(true);
 
     try {
@@ -746,7 +762,7 @@ export default function CorrectionInterface() {
             ? 'Correction mise à jour avec succès !'
             : 'Correction validée et étudiant notifié !'
         );
-        navigate('/professeur/corrections');
+        navigate(basePath);
         return;
       }
 
@@ -799,10 +815,11 @@ export default function CorrectionInterface() {
           ? 'Correction mise à jour avec succès !'
           : 'Correction soumise et étudiant notifié !'
       );
-      navigate('/professeur/corrections');
-    } catch (err: any) {
+      navigate(basePath);
+    } catch (err: unknown) {
       console.error('Exception soumission:', err);
-      toast.error(err?.message || 'Erreur lors de la soumission de la correction.');
+      const msg = err instanceof Error ? err.message : 'Erreur lors de la soumission de la correction.';
+      toast.error(msg);
     } finally {
       setSubmitting(false);
     }
@@ -810,6 +827,10 @@ export default function CorrectionInterface() {
 
   const handleRefuse = async () => {
     if (!production || !id) return;
+    if (!isAdmin && !isProfesseur) {
+      toast.error('Action réservée aux enseignants et administrateurs.');
+      return;
+    }
     setRefusing(true);
 
     try {
@@ -838,7 +859,7 @@ export default function CorrectionInterface() {
 
       if (!rpcErr && rpcRes?.success) {
         toast.success('Production refusée — note 0 enregistrée et étudiant notifié.');
-        navigate('/professeur/corrections');
+        navigate(basePath);
         return;
       }
 
@@ -889,10 +910,11 @@ export default function CorrectionInterface() {
       }
 
       toast.success('Production refusée — note 0 enregistrée et étudiant notifié.');
-      navigate('/professeur/corrections');
-    } catch (err: any) {
+      navigate(basePath);
+    } catch (err: unknown) {
       console.error('Exception refus:', err);
-      toast.error(err?.message || 'Erreur lors du refus.');
+      const msg = err instanceof Error ? err.message : 'Erreur lors du refus.';
+      toast.error(msg);
     } finally {
       setRefusing(false);
     }
@@ -907,7 +929,7 @@ export default function CorrectionInterface() {
   if (!production) return (
     <div className="max-w-2xl mx-auto text-center py-12">
       <p className="text-muted-foreground">Production introuvable.</p>
-      <Button variant="ghost" asChild className="mt-4"><Link to="/professeur/corrections">Retour aux corrections</Link></Button>
+      <Button variant="ghost" asChild className="mt-4"><Link to={basePath}>Retour aux corrections</Link></Button>
     </div>
   );
 
@@ -924,7 +946,7 @@ export default function CorrectionInterface() {
       <div className="flex items-start md:items-center justify-between gap-4 flex-wrap bg-card p-4 rounded-xl border border-border shadow-sm">
         <div className="flex items-center gap-3 min-w-0 flex-1">
           <Button variant="ghost" size="icon" asChild className="shrink-0">
-            <Link to="/professeur/corrections"><ChevronLeft className="w-5 h-5" /></Link>
+            <Link to={basePath}><ChevronLeft className="w-5 h-5" /></Link>
           </Button>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 flex-wrap">
@@ -978,7 +1000,7 @@ export default function CorrectionInterface() {
               return (
                 <Link
                   key={p.id}
-                  to={`/professeur/corrections/${p.id}`}
+                  to={`${basePath}/${p.id}`}
                   className={cn(
                     'px-3 py-1.5 rounded-md text-xs font-medium transition-colors flex items-center gap-1.5 whitespace-nowrap border',
                     isCurrent
@@ -1324,7 +1346,7 @@ export default function CorrectionInterface() {
                                     setNotes(updated);
                                   } else {
                                     const num = parseFloat(raw);
-                                    const val = isNaN(num) ? 0 : Math.min(c.points_max, Math.max(0, Math.round(num * 100) / 100));
+                                    const val = Number.isNaN(num) ? 0 : Math.min(c.points_max, Math.max(0, Math.round(num * 100) / 100));
                                     setNotes(prev => ({ ...prev, [c.nom]: val }));
                                   }
                                 }}

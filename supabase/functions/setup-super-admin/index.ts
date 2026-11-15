@@ -11,15 +11,62 @@ Deno.serve(async (req) => {
   }
 
   try {
+    const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
+    const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
+    const setupSecret = Deno.env.get('SETUP_SECRET_KEY') ?? '';
+
+    if (!supabaseUrl || !serviceRoleKey) {
+      throw new Error('Variables SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY manquantes.');
+    }
+
     // Utiliser le service role key pour l'API Admin
     const supabaseAdmin = createClient(
-      Deno.env.get('SUPABASE_URL')!,
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
+      supabaseUrl,
+      serviceRoleKey,
       { auth: { autoRefreshToken: false, persistSession: false } }
     );
 
-    const email = 'moralessedesouza@gmail.com';
-    const password = 'Desouza123';
+    // Authentification obligatoire : SETUP_SECRET_KEY, SERVICE_ROLE_KEY, ou utilisateur super_admin existant
+    const authHeader = req.headers.get('Authorization') || '';
+    const bearerToken = authHeader.replace(/^Bearer\s+/i, '').trim();
+    const headerSetupSecret = req.headers.get('x-setup-secret') || '';
+
+    let isAuthorized = false;
+    if (setupSecret && (headerSetupSecret === setupSecret || bearerToken === setupSecret)) {
+      isAuthorized = true;
+    } else if (serviceRoleKey && bearerToken === serviceRoleKey) {
+      isAuthorized = true;
+    } else if (bearerToken) {
+      const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY') ?? '';
+      const userClient = createClient(supabaseUrl, supabaseAnonKey, {
+        global: { headers: { Authorization: authHeader } },
+        auth: { autoRefreshToken: false, persistSession: false },
+      });
+      const { data: authData } = await userClient.auth.getUser();
+      if (authData?.user) {
+        const { data: callerProfile } = await supabaseAdmin
+          .from('profiles')
+          .select('role')
+          .eq('id', authData.user.id)
+          .maybeSingle();
+        if (callerProfile?.role === 'super_admin') {
+          isAuthorized = true;
+        }
+      }
+    }
+
+    if (!isAuthorized) {
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Non autorisé : secret de configuration ou rôle super_admin requis.',
+      }), {
+        status: 403,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const email = Deno.env.get('SUPER_ADMIN_EMAIL') || 'moralessedesouza@gmail.com';
+    const password = Deno.env.get('SUPER_ADMIN_INITIAL_PASSWORD');
 
     // Vérifier si l'utilisateur existe déjà
     const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers();
@@ -38,6 +85,16 @@ Deno.serve(async (req) => {
         message: 'Super Admin déjà existant — profil mis à jour',
         userId: existing.id,
       }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    if (!password || password.length < 8) {
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Variable SUPER_ADMIN_INITIAL_PASSWORD non définie ou trop courte dans les secrets Supabase.',
+      }), {
+        status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }

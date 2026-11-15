@@ -5,110 +5,148 @@
 
 @layer base {
   :root {
-    /* EduDesk TCF — Navy Blue + Gold color system */
-    --background: 210 20% 98%;
-    --foreground: 222 47% 11%;
+    /* Mon TCF CA — Warm Diplomatic Mastery Design Tokens */
+    --background: 230 100% 99%; /* #f8f9ff */
+    --foreground: 213 62% 12%; /* #0b1c30 */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card: 0 0% 100%; /* #ffffff */
+    --card-foreground: 213 62% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 213 62% 12%;
 
-    /* Primary: Navy blue (EduDesk "Desk") */
-    --primary: 220 68% 16%;
+    /* Primary: Institutional Deep Navy (#0D233A) */
+    --primary: 211 63% 14%;
     --primary-foreground: 0 0% 100%;
+    --primary-container: 211 63% 14%;
+    --primary-container-foreground: 213 22% 56%;
 
-    /* Secondary: Gold/Amber (EduDesk "Edu") */
-    --secondary: 38 91% 54%;
-    --secondary-foreground: 222 47% 11%;
+    /* Secondary: Canadian Crimson Accent (#E53E3E / #B51822) */
+    --secondary: 0 74% 57%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-container: 359 69% 53%;
+    --secondary-container-foreground: 300 100% 99%;
 
-    --muted: 210 20% 94%;
-    --muted-foreground: 215 16% 47%;
+    /* Tertiary: Golden Amber Benchmark (#D97706 / #F59E0B) */
+    --tertiary: 36 94% 43%;
+    --tertiary-foreground: 0 0% 100%;
+    --tertiary-container: 26 100% 11%;
+    --tertiary-container-foreground: 33 100% 41%;
 
-    /* Accent: Light gold tint */
-    --accent: 38 60% 92%;
-    --accent-foreground: 222 47% 11%;
+    --muted: 222 47% 96%; /* #eff4ff */
+    --muted-foreground: 215 16% 40%; /* #475569 */
 
-    /* Destructive: Red (logo hat color) */
-    --destructive: 4 78% 51%;
+    /* Accent: Soft container tint */
+    --accent: 218 100% 95%; /* #e5eeff */
+    --accent-foreground: 211 63% 14%;
+
+    /* Destructive */
+    --destructive: 0 74% 57%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 20% 88%;
-    --input: 214 20% 88%;
-    --ring: 220 68% 16%;
+    --border: 214 32% 91%; /* #e2e8f0 */
+    --input: 214 32% 91%;
+    --ring: 211 63% 14%;
 
-    --radius: 0.375rem;
+    --radius: 0.75rem; /* 12px */
+
+    /* Surfaces */
+    --surface: 230 100% 99%; /* #f8f9ff */
+    --surface-dim: 218 69% 88%; /* #cbdbf5 */
+    --surface-bright: 230 100% 99%;
+    --surface-container-lowest: 0 0% 100%; /* #ffffff */
+    --surface-container-low: 222 100% 97%; /* #eff4ff */
+    --surface-container: 218 100% 95%; /* #e5eeff */
+    --surface-container-high: 218 100% 93%; /* #dce9ff */
+    --surface-container-highest: 217 94% 91%; /* #d3e4fe */
 
     /* Chart colors */
-    --chart-1: 220 68% 16%;
-    --chart-2: 38 91% 54%;
-    --chart-3: 4 78% 51%;
-    --chart-4: 152 60% 40%;
-    --chart-5: 262 60% 55%;
+    --chart-1: 211 63% 14%; /* Navy */
+    --chart-2: 0 74% 57%; /* Crimson */
+    --chart-3: 36 94% 43%; /* Amber */
+    --chart-4: 152 60% 40%; /* Green */
+    --chart-5: 217 94% 65%; /* Soft Blue */
 
-    /* Sidebar */
-    --sidebar-background: 220 68% 16%;
-    --sidebar-foreground: 0 0% 95%;
-    --sidebar-primary: 38 91% 54%;
-    --sidebar-primary-foreground: 222 47% 11%;
-    --sidebar-accent: 220 55% 22%;
+    /* Sidebar Deep Navy */
+    --sidebar-background: 211 63% 14%; /* #0d233a */
+    --sidebar-foreground: 230 100% 99%;
+    --sidebar-primary: 0 74% 57%; /* #e53e3e */
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 213 56% 23%; /* #1a365d */
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 220 50% 22%;
-    --sidebar-ring: 38 91% 54%;
+    --sidebar-border: 213 45% 20%;
+    --sidebar-ring: 0 74% 57%;
 
     /* Status */
     --success: 152 60% 40%;
     --success-foreground: 0 0% 100%;
-    --warning: 38 91% 54%;
-    --warning-foreground: 222 47% 11%;
+    --warning: 36 94% 43%;
+    --warning-foreground: 0 0% 100%;
     --info: 210 80% 50%;
     --info-foreground: 0 0% 100%;
   }
 
   .dark {
-    --background: 222 47% 8%;
+    --background: 213 62% 8%;
     --foreground: 210 20% 95%;
 
-    --card: 222 47% 11%;
+    --card: 213 62% 11%;
     --card-foreground: 210 20% 95%;
 
-    --popover: 222 47% 11%;
+    --popover: 213 62% 11%;
     --popover-foreground: 210 20% 95%;
 
-    --primary: 38 91% 54%;
-    --primary-foreground: 222 47% 11%;
+    --primary: 217 94% 80%;
+    --primary-foreground: 213 62% 12%;
+    --primary-container: 213 56% 23%;
+    --primary-container-foreground: 217 94% 91%;
 
-    --secondary: 220 55% 22%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 0 74% 62%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-container: 359 69% 35%;
+    --secondary-container-foreground: 300 100% 99%;
 
-    --muted: 222 40% 16%;
-    --muted-foreground: 215 16% 60%;
+    --tertiary: 36 94% 55%;
+    --tertiary-foreground: 26 100% 11%;
+    --tertiary-container: 36 94% 25%;
+    --tertiary-container-foreground: 36 94% 85%;
 
-    --accent: 220 40% 20%;
+    --muted: 213 40% 16%;
+    --muted-foreground: 215 16% 65%;
+
+    --accent: 213 45% 20%;
     --accent-foreground: 210 20% 95%;
 
-    --destructive: 4 78% 55%;
+    --destructive: 0 74% 62%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 222 40% 20%;
-    --input: 222 40% 20%;
-    --ring: 38 91% 54%;
+    --border: 213 40% 20%;
+    --input: 213 40% 20%;
+    --ring: 0 74% 62%;
 
-    --chart-1: 38 91% 54%;
-    --chart-2: 220 68% 60%;
-    --chart-3: 4 78% 60%;
+    --surface: 213 62% 8%;
+    --surface-dim: 213 62% 6%;
+    --surface-bright: 213 62% 12%;
+    --surface-container-lowest: 213 62% 9%;
+    --surface-container-low: 213 62% 11%;
+    --surface-container: 213 62% 14%;
+    --surface-container-high: 213 62% 18%;
+    --surface-container-highest: 213 62% 22%;
+
+    --chart-1: 217 94% 80%;
+    --chart-2: 0 74% 62%;
+    --chart-3: 36 94% 55%;
     --chart-4: 152 60% 50%;
     --chart-5: 262 60% 65%;
 
-    --sidebar-background: 222 47% 6%;
-    --sidebar-foreground: 0 0% 90%;
-    --sidebar-primary: 38 91% 54%;
-    --sidebar-primary-foreground: 222 47% 11%;
-    --sidebar-accent: 222 47% 12%;
-    --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 222 40% 14%;
-    --sidebar-ring: 38 91% 54%;
+    --sidebar-background: 213 62% 6%;
+    --sidebar-foreground: 0 0% 92%;
+    --sidebar-primary: 0 74% 62%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 213 56% 16%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 213 40% 15%;
+    --sidebar-ring: 0 74% 62%;
   }
 
   * {
@@ -119,22 +157,39 @@
 
   *::-webkit-scrollbar {
     width: 6px;
+    height: 6px;
     background: transparent;
   }
 
   *::-webkit-scrollbar-thumb {
     background: hsl(var(--border));
-    border-radius: 3px;
+    border-radius: 9999px;
   }
 
   body {
     @apply bg-background text-foreground;
-    font-size: 16px;
-    line-height: 1.5;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    letter-spacing: -0.02em;
   }
 }
 
 @layer utilities {
+  .font-heading {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  }
+
+  .font-body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
   .gradient-text {
     background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
     -webkit-background-clip: text;
@@ -143,32 +198,60 @@
   }
 
   .gradient-bg {
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(220 55% 28%));
+    background: linear-gradient(135deg, #0d233a 0%, #1a365d 60%, #000c1c 100%);
+  }
+
+  .gradient-hero {
+    background: radial-gradient(circle at 50% 20%, rgba(229, 62, 62, 0.08) 0%, transparent 60%), linear-gradient(180deg, #f8f9ff 0%, #eff4ff 100%);
   }
 
   .gold-accent {
-    color: hsl(var(--secondary));
+    color: hsl(var(--tertiary));
+  }
+
+  .badge-nclc {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.02em;
   }
 
   /* Timer pulse animation for recording */
   @keyframes record-pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.96); }
   }
 
   .record-pulse {
-    animation: record-pulse 1s ease-in-out infinite;
+    animation: record-pulse 1.2s ease-in-out infinite;
   }
 
   /* Fade transition for exam sections */
   @keyframes fade-in {
-    from { opacity: 0; transform: translateY(8px); }
+    from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .fade-in {
-    animation: fade-in 0.15s ease-out forwards;
+  /* Protection anti-copie & anti-plagiat des fiches de cours */
+  .protected-course-content,
+  .protected-course-content * {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    -webkit-touch-callout: none !important;
+  }
+
+  .protected-course-content::selection,
+  .protected-course-content *::selection {
+    background: transparent !important;
+    color: inherit !important;
+  }
+
+  @media print {
+    .protected-course-content,
+    .no-print {
+      display: none !important;
+    }
   }
 }
-
 

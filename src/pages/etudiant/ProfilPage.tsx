@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '@/db/supabase';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,17 +8,35 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Loader2, User, Lock, Eye, EyeOff } from 'lucide-react';
+import { Loader2, User, Lock, Eye, EyeOff, Globe, Phone } from 'lucide-react';
 import { toast } from 'sonner';
 import { ROLE_LABELS } from '@/types/index';
+import { COUNTRIES, findCountryByName } from '@/data/countries';
+import { CountryFlag } from '@/components/ui/CountryFlag';
 
 export default function ProfilPage() {
   const { profile, user, refreshProfile } = useAuth();
 
   // Infos personnelles
-  const [form, setForm] = useState({ nom: profile?.nom || '', prenom: profile?.prenom || '' });
+  const [form, setForm] = useState({
+    nom: profile?.nom || '',
+    prenom: profile?.prenom || '',
+    pays: profile?.pays || '',
+    telephone: profile?.telephone || '',
+  });
   const [loadingProfile, setLoadingProfile] = useState(false);
   const [errorProfile, setErrorProfile] = useState('');
+
+  useEffect(() => {
+    if (profile) {
+      setForm({
+        nom: profile.nom || '',
+        prenom: profile.prenom || '',
+        pays: profile.pays || '',
+        telephone: profile.telephone || '',
+      });
+    }
+  }, [profile]);
 
   // Mot de passe
   const [pwForm, setPwForm] = useState({ current: '', next: '', confirm: '' });
@@ -34,7 +52,12 @@ export default function ProfilPage() {
     setErrorProfile('');
     const { error: err } = await supabase
       .from('profiles')
-      .update({ nom: form.nom || null, prenom: form.prenom || null })
+      .update({
+        nom: form.nom || null,
+        prenom: form.prenom || null,
+        pays: form.pays || null,
+        telephone: form.telephone || null,
+      })
       .eq('id', profile.id);
     setLoadingProfile(false);
     if (err) { setErrorProfile('Erreur lors de la mise à jour. Veuillez réessayer.'); return; }
@@ -72,6 +95,19 @@ export default function ProfilPage() {
 
     setPwForm({ current: '', next: '', confirm: '' });
     toast.success('Mot de passe modifié avec succès !');
+
+    // Déclencher l'email de confirmation de changement de mot de passe (Email 3)
+    supabase.functions.invoke('send-email', {
+      body: {
+        type: 'auth_password_changed',
+        user_id: user.id,
+        email: user.email,
+        data: {
+          prenom: profile?.prenom || 'Cher candidat',
+          dateChangement: new Date().toLocaleString('fr-FR', { timeZone: 'UTC' }),
+        },
+      },
+    }).catch((err) => console.error('⚠️ Échec non-bloquant notification email:', err));
   };
 
   return (
@@ -91,9 +127,22 @@ export default function ProfilPage() {
             <div>
               <p className="font-semibold text-foreground">{profile?.prenom} {profile?.nom}</p>
               <p className="text-sm text-muted-foreground">{profile?.email}</p>
-              {profile?.role && (
-                <Badge variant="outline" className="mt-1 text-xs">{ROLE_LABELS[profile.role]}</Badge>
-              )}
+              <div className="flex flex-wrap items-center gap-1.5 mt-1">
+                {profile?.role && (
+                  <Badge variant="outline" className="text-xs">{ROLE_LABELS[profile.role]}</Badge>
+                )}
+                {profile?.pays && (
+                  <Badge variant="secondary" className="text-xs bg-slate-100 text-slate-800">
+                    <CountryFlag country={profile.pays} showName />
+                  </Badge>
+                )}
+                {profile?.telephone && (
+                  <Badge variant="secondary" className="text-xs bg-slate-100 text-slate-800">
+                    <Phone className="w-3 h-3 mr-1" />
+                    {profile.telephone}
+                  </Badge>
+                )}
+              </div>
             </div>
           </div>
         </CardHeader>
@@ -122,6 +171,45 @@ export default function ProfilPage() {
           <div className="space-y-2">
             <Label className="text-sm font-normal">Adresse e-mail</Label>
             <Input value={profile?.email || ''} disabled className="bg-muted px-3" />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="profil-pays" className="text-sm font-normal">Pays de résidence</Label>
+              <select
+                id="profil-pays"
+                value={form.pays}
+                onChange={e => {
+                  const val = e.target.value;
+                  const country = findCountryByName(val);
+                  setForm(f => {
+                    // Si le téléphone était vide ou ne contenait qu'un indicatif, proposer le nouvel indicatif
+                    if (country && (!f.telephone || f.telephone.startsWith('+'))) {
+                      return { ...f, pays: val, telephone: country.dialCode + ' ' };
+                    }
+                    return { ...f, pays: val };
+                  });
+                }}
+                className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm cursor-pointer"
+              >
+                <option value="">Sélectionner un pays</option>
+                {COUNTRIES.map(c => (
+                  <option key={c.code} value={c.name}>
+                    {c.flag} {c.name} ({c.dialCode})
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="profil-telephone" className="text-sm font-normal">Numéro de téléphone</Label>
+              <Input
+                id="profil-telephone"
+                value={form.telephone}
+                placeholder="+225 07 01 23 45 67"
+                onChange={e => setForm(f => ({ ...f, telephone: e.target.value }))}
+                className="px-3"
+              />
+            </div>
           </div>
           <Button onClick={handleSaveProfile} disabled={loadingProfile} className="w-full">
             {loadingProfile

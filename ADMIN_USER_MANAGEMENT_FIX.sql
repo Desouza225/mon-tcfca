@@ -3,37 +3,22 @@
 -- À exécuter dans : Supabase Dashboard > SQL Editor > New Query > Run
 -- ==============================================================================
 
--- 1. Trigger amélioré pour synchroniser automatiquement les métadonnées lors de la création d'un utilisateur
+-- 1. Trigger sécurisé lors de la création d'un utilisateur (ne JAMAIS faire confiance à raw_user_meta_data->>'role')
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS trigger
 LANGUAGE plpgsql
 SECURITY DEFINER SET search_path = public, auth
 AS $$
-DECLARE
-  v_role public.user_role := 'etudiant';
 BEGIN
-  -- Déterminer le rôle depuis raw_user_meta_data si présent
-  IF NEW.raw_user_meta_data IS NOT NULL AND NEW.raw_user_meta_data->>'role' IS NOT NULL THEN
-    BEGIN
-      v_role := (NEW.raw_user_meta_data->>'role')::public.user_role;
-    EXCEPTION WHEN OTHERS THEN
-      v_role := 'etudiant'::public.user_role;
-    END;
-  END IF;
-
   INSERT INTO public.profiles (id, email, role, nom, prenom)
   VALUES (
     NEW.id,
     NEW.email,
-    v_role,
-    NEW.raw_user_meta_data->>'nom',
-    NEW.raw_user_meta_data->>'prenom'
+    'etudiant'::public.user_role,
+    COALESCE(NEW.raw_user_meta_data->>'nom', ''),
+    COALESCE(NEW.raw_user_meta_data->>'prenom', '')
   )
-  ON CONFLICT (id) DO UPDATE SET
-    email = EXCLUDED.email,
-    nom = COALESCE(EXCLUDED.nom, profiles.nom),
-    prenom = COALESCE(EXCLUDED.prenom, profiles.prenom),
-    role = COALESCE(EXCLUDED.role, profiles.role);
+  ON CONFLICT (id) DO NOTHING;
 
   RETURN NEW;
 END;

@@ -118,59 +118,65 @@ export default function ProfesseurDashboard() {
   }, [user, load]);
 
   const stats = [
-    { label: 'Étudiants attribués', value: etudiants.length, icon: Users, color: 'text-primary', href: '/professeur/etudiants' },
+    { label: 'Étudiants attribués', value: etudiants.length, icon: Users, color: 'text-[#0d233a]', href: '/professeur/etudiants' },
     {
       label: 'Corrections en attente',
       value: totalPendingCount,
       icon: ClipboardList,
-      color: totalPendingCount > 0 ? 'text-amber-500' : 'text-secondary',
+      color: totalPendingCount > 0 ? 'text-[#e53e3e]' : 'text-[#d97706]',
       href: '/professeur/corrections',
       badge: totalPendingCount > 0 ? `${totalPendingCount} à traiter` : null,
     },
   ];
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 fade-in">
+    <div className="max-w-4xl mx-auto space-y-6 pb-12 fade-in">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground text-balance">
+        <div className="space-y-1">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#eff4ff] text-[#0d233a] border border-[#d3e4fe] text-xs font-heading font-semibold mb-1">
+            <Sparkles className="w-3.5 h-3.5 text-[#e53e3e]" />
+            <span>Pédagogie &amp; Corrections Certifiées TCF</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-[#0d233a] tracking-tight">
             Bonjour, {profile?.prenom || 'Professeur'} 👋
           </h1>
-          <p className="text-muted-foreground mt-1">Tableau de bord — Espace Professeur</p>
+          <p className="text-xs sm:text-sm text-[#475569]">
+            Espace Enseignant — Suivi des soumissions et corrections des expressions
+          </p>
         </div>
         <Button
           variant="outline"
           size="sm"
           onClick={() => load()}
           disabled={refreshing}
-          className="self-start sm:self-center gap-2"
+          className="self-start sm:self-center gap-2 rounded-xl border-[#e2e8f0] text-[#0d233a] hover:bg-[#eff4ff]"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin' : ''}`} />
           <span>Actualiser</span>
         </Button>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {stats.map(stat => (
           <Card
             key={stat.label}
-            className="h-full cursor-pointer hover:border-primary/40 hover:shadow-md transition-all"
+            className="h-full cursor-pointer hover:border-[#0d233a]/40 hover:shadow-md transition-all rounded-2xl border border-[#e2e8f0] bg-white"
             onClick={() => navigate(stat.href)}
           >
             <CardContent className="p-5 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+              <div className="w-12 h-12 rounded-xl bg-[#eff4ff] flex items-center justify-center shrink-0 shadow-xs">
                 <stat.icon className={`w-6 h-6 ${stat.color}`} />
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
-                  <p className="text-2xl font-bold text-foreground">{loading ? '—' : stat.value}</p>
+                  <p className="text-2xl sm:text-3xl font-heading font-extrabold text-[#0d233a]">{loading ? '—' : stat.value}</p>
                   {stat.badge && (
-                    <Badge variant="destructive" className="text-[10px] py-0 px-1.5 h-4">
+                    <Badge className="bg-[#ffdad7] text-[#930013] text-[10px] font-bold py-0.5 px-2 rounded-full border-0">
                       {stat.badge}
                     </Badge>
                   )}
                 </div>
-                <p className="text-xs text-muted-foreground text-pretty">{stat.label}</p>
+                <p className="text-xs text-[#475569] font-medium">{stat.label}</p>
               </div>
             </CardContent>
           </Card>
@@ -178,50 +184,50 @@ export default function ProfesseurDashboard() {
       </div>
 
       {/* Corrections urgentes */}
-      <Card className="h-full">
-        <CardHeader className="flex flex-row items-center justify-between pb-3">
+      <Card className="rounded-2xl border border-[#e2e8f0] bg-white shadow-sm overflow-hidden">
+        <CardHeader className="flex flex-row items-center justify-between pb-3 px-6 pt-6">
           <div>
-            <CardTitle className="text-base text-balance flex items-center gap-2">
+            <CardTitle className="text-base sm:text-lg font-heading font-bold text-[#0d233a] flex items-center gap-2">
               <span>Corrections en attente</span>
               {totalPendingCount > 0 && (
-                <Badge className="bg-amber-500/15 text-amber-600 border-amber-500/30 text-xs font-semibold">
+                <Badge className="bg-[#ffdcc3] text-[#6e3900] text-xs font-bold px-2.5 py-0.5 rounded-full border-0">
                   {totalPendingCount} au total
                 </Badge>
               )}
             </CardTitle>
           </div>
-          <Button variant="ghost" size="sm" asChild>
+          <Button variant="ghost" size="sm" asChild className="text-xs font-heading font-bold text-[#0d233a] hover:text-[#e53e3e]">
             <Link to="/professeur/corrections" className="gap-1">
               Voir tout <ChevronRight className="w-4 h-4" />
             </Link>
           </Button>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-6 pb-6 pt-2">
           {loading ? (
-            <div className="space-y-2">{[1, 2, 3].map(i => <Skeleton key={i} className="h-12 w-full bg-muted" />)}</div>
+            <div className="space-y-2">{[1, 2, 3].map(i => <Skeleton key={i} className="h-14 w-full bg-[#eff4ff] rounded-xl" />)}</div>
           ) : corrections.length === 0 ? (
             <div className="text-center py-8">
-              <CheckCircle className="w-10 h-10 text-success/40 mx-auto mb-2" />
-              <p className="text-sm text-muted-foreground">Aucune correction en attente. Bravo !</p>
+              <CheckCircle className="w-10 h-10 text-emerald-500/50 mx-auto mb-2" />
+              <p className="text-sm text-[#475569] font-medium">Toutes les productions ont été corrigées !</p>
             </div>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               {corrections.map(prod => (
-                <div key={prod.id} className="flex items-center justify-between gap-3 p-3 rounded-md bg-muted/40 border border-border/60 hover:border-primary/40 transition-colors">
+                <div key={prod.id} className="flex items-center justify-between gap-3 p-3.5 rounded-xl bg-[#f8f9ff] border border-[#e2e8f0] hover:border-[#0d233a]/30 transition-all">
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <p className="text-sm font-semibold text-foreground truncate">
+                      <p className="text-sm font-heading font-bold text-[#0d233a] truncate">
                         {prod.etudiant?.prenom ? `${prod.etudiant.prenom} ${prod.etudiant.nom || ''}` : 'Étudiant'}
                       </p>
-                      <Badge variant="outline" className="text-[10px] py-0 h-4 border-primary/30 text-primary">
+                      <Badge className="text-[10px] font-semibold py-0.5 px-2 bg-[#dce9ff] text-[#0d233a] rounded-full border-0">
                         {EPREUVE_LABELS[prod.epreuve as keyof typeof EPREUVE_LABELS] || prod.epreuve} · Tâche {prod.numero_tache}
                       </Badge>
                       {prod.reference && (
-                        <span className="text-[10px] font-mono text-muted-foreground">({prod.reference})</span>
+                        <span className="text-[10px] font-mono text-[#475569]">({prod.reference})</span>
                       )}
                     </div>
-                    <p className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
-                      <Clock className="w-3 h-3" />
+                    <p className="text-xs text-[#475569] flex items-center gap-1 mt-0.5">
+                      <Clock className="w-3 h-3 text-[#475569]" />
                       Reçu le {new Date(prod.created_at).toLocaleDateString('fr-FR', {
                         day: 'numeric',
                         month: 'short',
@@ -230,7 +236,7 @@ export default function ProfesseurDashboard() {
                       })}
                     </p>
                   </div>
-                  <Button size="sm" asChild className="shrink-0 shadow-xs">
+                  <Button size="sm" asChild className="shrink-0 bg-[#0d233a] hover:bg-[#1a365d] text-white font-heading font-semibold rounded-xl text-xs px-4">
                     <Link to={`/professeur/corrections/${prod.id}`}>Corriger</Link>
                   </Button>
                 </div>
@@ -241,39 +247,40 @@ export default function ProfesseurDashboard() {
       </Card>
 
       {/* Étudiants récents */}
-      <Card className="h-full">
-        <CardHeader className="flex flex-row items-center justify-between pb-3">
-          <CardTitle className="text-base text-balance">Mes étudiants ({etudiants.length})</CardTitle>
-          <Button variant="ghost" size="sm" asChild>
+      <Card className="rounded-2xl border border-[#e2e8f0] bg-white shadow-sm overflow-hidden">
+        <CardHeader className="flex flex-row items-center justify-between pb-3 px-6 pt-6">
+          <CardTitle className="text-base sm:text-lg font-heading font-bold text-[#0d233a]">
+            Mes étudiants ({etudiants.length})
+          </CardTitle>
+          <Button variant="ghost" size="sm" asChild className="text-xs font-heading font-bold text-[#0d233a] hover:text-[#e53e3e]">
             <Link to="/professeur/etudiants" className="gap-1">
               Voir tout <ChevronRight className="w-4 h-4" />
             </Link>
           </Button>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-6 pb-6 pt-2">
           {loading ? (
-            <div className="space-y-2">{[1, 2].map(i => <Skeleton key={i} className="h-12 w-full bg-muted" />)}</div>
+            <div className="space-y-2">{[1, 2].map(i => <Skeleton key={i} className="h-14 w-full bg-[#eff4ff] rounded-xl" />)}</div>
           ) : etudiants.length === 0 ? (
-            <p className="text-sm text-muted-foreground text-center py-6">Aucun étudiant attribué pour l'instant.</p>
+            <p className="text-sm text-[#475569] text-center py-6">Aucun étudiant attribué pour l'instant.</p>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               {etudiants.slice(0, 4).map(etudiant => (
-                <div
+                <button
+                  type="button"
                   key={etudiant.id}
-                  className="flex items-center gap-3 p-3 rounded-md bg-muted/40 border border-border/60 cursor-pointer hover:border-primary/40 transition-colors"
+                  className="w-full text-left flex items-center gap-3 p-3.5 rounded-xl bg-[#f8f9ff] border border-[#e2e8f0] cursor-pointer hover:border-[#0d233a]/30 hover:bg-white transition-all"
                   onClick={() => navigate('/professeur/etudiants')}
                 >
-                  <div className="w-8 h-8 rounded-full bg-primary/15 flex items-center justify-center shrink-0">
-                    <span className="text-xs font-semibold text-primary">
-                      {etudiant.prenom?.[0]}{etudiant.nom?.[0]}
-                    </span>
+                  <div className="w-9 h-9 rounded-xl bg-[#0d233a] text-white flex items-center justify-center font-heading font-bold text-xs shrink-0 shadow-xs">
+                    {etudiant.prenom?.[0]}{etudiant.nom?.[0]}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-foreground truncate">{etudiant.prenom} {etudiant.nom}</p>
-                    <p className="text-xs text-muted-foreground truncate">{etudiant.email}</p>
+                    <p className="text-sm font-heading font-bold text-[#0d233a] truncate">{etudiant.prenom} {etudiant.nom}</p>
+                    <p className="text-xs text-[#475569] truncate">{etudiant.email}</p>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-muted-foreground shrink-0" />
-                </div>
+                  <ChevronRight className="w-4 h-4 text-[#475569] shrink-0" />
+                </button>
               ))}
             </div>
           )}

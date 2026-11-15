@@ -137,10 +137,12 @@ async function runCleanup(): Promise<{ deleted_count: number; executed_at: strin
     throw dryRunError;
   }
 
-  // Extraire les user_ids des profils à supprimer
-  const toDelete: string[] = Array.isArray(dryRunData?.profiles)
-    ? dryRunData.profiles.map((p: { id: string }) => p.id)
-    : [];
+  // Extraire les user_ids des profils à supprimer (compatible avec deleted_ids[] et profiles[])
+  const toDelete: string[] = Array.isArray(dryRunData?.deleted_ids)
+    ? dryRunData.deleted_ids.filter((id: unknown): id is string => typeof id === 'string')
+    : Array.isArray(dryRunData?.profiles)
+      ? dryRunData.profiles.map((p: { id: string }) => p.id)
+      : [];
 
   // Supprimer les fichiers audio AVANT la suppression DB
   await deleteStorageForUsers(supabase, toDelete);
@@ -160,16 +162,53 @@ async function runCleanup(): Promise<{ deleted_count: number; executed_at: strin
   return data as { deleted_count: number; executed_at: string; raisons: Record<string, number> };
 }
 
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
 // Handler HTTP (pour déclenchement manuel ou webhook)
 Deno.serve(async (req) => {
-  // Sécurité : vérifier le secret d'autorisation
-  const authHeader = req.headers.get('Authorization');
-  const expectedSecret = Deno.env.get('CLEANUP_SECRET');
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { status: 200, headers: corsHeaders });
+  }
 
-  if (expectedSecret && authHeader !== `Bearer ${expectedSecret}`) {
+  // Sécurité : exiger CLEANUP_SECRET, SERVICE_ROLE_KEY, ou un JWT admin/super_admin
+  const authHeader = req.headers.get('Authorization') || '';
+  const bearerToken = authHeader.replace(/^Bearer\s+/i, '').trim();
+  const expectedSecret = Deno.env.get('CLEANUP_SECRET') || '';
+
+  let isAuthorized = false;
+  if (expectedSecret && bearerToken === expectedSecret) {
+    isAuthorized = true;
+  } else if (SERVICE_ROLE_KEY && bearerToken === SERVICE_ROLE_KEY) {
+    isAuthorized = true;
+  } else if (bearerToken) {
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY') || '';
+    const userClient = createClient(SUPABASE_URL, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } },
+      auth: { persistSession: false },
+    });
+    const { data: authData } = await userClient.auth.getUser();
+    if (authData?.user) {
+      const supabaseAdmin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
+        auth: { persistSession: false },
+      });
+      const { data: profile } = await supabaseAdmin
+        .from('profiles')
+        .select('role')
+        .eq('id', authData.user.id)
+        .maybeSingle();
+      if (profile?.role === 'admin' || profile?.role === 'super_admin') {
+        isAuthorized = true;
+      }
+    }
+  }
+
+  if (!isAuthorized) {
     return new Response(JSON.stringify({ error: 'Non autorisé' }), {
       status: 401,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
 
@@ -177,13 +216,13 @@ Deno.serve(async (req) => {
     const result = await runCleanup();
     return new Response(JSON.stringify(result), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     return new Response(JSON.stringify({ error: message }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
 });

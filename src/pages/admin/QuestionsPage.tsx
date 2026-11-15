@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/db/supabase';
 import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -26,7 +26,7 @@ import MediaUpload from '@/components/ui/MediaUpload';
 import PackImportModal from '@/components/admin/PackImportModal';
 import CleanQuestionsModal from '@/components/admin/CleanQuestionsModal';
 
-const EMPTY_FORM = {
+const createEmptyForm = () => ({
   epreuve: '' as EpreuveType,
   niveau: '' as NiveauCECRL | '',
   reference: '',
@@ -34,13 +34,19 @@ const EMPTY_FORM = {
   audio_url: '',
   image_url: '',
   explication: '',
-  choix: [{ id: 'A', texte: '' }, { id: 'B', texte: '' }, { id: 'C', texte: '' }, { id: 'D', texte: '' }],
+  choix: [
+    { id: 'A', texte: '' },
+    { id: 'B', texte: '' },
+    { id: 'C', texte: '' },
+    { id: 'D', texte: '' },
+  ],
   bonne_reponse: 'A',
-};
+});
 
 const PAGE_SIZE = 50;
 
 export default function QuestionsPage() {
+  const { isAdmin } = useAuth();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [page, setPage] = useState(0);
@@ -57,35 +63,46 @@ export default function QuestionsPage() {
     explication: string;
     choix: { id: string; texte: string }[];
     bonne_reponse: string;
-  }>(EMPTY_FORM);
+  }>(createEmptyForm);
   const [editId, setEditId] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [importModalOpen, setImportModalOpen] = useState(false);
   const [cleanModalOpen, setCleanModalOpen] = useState(false);
   const [saving, setSaving] = useState(false);
 
-  const fetchQuestions = async (currentPage = page) => {
-    setLoading(true);
-    let q = supabase
-      .from('questions')
-      .select('*', { count: 'exact' })
-      .order('created_at', { ascending: false })
-      .range(currentPage * PAGE_SIZE, (currentPage + 1) * PAGE_SIZE - 1);
-    if (filterEpreuve !== 'toutes') q = q.eq('epreuve', filterEpreuve);
-    const { data, count } = await q;
-    setQuestions(Array.isArray(data) ? data : []);
-    setTotalCount(count ?? 0);
-    setLoading(false);
-  };
+  const fetchQuestions = useCallback(async (currentPage: number, currentEpreuve: EpreuveType | 'toutes', currentSearch: string) => {
+    try {
+      setLoading(true);
+      let q = supabase
+        .from('questions')
+        .select('*', { count: 'exact' })
+        .order('created_at', { ascending: false })
+        .range(currentPage * PAGE_SIZE, (currentPage + 1) * PAGE_SIZE - 1);
+      if (currentEpreuve !== 'toutes') {
+        q = q.eq('epreuve', currentEpreuve);
+      }
+      const trimmedSearch = currentSearch.trim();
+      if (trimmedSearch) {
+        const safeSearch = trimmedSearch.replace(/[,%()]/g, '');
+        if (safeSearch) {
+          q = q.or(`texte.ilike.%${safeSearch}%,reference.ilike.%${safeSearch}%`);
+        }
+      }
+      const { data, count, error } = await q;
+      if (error) throw error;
+      setQuestions(Array.isArray(data) ? data : []);
+      setTotalCount(count ?? 0);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Erreur lors du chargement des questions.';
+      toast.error(msg);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    setPage(0);
-    fetchQuestions(0);
-  }, [filterEpreuve]);
-
-  useEffect(() => {
-    fetchQuestions(page);
-  }, [page]);
+    fetchQuestions(page, filterEpreuve, search);
+  }, [page, filterEpreuve, search, fetchQuestions]);
 
   const filtered = questions.filter(q =>
     !search ||
@@ -104,49 +121,65 @@ export default function QuestionsPage() {
         audio_url: question.audio_url || '',
         image_url: question.image_url || '',
         explication: question.explication || '',
-        choix: question.choix || EMPTY_FORM.choix,
+        choix: question.choix && question.choix.length > 0
+          ? question.choix.map(c => ({ ...c }))
+          : createEmptyForm().choix,
         bonne_reponse: question.bonne_reponse || 'A',
       });
     } else {
       setEditId(null);
-      setForm(EMPTY_FORM);
+      setForm(createEmptyForm());
     }
     setDialogOpen(true);
   };
 
   const handleSave = async () => {
+    if (!isAdmin) {
+      toast.error('Action réservée aux administrateurs.');
+      return;
+    }
     if (!form.epreuve) { toast.error('Sélectionnez une épreuve.'); return; }
     setSaving(true);
-    const isQCM = form.epreuve === 'comprehension_oral' || form.epreuve === 'comprehension_ecrit';
-    const payload = {
-      epreuve: form.epreuve,
-      niveau: form.niveau || null,
-      reference: form.reference?.trim() || null,
-      texte: form.texte || null,
-      audio_url: form.audio_url || null,
-      image_url: form.image_url || null,
-      explication: form.explication || null,
-      choix: isQCM ? form.choix : null,
-      bonne_reponse: isQCM ? form.bonne_reponse : null,
-      actif: true,
-    };
+    try {
+      const isQCM = form.epreuve === 'comprehension_oral' || form.epreuve === 'comprehension_ecrit';
+      const payload = {
+        epreuve: form.epreuve,
+        niveau: form.niveau || null,
+        reference: form.reference?.trim() || null,
+        texte: form.texte || null,
+        audio_url: form.audio_url || null,
+        image_url: form.image_url || null,
+        explication: form.explication || null,
+        choix: isQCM ? form.choix : null,
+        bonne_reponse: isQCM ? form.bonne_reponse : null,
+        actif: true,
+      };
 
-    const { error } = editId
-      ? await supabase.from('questions').update(payload).eq('id', editId)
-      : await supabase.from('questions').insert(payload);
+      const { error } = editId
+        ? await supabase.from('questions').update(payload).eq('id', editId)
+        : await supabase.from('questions').insert(payload);
 
-    setSaving(false);
-    if (error) { toast.error('Erreur lors de la sauvegarde.'); return; }
-    toast.success(editId ? 'Question modifiée !' : 'Question créée !');
-    setDialogOpen(false);
-    fetchQuestions(page);
+      if (error) {
+        toast.error('Erreur lors de la sauvegarde.');
+        return;
+      }
+      toast.success(editId ? 'Question modifiée !' : 'Question créée !');
+      setDialogOpen(false);
+      fetchQuestions(page, filterEpreuve, search);
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleDelete = async (id: string) => {
+    if (!isAdmin) {
+      toast.error('Action réservée aux administrateurs.');
+      return;
+    }
     const { error } = await supabase.from('questions').delete().eq('id', id);
     if (error) { toast.error('Erreur lors de la suppression.'); return; }
     toast.success('Question supprimée !');
-    fetchQuestions(page);
+    fetchQuestions(page, filterEpreuve, search);
   };
 
   const isQCM = form.epreuve === 'comprehension_oral' || form.epreuve === 'comprehension_ecrit';
@@ -285,7 +318,7 @@ export default function QuestionsPage() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input value={search} onChange={e => { setSearch(e.target.value); setPage(0); }} placeholder="Rechercher par texte ou code référence (ex: CO_012)..." className="pl-9" />
         </div>
-        <Select value={filterEpreuve} onValueChange={v => setFilterEpreuve(v as EpreuveType | 'toutes')}>
+        <Select value={filterEpreuve} onValueChange={v => { setFilterEpreuve(v as EpreuveType | 'toutes'); setPage(0); }}>
           <SelectTrigger className="w-full md:w-56"><SelectValue /></SelectTrigger>
           <SelectContent>
             <SelectItem value="toutes">Toutes les épreuves</SelectItem>
@@ -409,7 +442,7 @@ export default function QuestionsPage() {
         onOpenChange={setImportModalOpen}
         onImportSuccess={() => {
           setPage(0);
-          fetchQuestions(0);
+          fetchQuestions(0, filterEpreuve, search);
         }}
       />
 
@@ -419,7 +452,7 @@ export default function QuestionsPage() {
         onOpenChange={setCleanModalOpen}
         onCleanSuccess={() => {
           setPage(0);
-          fetchQuestions(0);
+          fetchQuestions(0, filterEpreuve, search);
         }}
       />
     </div>

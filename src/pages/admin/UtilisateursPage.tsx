@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/db/supabase';
 import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -18,69 +18,121 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { Plus, Pencil, Trash2, Loader2, Users, Search, ToggleLeft, ToggleRight, Ban, CheckCircle2, Clock, GraduationCap, UserX } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, Users, Search, ToggleLeft, ToggleRight, Ban, CheckCircle2, Clock, GraduationCap, UserX, CreditCard } from 'lucide-react';
 import { toast } from 'sonner';
 import type { Profile, UserRole } from '@/types/index';
-import { ROLE_LABELS } from '@/types/index';
+import { ROLE_LABELS, PLANS_CONFIG } from '@/types/index';
+import { CountryFlag } from '@/components/ui/CountryFlag';
+
+type PlanKey = 'essentiel' | 'standard' | 'intensif' | 'express';
+const PLAN_KEYS: PlanKey[] = ['essentiel', 'standard', 'intensif', 'express'];
+type SubOverrideOption = PlanKey | 'aucun';
 
 export default function UtilisateursPage() {
-  const { isSuperAdmin } = useAuth();
+  const { user: currentUser, isAdmin, isSuperAdmin } = useAuth();
   const [users, setUsers] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [filterRole, setFilterRole] = useState<UserRole | 'tous'>('tous');
-  const [form, setForm] = useState({ email: '', password: '', nom: '', prenom: '', role: 'etudiant' as UserRole });
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+    nom: '',
+    prenom: '',
+    role: 'etudiant' as UserRole,
+    planOverride: 'aucun' as SubOverrideOption,
+  });
+  const [initialPlanOverride, setInitialPlanOverride] = useState<SubOverrideOption>('aucun');
   const [editId, setEditId] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [toggling, setToggling] = useState<string | null>(null);
   const [blocking, setBlocking] = useState<string | null>(null);
 
-  // Rôles que l'utilisateur courant peut créer/modifier
-  // Super Admin → peut créer admin, professeur, étudiant
-  // Admin       → peut créer professeur, étudiant uniquement
+  // Rôles autorisés selon les privilèges de l'administrateur connecté
   const allowedRoles = (): UserRole[] => {
-    if (isSuperAdmin) return ['admin', 'professeur', 'etudiant'];
-    return ['professeur', 'etudiant'];
+    if (isSuperAdmin) {
+      return ['etudiant', 'professeur', 'admin', 'super_admin'];
+    }
+    return ['etudiant', 'professeur', 'admin'];
   };
 
-  // Vérifier si l'utilisateur courant peut modifier un profil donné
   const canManage = (target: Profile): boolean => {
-    if (target.role === 'super_admin') return false;          // personne ne touche super_admin
-    if (target.role === 'admin' && !isSuperAdmin) return false; // seul super_admin gère les admins
+    if (!isAdmin) return false;
+    if (target.role === 'super_admin' && !isSuperAdmin) return false;
     return true;
   };
 
   const [attributionsMap, setAttributionsMap] = useState<Record<string, { prenom: string; nom: string }>>({});
+  const [abonnementsMap, setAbonnementsMap] = useState<Record<string, { id: string; plan: PlanKey; fin_at: string | null }>>({});
 
-  const fetchUsers = async () => {
-    let q = supabase.from('profiles').select('*').order('created_at', { ascending: false });
-    // Admin simple ne voit pas les super_admin
-    if (!isSuperAdmin) q = q.neq('role', 'super_admin').neq('role', 'admin');
-    if (filterRole !== 'tous') q = q.eq('role', filterRole);
+  const fetchUsers = useCallback(async () => {
+    try {
+      setLoading(true);
+      let q = supabase.from('profiles').select('*').order('created_at', { ascending: false });
+      if (filterRole !== 'tous') q = q.eq('role', filterRole);
 
-    const [usersRes, attrRes, profsRes] = await Promise.all([
-      q.limit(200),
-      supabase.from('attributions').select('etudiant_id, professeur_id'),
-      supabase.from('profiles').select('id, nom, prenom').eq('role', 'professeur'),
-    ]);
+      const [usersRes, attrRes, profsRes, abosRes] = await Promise.all([
+        q.limit(200),
+        supabase.from('attributions').select('etudiant_id, professeur_id'),
+        supabase.from('profiles').select('id, prenom, nom').in('role', ['professeur', 'admin', 'super_admin']),
+        supabase
+          .from('abonnements')
+          .select('id, user_id, etudiant_id, plan_id, status, current_period_end, date_fin')
+          .in('status', ['active', 'actif'])
+          .order('created_at', { ascending: false }),
+      ]);
 
-    setUsers(Array.isArray(usersRes.data) ? usersRes.data : []);
+      setUsers(Array.isArray(usersRes.data) ? usersRes.data : []);
 
-    if (attrRes.data && profsRes.data) {
-      const profMap = new Map(profsRes.data.map(p => [p.id, { prenom: p.prenom || '', nom: p.nom || '' }]));
-      const map: Record<string, { prenom: string; nom: string }> = {};
-      attrRes.data.forEach(a => {
-        const prof = profMap.get(a.professeur_id);
-        if (prof) map[a.etudiant_id] = prof;
-      });
-      setAttributionsMap(map);
+      if (attrRes.data && profsRes.data) {
+        const profMap = new Map<string, { prenom: string; nom: string }>(
+          (profsRes.data as { id: string; prenom: string | null; nom: string | null }[]).map(p => [
+            p.id,
+            { prenom: p.prenom || '', nom: p.nom || '' },
+          ]),
+        );
+        const map: Record<string, { prenom: string; nom: string }> = {};
+        for (const a of attrRes.data) {
+          const prof = profMap.get(a.professeur_id);
+          if (prof) map[a.etudiant_id] = prof;
+        }
+        setAttributionsMap(map);
+      }
+
+      if (abosRes.data) {
+        const subMap: Record<string, { id: string; plan: PlanKey; fin_at: string | null }> = {};
+        const nowMs = Date.now();
+        for (const abo of abosRes.data as {
+          id: string;
+          user_id?: string | null;
+          etudiant_id?: string | null;
+          plan_id: string;
+          current_period_end?: string | null;
+          date_fin?: string | null;
+        }[]) {
+          const uid = abo.user_id || abo.etudiant_id;
+          const endStr = abo.current_period_end || abo.date_fin || null;
+          if (endStr && new Date(endStr).getTime() <= nowMs) continue;
+          const normalizedPlan: PlanKey =
+            abo.plan_id === 'pack_express' ? 'express' : (abo.plan_id as PlanKey);
+          if (uid && !subMap[uid] && PLAN_KEYS.includes(normalizedPlan)) {
+            subMap[uid] = { id: abo.id, plan: normalizedPlan, fin_at: endStr };
+          }
+        }
+        setAbonnementsMap(subMap);
+      }
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Erreur lors du chargement des utilisateurs.';
+      toast.error(msg);
+    } finally {
+      setLoading(false);
     }
+  }, [filterRole]);
 
-    setLoading(false);
-  };
-
-  useEffect(() => { fetchUsers(); }, [filterRole]);
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
 
   const filtered = users.filter(u =>
     !search || [u.nom, u.prenom, u.email].some(v => v?.toLowerCase().includes(search.toLowerCase()))
@@ -88,38 +140,130 @@ export default function UtilisateursPage() {
 
   const handleOpen = (user?: Profile) => {
     if (user) {
-      if (!canManage(user)) return; // sécurité supplémentaire
+      if (!canManage(user)) return;
+      const currentSub = abonnementsMap[user.id]?.plan ?? 'aucun';
       setEditId(user.id);
-      setForm({ email: user.email || '', password: '', nom: user.nom || '', prenom: user.prenom || '', role: user.role });
+      setInitialPlanOverride(currentSub);
+      setForm({
+        email: user.email || '',
+        password: '',
+        nom: user.nom || '',
+        prenom: user.prenom || '',
+        role: user.role,
+        planOverride: currentSub,
+      });
     } else {
       setEditId(null);
-      setForm({ email: '', password: '', nom: '', prenom: '', role: 'etudiant' });
+      setInitialPlanOverride('aucun');
+      setForm({
+        email: '',
+        password: '',
+        nom: '',
+        prenom: '',
+        role: 'etudiant',
+        planOverride: 'aucun',
+      });
     }
     setDialogOpen(true);
   };
 
+  const applySubscriptionOverride = async (userId: string, planOption: SubOverrideOption) => {
+    const now = new Date();
+    const nowIso = now.toISOString();
+
+    const { error: expireErr } = await supabase
+      .from('abonnements')
+      .update({ status: 'expired', updated_at: nowIso })
+      .or(`user_id.eq.${userId},etudiant_id.eq.${userId}`)
+      .in('status', ['active', 'actif']);
+    if (expireErr) throw expireErr;
+
+    if (planOption !== 'aucun') {
+      const cfg = PLANS_CONFIG[planOption];
+      const finAt = new Date(now.getTime() + cfg.duree_jours * 24 * 60 * 60 * 1000).toISOString();
+      const { error: insertErr } = await supabase.from('abonnements').insert({
+        user_id: userId,
+        etudiant_id: userId,
+        plan_id: planOption,
+        status: 'active',
+        quota_ee_restant: cfg.quota_ee,
+        quota_eo_restant: cfg.quota_eo,
+        quota_examen_blanc_restant: cfg.quota_examen_blanc,
+        current_period_start: nowIso,
+        current_period_end: finAt,
+        auto_renew: false,
+      });
+      if (insertErr) throw insertErr;
+
+      await supabase
+        .from('profiles')
+        .update({ examen_blanc_actif: cfg.quota_examen_blanc > 0 })
+        .eq('id', userId);
+    }
+  };
+
   const handleSave = async () => {
-    if (!editId && (!form.email || !form.password)) {
-      toast.error('Email et mot de passe requis pour un nouvel utilisateur.');
+    if (!isAdmin) {
+      toast.error('Action réservée aux administrateurs.');
       return;
     }
+    if (!editId) {
+      const cleanEmail = form.email.trim().toLowerCase();
+      if (!cleanEmail || !form.password) {
+        toast.error('Email et mot de passe requis pour un nouvel utilisateur.');
+        return;
+      }
+      if (!/^\S+@\S+\.\S+$/.test(cleanEmail)) {
+        toast.error('Veuillez saisir une adresse e-mail valide.');
+        return;
+      }
+      if (form.password.length < 8) {
+        toast.error('Le mot de passe doit contenir au moins 8 caractères.');
+        return;
+      }
+    }
+    if (editId && editId === currentUser?.id && form.role !== currentUser?.role) {
+      toast.error('Vous ne pouvez pas modifier votre propre rôle.');
+      return;
+    }
+    if (form.role === 'super_admin' && !isSuperAdmin) {
+      toast.error('Seul un super administrateur peut attribuer le rôle Super Admin.');
+      return;
+    }
+
     setSaving(true);
 
     if (editId) {
       // Mise à jour du profil
       const { error } = await supabase.from('profiles').update({
-        nom: form.nom || null,
-        prenom: form.prenom || null,
+        nom: form.nom.trim() || null,
+        prenom: form.prenom.trim() || null,
         role: form.role,
       }).eq('id', editId);
-      if (error) { toast.error('Erreur lors de la mise à jour.'); setSaving(false); return; }
+      if (error) {
+        toast.error('Erreur lors de la mise à jour.');
+        setSaving(false);
+        return;
+      }
+
+      if (form.role === 'etudiant' && form.planOverride !== initialPlanOverride) {
+        try {
+          await applySubscriptionOverride(editId, form.planOverride);
+        } catch (err: unknown) {
+          const msg = err instanceof Error ? err.message : 'Erreur lors de la mise à jour de l\'abonnement.';
+          toast.error(msg);
+          setSaving(false);
+          return;
+        }
+      }
+
       toast.success('Utilisateur mis à jour !');
     } else {
       // Créer via edge function (avec service role)
       const cleanEmail = form.email.trim().toLowerCase();
       try {
         const { data, error } = await supabase.functions.invoke('create-user', {
-          body: { email: cleanEmail, password: form.password, nom: form.nom, prenom: form.prenom, role: form.role },
+          body: { email: cleanEmail, password: form.password, nom: form.nom.trim(), prenom: form.prenom.trim(), role: form.role },
         });
         if (error || data?.error) {
           const errMsg = data?.error || error?.message || 'Erreur lors de la création de l\'utilisateur.';
@@ -127,9 +271,18 @@ export default function UtilisateursPage() {
           setSaving(false);
           return;
         }
+        const createdId = (data as { user?: { id?: string } } | null)?.user?.id;
+        if (createdId && form.role === 'etudiant' && form.planOverride !== 'aucun') {
+          try {
+            await applySubscriptionOverride(createdId, form.planOverride);
+          } catch {
+            // Non-bloquant si l'attribution d'abonnement initiale échoue
+          }
+        }
         toast.success('Utilisateur créé avec succès !');
-      } catch (err: any) {
-        toast.error(err?.message || 'Erreur lors de la création de l\'utilisateur.');
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : 'Erreur lors de la création de l\'utilisateur.';
+        toast.error(msg);
         setSaving(false);
         return;
       }
@@ -143,6 +296,14 @@ export default function UtilisateursPage() {
   const [deleting, setDeleting] = useState<string | null>(null);
 
   const handleDelete = async (userId: string) => {
+    if (!isAdmin) {
+      toast.error('Action réservée aux administrateurs.');
+      return;
+    }
+    if (userId === currentUser?.id) {
+      toast.error('Vous ne pouvez pas supprimer votre propre compte.');
+      return;
+    }
     const target = users.find(u => u.id === userId);
     if (target && !canManage(target)) {
       toast.error('Vous n\'avez pas les droits pour supprimer cet utilisateur.');
@@ -188,8 +349,8 @@ export default function UtilisateursPage() {
       } else {
         lastErrorMsg = data?.error || error?.message || '';
       }
-    } catch (e: any) {
-      lastErrorMsg = e?.message || '';
+    } catch (e: unknown) {
+      lastErrorMsg = e instanceof Error ? e.message : '';
     }
 
     // 3. Si l'Edge Function a échoué ou n'est pas déployée, repli sur la RPC admin_delete_user
@@ -198,13 +359,14 @@ export default function UtilisateursPage() {
         const { data: rpcData, error: rpcError } = await supabase.rpc('admin_delete_user', {
           target_user_id: userId,
         });
-        if (!rpcError && (rpcData as any)?.success) {
+        const rpcSuccess = (rpcData as { success?: boolean } | null)?.success;
+        if (!rpcError && rpcSuccess) {
           deleted = true;
         } else {
           lastErrorMsg = rpcError?.message || lastErrorMsg || 'Erreur lors de la suppression.';
         }
-      } catch (e: any) {
-        lastErrorMsg = e?.message || lastErrorMsg || 'Erreur lors de la suppression.';
+      } catch (e: unknown) {
+        lastErrorMsg = e instanceof Error ? e.message : (lastErrorMsg || 'Erreur lors de la suppression.');
       }
     }
 
@@ -224,6 +386,7 @@ export default function UtilisateursPage() {
   };
 
   const toggleExamenBlanc = async (userId: string, current: boolean) => {
+    if (!isAdmin) return;
     setToggling(userId);
     const { error } = await supabase
       .from('profiles')
@@ -241,6 +404,11 @@ export default function UtilisateursPage() {
   };
 
   const toggleBloque = async (userId: string, current: boolean) => {
+    if (!isAdmin) return;
+    if (userId === currentUser?.id) {
+      toast.error('Vous ne pouvez pas bloquer votre propre compte.');
+      return;
+    }
     setBlocking(userId);
     const { error } = await supabase
       .from('profiles')
@@ -314,13 +482,36 @@ export default function UtilisateursPage() {
               )}
               <div className="space-y-2">
                 <Label className="text-sm font-normal">Rôle *</Label>
-                <Select value={form.role} onValueChange={v => setForm(f => ({ ...f, role: v as UserRole }))}>
+                <Select
+                  value={form.role}
+                  onValueChange={v => setForm(f => ({ ...f, role: v as UserRole }))}
+                  disabled={editId === currentUser?.id}
+                >
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
                     {allowedRoles().map(r => <SelectItem key={r} value={r}>{ROLE_LABELS[r]}</SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>
+              {form.role === 'etudiant' && (
+                <div className="space-y-2">
+                  <Label className="text-sm font-normal">Abonnement actif (attribution manuelle)</Label>
+                  <Select
+                    value={form.planOverride}
+                    onValueChange={v => setForm(f => ({ ...f, planOverride: v as SubOverrideOption }))}
+                  >
+                    <SelectTrigger><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="aucun">Aucun abonnement actif</SelectItem>
+                      {PLAN_KEYS.map(p => (
+                        <SelectItem key={p} value={p}>
+                          {PLANS_CONFIG[p].nom} ({PLANS_CONFIG[p].duree_jours}j — {PLANS_CONFIG[p].prix_usd} $)
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => setDialogOpen(false)}>Annuler</Button>
@@ -364,6 +555,7 @@ export default function UtilisateursPage() {
               <tr className="border-b border-border">
                 <th className="text-left text-xs font-medium text-muted-foreground whitespace-nowrap px-3 py-2">NOM</th>
                 <th className="text-left text-xs font-medium text-muted-foreground whitespace-nowrap px-3 py-2">EMAIL</th>
+                <th className="text-left text-xs font-medium text-muted-foreground whitespace-nowrap px-3 py-2">PAYS / TÉLÉPHONE</th>
                 <th className="text-left text-xs font-medium text-muted-foreground whitespace-nowrap px-3 py-2">RÔLE</th>
                 <th className="text-left text-xs font-medium text-muted-foreground whitespace-nowrap px-3 py-2">PROFESSEUR</th>
                 <th className="text-left text-xs font-medium text-muted-foreground whitespace-nowrap px-3 py-2">STATUT</th>
@@ -385,6 +577,20 @@ export default function UtilisateursPage() {
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap">
                     <span className="text-sm text-muted-foreground">{user.email}</span>
+                  </td>
+                  <td className="px-3 py-3 whitespace-nowrap">
+                    {user.pays || user.telephone ? (
+                      <div className="flex flex-col text-xs">
+                        {user.pays && (
+                          <span className="font-medium text-foreground">
+                            <CountryFlag country={user.pays} showName />
+                          </span>
+                        )}
+                        {user.telephone && <span className="text-muted-foreground">{user.telephone}</span>}
+                      </div>
+                    ) : (
+                      <span className="text-xs text-muted-foreground">—</span>
+                    )}
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap">
                     <Badge className={`text-xs ${roleColors[user.role]}`}>{ROLE_LABELS[user.role]}</Badge>
@@ -409,15 +615,23 @@ export default function UtilisateursPage() {
                     )}
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap">
-                    {user.bloque ? (
-                      <Badge variant="destructive" className="text-xs gap-1">
-                        <Ban className="w-3 h-3" /> Bloqué
-                      </Badge>
-                    ) : (
-                      <Badge variant="outline" className="text-xs gap-1 border-success/50 text-success">
-                        <CheckCircle2 className="w-3 h-3" /> Actif
-                      </Badge>
-                    )}
+                    <div className="flex items-center gap-1.5">
+                      {user.bloque ? (
+                        <Badge variant="destructive" className="text-xs gap-1">
+                          <Ban className="w-3 h-3" /> Bloqué
+                        </Badge>
+                      ) : (
+                        <Badge variant="outline" className="text-xs gap-1 border-success/50 text-success">
+                          <CheckCircle2 className="w-3 h-3" /> Actif
+                        </Badge>
+                      )}
+                      {user.role === 'etudiant' && abonnementsMap[user.id] && (
+                        <Badge variant="outline" className="text-xs gap-1 border-primary/40 text-primary bg-primary/5">
+                          <CreditCard className="w-3 h-3" />
+                          {PLANS_CONFIG[abonnementsMap[user.id].plan]?.nom ?? abonnementsMap[user.id].plan}
+                        </Badge>
+                      )}
+                    </div>
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap">
                     <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
@@ -452,68 +666,72 @@ export default function UtilisateursPage() {
                     {canManage(user) && (
                       <div className="flex items-center gap-1">
                         {/* Bouton Bloquer / Débloquer */}
-                        <AlertDialog>
-                          <AlertDialogTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              disabled={blocking === user.id}
-                              className={user.bloque ? 'text-success hover:text-success' : 'text-destructive hover:text-destructive'}
-                              title={user.bloque ? 'Débloquer' : 'Bloquer'}
-                            >
-                              {user.bloque ? <CheckCircle2 className="w-4 h-4" /> : <Ban className="w-4 h-4" />}
-                            </Button>
-                          </AlertDialogTrigger>
-                          <AlertDialogContent className="max-w-[calc(100%-2rem)] md:max-w-lg">
-                            <AlertDialogHeader>
-                              <AlertDialogTitle className="text-balance">
-                                {user.bloque ? 'Débloquer' : 'Bloquer'} {user.prenom} {user.nom} ?
-                              </AlertDialogTitle>
-                              <AlertDialogDescription className="text-pretty">
-                                {user.bloque
-                                  ? 'L\'utilisateur pourra de nouveau se connecter à la plateforme.'
-                                  : 'L\'utilisateur sera immédiatement déconnecté et ne pourra plus accéder à la plateforme.'}
-                              </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                              <AlertDialogCancel>Annuler</AlertDialogCancel>
-                              <AlertDialogAction
-                                onClick={() => toggleBloque(user.id, !!user.bloque)}
-                                className={user.bloque
-                                  ? 'bg-success text-white hover:bg-success/90'
-                                  : 'bg-destructive text-destructive-foreground hover:bg-destructive/90'}
+                        {user.id !== currentUser?.id && (
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                disabled={blocking === user.id}
+                                className={user.bloque ? 'text-success hover:text-success' : 'text-destructive hover:text-destructive'}
+                                title={user.bloque ? 'Débloquer' : 'Bloquer'}
                               >
-                                {user.bloque ? 'Débloquer' : 'Bloquer'}
-                              </AlertDialogAction>
-                            </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
+                                {user.bloque ? <CheckCircle2 className="w-4 h-4" /> : <Ban className="w-4 h-4" />}
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent className="max-w-[calc(100%-2rem)] md:max-w-lg">
+                              <AlertDialogHeader>
+                                <AlertDialogTitle className="text-balance">
+                                  {user.bloque ? 'Débloquer' : 'Bloquer'} {user.prenom} {user.nom} ?
+                                </AlertDialogTitle>
+                                <AlertDialogDescription className="text-pretty">
+                                  {user.bloque
+                                    ? 'L\'utilisateur pourra de nouveau se connecter à la plateforme.'
+                                    : 'L\'utilisateur sera immédiatement déconnecté et ne pourra plus accéder à la plateforme.'}
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Annuler</AlertDialogCancel>
+                                <AlertDialogAction
+                                  onClick={() => toggleBloque(user.id, !!user.bloque)}
+                                  className={user.bloque
+                                    ? 'bg-success text-white hover:bg-success/90'
+                                    : 'bg-destructive text-destructive-foreground hover:bg-destructive/90'}
+                                >
+                                  {user.bloque ? 'Débloquer' : 'Bloquer'}
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        )}
                         <Button variant="ghost" size="icon" onClick={() => handleOpen(user)}>
                           <Pencil className="w-4 h-4" />
                         </Button>
-                        <AlertDialog>
-                          <AlertDialogTrigger asChild>
-                            <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive" disabled={deleting === user.id}>
-                              {deleting === user.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
-                            </Button>
-                          </AlertDialogTrigger>
-                          <AlertDialogContent className="max-w-[calc(100%-2rem)] md:max-w-lg">
-                            <AlertDialogHeader>
-                              <AlertDialogTitle className="text-balance">Supprimer {user.prenom} {user.nom} ?</AlertDialogTitle>
-                              <AlertDialogDescription className="text-pretty">Cette action est irréversible. Toutes les données associées seront supprimées.</AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                              <AlertDialogCancel disabled={deleting === user.id}>Annuler</AlertDialogCancel>
-                              <AlertDialogAction
-                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                                onClick={() => handleDelete(user.id)}
-                                disabled={deleting === user.id}
-                              >
-                                {deleting === user.id ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Suppression...</> : 'Supprimer'}
-                              </AlertDialogAction>
-                            </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
+                        {user.id !== currentUser?.id && (
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive" disabled={deleting === user.id}>
+                                {deleting === user.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent className="max-w-[calc(100%-2rem)] md:max-w-lg">
+                              <AlertDialogHeader>
+                                <AlertDialogTitle className="text-balance">Supprimer {user.prenom} {user.nom} ?</AlertDialogTitle>
+                                <AlertDialogDescription className="text-pretty">Cette action est irréversible. Toutes les données associées seront supprimées.</AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel disabled={deleting === user.id}>Annuler</AlertDialogCancel>
+                                <AlertDialogAction
+                                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                  onClick={() => handleDelete(user.id)}
+                                  disabled={deleting === user.id}
+                                >
+                                  {deleting === user.id ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Suppression...</> : 'Supprimer'}
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        )}
                       </div>
                     )}
                   </td>

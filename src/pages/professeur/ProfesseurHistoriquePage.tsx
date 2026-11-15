@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { supabase } from '@/db/supabase';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,7 +10,6 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { FileText, Mic, CheckCircle, XCircle, BarChart3 } from 'lucide-react';
 import type { Production, Profile, NiveauCECRL } from '@/types/index';
 import {
-  pctToCECRL,
   scoreEeToCECRL,
   scoreEeToCECRLLabel,
   scoreEoToCECRL,
@@ -32,16 +31,22 @@ interface SessionGroup {
   epreuves: { epreuve: string; productions: (Production & { etudiant?: Profile })[] }[];
 }
 
-function groupBySession(
-  prods: (Production & { etudiant?: Profile; session?: { id: string; created_at: string; mode?: string } })[]
-): SessionGroup[] {
+type EnrichedProduction = Production & {
+  etudiant?: Profile;
+  session?: { id: string; created_at: string; mode?: string };
+};
+
+function groupBySession(prods: EnrichedProduction[]): SessionGroup[] {
   const map = new Map<string, SessionGroup>();
   for (const p of prods) {
-    const sid = p.session_id;
+    const sid = p.session_id || `standalone_${p.id}`;
     const date = p.session?.created_at ?? p.created_at;
     const mode = (p.session?.mode as 'entrainement' | 'examen_blanc') ?? null;
-    if (!map.has(sid)) map.set(sid, { sessionId: sid, sessionDate: date, sessionMode: mode, etudiant: p.etudiant, epreuves: [] });
-    const sg = map.get(sid)!;
+    let sg = map.get(sid);
+    if (!sg) {
+      sg = { sessionId: sid, sessionDate: date, sessionMode: mode, etudiant: p.etudiant, epreuves: [] };
+      map.set(sid, sg);
+    }
     let eg = sg.epreuves.find(e => e.epreuve === p.epreuve);
     if (!eg) { eg = { epreuve: p.epreuve, productions: [] }; sg.epreuves.push(eg); }
     eg.productions.push(p);
@@ -51,21 +56,25 @@ function groupBySession(
 
 export default function ProfesseurHistoriquePage() {
   const { user } = useAuth();
+  const location = useLocation();
+  const basePath = location.pathname.startsWith('/admin') ? '/admin/corrections' : '/professeur/corrections';
   const [groups, setGroups] = useState<SessionGroup[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'tout' | 'examen_blanc' | 'entrainement'>('tout');
 
   useEffect(() => {
     if (!user) return;
-    supabase
-      .from('productions')
-      .select('*, etudiant:profiles!etudiant_id(*), session:sessions_examen!session_id(id, created_at, mode)')
-      .eq('professeur_id', user.id)
-      .in('statut_correction', ['corrige', 'refuse'])
-      .order('epreuve')
-      .order('numero_tache')
-      .then(async ({ data, error }) => {
-        let all: any[] = [];
+    const load = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('productions')
+          .select('*, etudiant:profiles!etudiant_id(*), session:sessions_examen!session_id(id, created_at, mode)')
+          .eq('professeur_id', user.id)
+          .in('statut_correction', ['corrige', 'refuse'])
+          .order('epreuve')
+          .order('numero_tache');
+
+        let all: EnrichedProduction[] = [];
         if (error || !data) {
           const fallback = await supabase
             .from('productions')
@@ -90,11 +99,16 @@ export default function ProfesseurHistoriquePage() {
             }));
           }
         } else {
-          all = data;
+          all = data as EnrichedProduction[];
         }
         setGroups(groupBySession(all));
+      } catch (err: unknown) {
+        console.error('Erreur chargement historique corrections:', err);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+    load();
   }, [user]);
 
   // Filtrer selon l'onglet actif
@@ -207,7 +221,7 @@ export default function ProfesseurHistoriquePage() {
                             : <Badge className="bg-success text-success-foreground text-xs"><CheckCircle className="w-3 h-3 mr-1" />Corrigée</Badge>
                           }
                           <Button size="sm" variant="outline" asChild className="shrink-0">
-                            <Link to={`/professeur/corrections/${prod.id}`}>Voir</Link>
+                            <Link to={`${basePath}/${prod.id}`}>Voir</Link>
                           </Button>
                         </div>
                       </div>

@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/db/supabase';
+import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -19,6 +20,7 @@ interface Attribution {
 }
 
 export default function AttributionsPage() {
+  const { isAdmin } = useAuth();
   const [attributions, setAttributions] = useState<Attribution[]>([]);
   const [etudiants, setEtudiants] = useState<Profile[]>([]);
   const [professeurs, setProfesseurs] = useState<Profile[]>([]);
@@ -27,7 +29,7 @@ export default function AttributionsPage() {
   const [selectedProfesseur, setSelectedProfesseur] = useState('');
   const [saving, setSaving] = useState(false);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const [attrResult, etudiantsResult, professeursResult] = await Promise.all([
         supabase.from('attributions').select('*, etudiant:profiles!etudiant_id(*), professeur:profiles!professeur_id(*)').order('created_at', { ascending: false }),
@@ -60,11 +62,15 @@ export default function AttributionsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  useEffect(() => { fetchData(); }, []);
+  useEffect(() => { fetchData(); }, [fetchData]);
 
   const handleAttribuer = async () => {
+    if (!isAdmin) {
+      toast.error('Action réservée aux administrateurs.');
+      return;
+    }
     if (!selectedEtudiant || !selectedProfesseur) {
       toast.error('Sélectionnez un étudiant et un professeur.');
       return;
@@ -86,6 +92,10 @@ export default function AttributionsPage() {
   };
 
   const handleDelete = async (id: string) => {
+    if (!isAdmin) {
+      toast.error('Action réservée aux administrateurs.');
+      return;
+    }
     const { error } = await supabase.from('attributions').delete().eq('id', id);
     if (error) { toast.error('Erreur lors de la suppression.'); return; }
     toast.success('Attribution supprimée.');
@@ -107,9 +117,9 @@ export default function AttributionsPage() {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-sm font-normal text-muted-foreground">Étudiant</label>
+              <label htmlFor="select-etudiant" className="text-sm font-normal text-muted-foreground">Étudiant</label>
               <Select value={selectedEtudiant} onValueChange={setSelectedEtudiant}>
-                <SelectTrigger>
+                <SelectTrigger id="select-etudiant">
                   <SelectValue placeholder={etudiantsSansAttribution.length === 0 ? 'Tous les étudiants sont attribués' : 'Choisir un étudiant'} />
                 </SelectTrigger>
                 <SelectContent>
@@ -124,9 +134,9 @@ export default function AttributionsPage() {
               </Select>
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-normal text-muted-foreground">Professeur</label>
+              <label htmlFor="select-professeur" className="text-sm font-normal text-muted-foreground">Professeur</label>
               <Select value={selectedProfesseur} onValueChange={setSelectedProfesseur}>
-                <SelectTrigger>
+                <SelectTrigger id="select-professeur">
                   <SelectValue placeholder={professeurs.length === 0 ? 'Aucun professeur' : 'Choisir un professeur'} />
                 </SelectTrigger>
                 <SelectContent>

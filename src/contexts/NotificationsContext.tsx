@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
 import { supabase } from '@/db/supabase';
 import { useAuth } from '@/contexts/AuthContext';
+import { checkAndTriggerStudentAlerts } from '@/lib/studentAlerts';
 import type { Notification } from '@/types/index';
 
 interface NotificationsContextType {
@@ -56,6 +57,9 @@ export function NotificationsProvider({ children }: { children: ReactNode }) {
     }
 
     fetchNotifications();
+
+    // Vérifier et déclencher les alertes proactives pour l'étudiant
+    checkAndTriggerStudentAlerts(user.id);
 
     // Canal unique par utilisateur — une seule souscription dans toute l'app
     const channelName = `notifications-user-${user.id}`;

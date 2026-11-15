@@ -24,7 +24,15 @@ interface AuthContextType {
   profile: Profile | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error: Error | null; profile: Profile | null }>;
-  signUp: (email: string, password: string, nom: string, prenom: string) => Promise<{ error: Error | null }>;
+  signUp: (
+    email: string,
+    password: string,
+    nom: string,
+    prenom: string,
+    extraData?: { pays?: string; telephone?: string; indicatif_pays?: string }
+  ) => Promise<{ error: Error | null }>;
+  resetPassword: (email: string) => Promise<{ error: Error | null }>;
+  updatePassword: (password: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
   refreshProfile: () => Promise<void>;
   hasRole: (roles: UserRole[]) => boolean;
@@ -68,6 +76,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  // Vérifie qu'un profil est valide et non bloqué (directement ou en cascade)
+  const loadValidProfile = useCallback(async (userId: string): Promise<Profile | null> => {
+    const p = await getProfile(userId);
+    if (!p) return null;
+
+    if (p.bloque) {
+      localStorage.removeItem(SESSION_TOKEN_KEY);
+      await supabase.auth.signOut();
+      return null;
+    }
+
+    if (p.cree_par) {
+      const { data: adminProfile } = await supabase
+        .from('profiles')
+        .select('bloque')
+        .eq('id', p.cree_par)
+        .maybeSingle();
+      if (adminProfile?.bloque) {
+        localStorage.removeItem(SESSION_TOKEN_KEY);
+        await supabase.auth.signOut();
+        return null;
+      }
+    }
+
+    return p;
+  }, []);
+
   useEffect(() => {
     let mounted = true;
 
@@ -75,10 +110,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     supabase.auth.getSession()
       .then(async ({ data: { session } }) => {
         if (!mounted) return;
-        setUser(session?.user ?? null);
         if (session?.user) {
-          const p = await getProfile(session.user.id);
-          if (mounted) setProfile(p);
+          const p = await loadValidProfile(session.user.id);
+          if (!mounted) return;
+          if (p) {
+            setUser(session.user);
+            setProfile(p);
+          } else {
+            setUser(null);
+            setProfile(null);
+          }
+        } else {
+          setUser(null);
+          setProfile(null);
         }
       })
       .finally(() => { if (mounted) setLoading(false); });
@@ -86,21 +130,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // onAuthStateChange : gère les changements d'état (SIGNED_IN, SIGNED_OUT, TOKEN_REFRESHED…)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (!mounted) return;
-      setUser(session?.user ?? null);
       if (session?.user) {
-        getProfile(session.user.id).then(p => {
+        loadValidProfile(session.user.id).then(p => {
           if (!mounted) return;
-          if (p?.bloque) {
-            supabase.auth.signOut();
-            localStorage.removeItem(SESSION_TOKEN_KEY);
+          if (p) {
+            setUser(session.user);
+            setProfile(p);
+          } else {
             setUser(null);
             setProfile(null);
-          } else {
-            setProfile(p);
           }
+          setLoading(false);
         });
       } else {
+        setUser(null);
         setProfile(null);
+        setLoading(false);
       }
     });
 
@@ -108,7 +153,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       mounted = false;
       subscription.unsubscribe();
     };
-  }, []);
+  }, [loadValidProfile]);
 
   // Vérifier la session unique à la reprise de visibilité de la page
   // - Seulement si l'onglet a été masqué plus de 30 secondes (évite faux positifs mobile)
@@ -198,7 +243,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
 
         // Générer un token de session unique (invalide les autres appareils)
-        const newToken = crypto.randomUUID();
+        const newToken =
+          typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+            ? crypto.randomUUID()
+            : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
         localStorage.setItem(SESSION_TOKEN_KEY, newToken);
 
         await supabase
@@ -220,14 +268,129 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const signUp = async (email: string, password: string, nom: string, prenom: string) => {
+  const signUp = async (
+    email: string,
+    password: string,
+    nom: string,
+    prenom: string,
+    extraData?: { pays?: string; telephone?: string; indicatif_pays?: string }
+  ) => {
     try {
       const cleanEmail = email.trim().toLowerCase();
-      const { data, error } = await supabase.auth.signUp({ email: cleanEmail, password });
+      const targetRole: UserRole = 'etudiant';
+
+      const { data, error } = await supabase.auth.signUp({
+        email: cleanEmail,
+        password,
+        options: {
+          data: {
+            nom,
+            prenom,
+            role: targetRole,
+            pays: extraData?.pays || null,
+            telephone: extraData?.telephone || null,
+            indicatif_pays: extraData?.indicatif_pays || null,
+          },
+        },
+      });
+
       if (error) throw error;
+
       if (data.user) {
-        await supabase.from('profiles').update({ nom, prenom }).eq('id', data.user.id);
+        const { data: existingProfile } = await supabase
+          .from('profiles')
+          .select('id')
+          .eq('id', data.user.id)
+          .maybeSingle();
+
+        if (!existingProfile) {
+          await supabase.from('profiles').insert({
+            id: data.user.id,
+            email: cleanEmail,
+            nom,
+            prenom,
+            role: targetRole,
+            pays: extraData?.pays || null,
+            telephone: extraData?.telephone || null,
+            indicatif_pays: extraData?.indicatif_pays || null,
+            bloque: false,
+            examen_blanc_actif: true,
+          });
+        } else if (extraData?.pays || extraData?.telephone) {
+          await supabase.from('profiles').update({
+            pays: extraData?.pays || undefined,
+            telephone: extraData?.telephone || undefined,
+            indicatif_pays: extraData?.indicatif_pays || undefined,
+          }).eq('id', data.user.id);
+        }
+
+        // Envoi de l'email de bienvenue (non bloquant)
+        if (data.session) {
+          supabase.functions.invoke('send-email', {
+            body: {
+              type: 'auth_welcome',
+              user_id: data.user.id,
+              email: cleanEmail,
+              idempotency_key: `welcome:${data.user.id}`,
+              data: {
+                prenom,
+                nom,
+                actionUrl: `${window.location.origin}/etudiant`,
+              },
+            },
+          }).catch((err) => {
+            console.warn('Email de bienvenue non envoyé:', err);
+          });
+        }
       }
+      return { error: null };
+    } catch (error) {
+      return { error: error as Error };
+    }
+  };
+
+  const resetPassword = async (email: string) => {
+    try {
+      const cleanEmail = email.trim().toLowerCase();
+      const redirectUrl = `${window.location.origin}/reinitialisation-mot-de-passe`;
+
+      // 1. Tenter d'envoyer l'email personnalisé avec le logo officiel Mon TCFCA via notre Edge Function
+      try {
+        const { data: edgeData, error: edgeErr } = await supabase.functions.invoke('send-email', {
+          body: {
+            type: 'auth_password_reset',
+            email: cleanEmail,
+            data: {
+              actionUrl: redirectUrl,
+            },
+          },
+        });
+
+        if (!edgeErr && edgeData?.success) {
+          return { error: null };
+        }
+        if (edgeErr) {
+          console.warn('Edge Function send-email warn, fallback vers Supabase Auth:', edgeErr);
+        }
+      } catch (invokeErr) {
+        console.warn('Erreur appel Edge Function send-email, fallback:', invokeErr);
+      }
+
+      // 2. Fallback natif Supabase Auth
+      const { error } = await supabase.auth.resetPasswordForEmail(cleanEmail, {
+        redirectTo: redirectUrl,
+      });
+      if (error) throw error;
+      return { error: null };
+    } catch (error) {
+      return { error: error as Error };
+    }
+  };
+
+  const updatePassword = async (password: string) => {
+    try {
+      const { error } = await supabase.auth.updateUser({ password });
+      if (error) throw error;
       return { error: null };
     } catch (error) {
       return { error: error as Error };
@@ -250,7 +413,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   return (
     <AuthContext.Provider value={{
       user, profile, loading,
-      signIn, signUp, signOut, refreshProfile,
+      signIn, signUp, resetPassword, updatePassword, signOut, refreshProfile,
       hasRole, isAdmin, isSuperAdmin, isProfesseur, isEtudiant,
     }}>
       {children}
@@ -270,6 +433,8 @@ export function useAuth() {
       loading: true,
       signIn: async () => ({ error: null, profile: null }),
       signUp: async () => ({ error: null }),
+      resetPassword: async () => ({ error: null }),
+      updatePassword: async () => ({ error: null }),
       signOut: async () => {},
       refreshProfile: async () => {},
       hasRole: () => false,

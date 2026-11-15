@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmez votre adresse email — Mon TCF Canada</title>
+  <style>
+    body { margin: 0; padding: 0; background-color: #F8F9FF; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1E293B; }
+    table { border-collapse: collapse; }
+    @media only screen and (max-width: 620px) {
+      .container { width: 100% !important; padding: 16px !important; }
+      .card { padding: 24px 20px !important; }
+      .btn { display: block !important; width: 100% !important; box-sizing: border-box !important; }
+    }
+  </style>
+</head>
+<body style="margin: 0; padding: 32px 0; background-color: #F8F9FF;">
+  <center>
+    <table role="presentation" class="container" style="width: 600px; max-width: 600px; margin: 0 auto; text-align: left;">
+      <!-- EN-TÊTE MON TCF CANADA AVEC LOGO OFFICIEL -->
+      <tr>
+        <td style="padding: 0 0 20px 0; text-align: center;">
+          <a href="https://mon-tcfca.com" target="_blank" style="text-decoration: none; display: inline-block;">
+            <img src="https://levdefzdiwvowtadzdkw.supabase.co/storage/v1/object/public/question-images/brand/mon-tcfca-logo.png" alt="Mon TCF Canada — Préparation TCF Canada" width="96" style="width: 96px; max-width: 96px; height: auto; display: block; margin: 0 auto; border: 0;" />
+          </a>
+        </td>
+      </tr>
+
+      <!-- CARTE DE CONTENU -->
+      <tr>
+        <td>
+          <table role="presentation" class="card" style="width: 100%; background-color: #FFFFFF; border-radius: 20px; border: 1px solid #E2E8F0; box-shadow: 0 4px 16px rgba(13, 35, 58, 0.04); overflow: hidden;">
+            <tr>
+              <td style="padding: 40px 36px;">
+                <div style="text-align: center; margin-bottom: 24px;">
+                  <span style="display: inline-block; padding: 6px 14px; background: #EFF4FF; color: #0D233A; font-weight: 700; font-size: 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px;">
+                    Inscription Mon TCF Canada
+                  </span>
+                </div>
+
+                <h1 style="margin: 0 0 16px 0; font-size: 24px; font-weight: 800; color: #0D233A; line-height: 32px; text-align: center;">
+                  Bienvenue dans votre préparation au TCF Canada
+                </h1>
+
+                <p style="margin: 0 0 16px 0; font-size: 15px; line-height: 24px; color: #334155;">
+                  Bonjour,
+                </p>
+
+                <p style="margin: 0 0 20px 0; font-size: 15px; line-height: 24px; color: #334155;">
+                  Merci d'avoir rejoint <strong>Mon TCF Canada</strong>. Pour sécuriser votre compte associé à l'adresse <strong>{{ .Email }}</strong> et commencer vos entraînements, veuillez valider votre adresse en cliquant ci-dessous :
+                </p>
+
+                <div style="margin: 32px 0; text-align: center;">
+                  <!--[if mso]>
+                  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{ .ConfirmationURL }}" style="height:48px;v-text-anchor:middle;width:280px;" arcsize="20%" stroke="f" fillcolor="#0D233A">
+                    <w:anchorlock/>
+                    <center style="color:#ffffff;font-family:sans-serif;font-size:15px;font-weight:bold;">Confirmer mon inscription</center>
+                  </v:roundrect>
+                  <![endif]-->
+                  <a class="btn" href="{{ .ConfirmationURL }}" target="_blank" style="display: inline-block; background-color: #0D233A; color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 12px; box-shadow: 0 4px 12px rgba(13, 35, 58, 0.15);">
+                    Confirmer mon inscription →
+                  </a>
+                </div>
+
+                <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 16px; margin-top: 24px; font-size: 13px; color: #64748B; line-height: 20px;">
+                  💡 <strong>Besoin d'aide ?</strong> Si le bouton ne fonctionne pas, copiez et collez le lien suivant dans votre navigateur :<br>
+                  <a href="{{ .ConfirmationURL }}" style="color: #0D233A; word-break: break-all;">{{ .ConfirmationURL }}</a>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <!-- PIED DE PAGE -->
+      <tr>
+        <td style="padding: 28px 20px; text-align: center;">
+          <p style="margin: 0; font-size: 13px; font-weight: 600; color: #0D233A;">
+            Mon TCF Canada — Plateforme francophone de préparation au TCF Canada
+          </p>
+          <p style="margin: 6px 0 0 0; font-size: 12px; color: #64748B;">
+            Contact support : <a href="mailto:support@mon-tcfca.com" style="color: #0D233A; font-weight: 600; text-decoration: underline;">support@mon-tcfca.com</a>
+          </p>
+          <p style="margin: 12px 0 0 0; font-size: 11px; color: #94A3B8;">
+            Cet email obligatoire valide la création de votre compte. Si vous n'êtes pas à l'origine de cette démarche, ignorez-le en toute sécurité.
+          </p>
+        </td>
+      </tr>
+    </table>
+  </center>
+</body>
+</html>

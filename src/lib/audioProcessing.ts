@@ -1,7 +1,7 @@
 import { supabase } from '@/db/supabase';
 
 // Stockage local en cache pour une réactivité immédiate sans latence réseau
-const LOCAL_STORAGE_KEY = 'edudesk_audio_clarity_enabled';
+const LOCAL_STORAGE_KEY = 'mon_tcfca_audio_clarity_enabled';
 
 let cachedSetting: boolean | null = null;
 

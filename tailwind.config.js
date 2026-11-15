@@ -23,6 +23,11 @@ export default {
             }
         },
         extend: {
+            fontFamily: {
+                sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                heading: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+                display: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+            },
             colors: {
                 border: 'hsl(var(--border))',
                 borderColor: {
@@ -34,11 +39,21 @@ export default {
                 foreground: 'hsl(var(--foreground))',
                 primary: {
                     DEFAULT: 'hsl(var(--primary))',
-                    foreground: 'hsl(var(--primary-foreground))'
+                    foreground: 'hsl(var(--primary-foreground))',
+                    container: 'hsl(var(--primary-container))',
+                    'container-foreground': 'hsl(var(--primary-container-foreground))',
                 },
                 secondary: {
                     DEFAULT: 'hsl(var(--secondary))',
-                    foreground: 'hsl(var(--secondary-foreground))'
+                    foreground: 'hsl(var(--secondary-foreground))',
+                    container: 'hsl(var(--secondary-container))',
+                    'container-foreground': 'hsl(var(--secondary-container-foreground))',
+                },
+                tertiary: {
+                    DEFAULT: 'hsl(var(--tertiary))',
+                    foreground: 'hsl(var(--tertiary-foreground))',
+                    container: 'hsl(var(--tertiary-container))',
+                    'container-foreground': 'hsl(var(--tertiary-container-foreground))',
                 },
                 destructive: {
                     DEFAULT: 'hsl(var(--destructive))',
@@ -59,6 +74,16 @@ export default {
                 card: {
                     DEFAULT: 'hsl(var(--card))',
                     foreground: 'hsl(var(--card-foreground))'
+                },
+                surface: {
+                    DEFAULT: 'hsl(var(--surface))',
+                    dim: 'hsl(var(--surface-dim))',
+                    bright: 'hsl(var(--surface-bright))',
+                    'container-lowest': 'hsl(var(--surface-container-lowest))',
+                    'container-low': 'hsl(var(--surface-container-low))',
+                    container: 'hsl(var(--surface-container))',
+                    'container-high': 'hsl(var(--surface-container-high))',
+                    'container-highest': 'hsl(var(--surface-container-highest))',
                 },
                 education: {
                     blue: 'hsl(var(--education-blue))',
@@ -96,18 +121,21 @@ export default {
                 }
             },
             borderRadius: {
-                lg: 'var(--radius)',
-                md: 'calc(var(--radius) - 2px)',
-                sm: 'calc(var(--radius) - 4px)'
+                xl: 'var(--radius)',
+                lg: 'calc(var(--radius) - 2px)',
+                md: 'calc(var(--radius) - 4px)',
+                sm: 'calc(var(--radius) - 6px)'
             },
             backgroundImage: {
                 'gradient-primary': 'var(--gradient-primary)',
                 'gradient-card': 'var(--gradient-card)',
-                'gradient-background': 'var(--gradient-background)'
+                'gradient-background': 'var(--gradient-background)',
+                'gradient-hero': 'var(--gradient-hero)'
             },
             boxShadow: {
                 card: 'var(--shadow-card)',
-                hover: 'var(--shadow-hover)'
+                hover: 'var(--shadow-hover)',
+                glow: '0 0 20px -5px rgba(229, 62, 62, 0.3)'
             },
             keyframes: {
                 'accordion-down': {

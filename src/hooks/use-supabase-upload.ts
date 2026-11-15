@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { type FileError, type FileRejection, useDropzone } from 'react-dropzone'
-import {type SupabaseClient} from '@supabase/supabase-js'
+import type { SupabaseClient } from '@supabase/supabase-js'
 
 interface FileWithPreview extends File {
   preview?: string
@@ -102,13 +102,16 @@ const useSupabaseUpload = (options: UseSupabaseUploadOptions) => {
 
       setFiles(newFiles)
     },
-    [files, setFiles]
+    [files]
   )
 
   const dropzoneProps = useDropzone({
     onDrop,
     noClick: true,
-    accept: allowedMimeTypes.reduce((acc, type) => ({ ...acc, [type]: [] }), {}),
+    accept: allowedMimeTypes.reduce<Record<string, string[]>>((acc, type) => {
+      acc[type] = []
+      return acc
+    }, {}),
     maxSize: maxFileSize,
     maxFiles: maxFiles,
     multiple: maxFiles !== 1,
@@ -132,7 +135,7 @@ const useSupabaseUpload = (options: UseSupabaseUploadOptions) => {
       filesToUpload.map(async (file) => {
         const { error } = await supabase.storage
           .from(bucketName)
-          .upload(!!path ? `${path}/${file.name}` : file.name, file, {
+          .upload(path ? `${path}/${file.name}` : file.name, file, {
             cacheControl: cacheControl.toString(),
             upsert,
           })
@@ -155,7 +158,7 @@ const useSupabaseUpload = (options: UseSupabaseUploadOptions) => {
     setSuccesses(newSuccesses)
 
     setLoading(false)
-  }, [files, path, bucketName, errors, successes])
+  }, [files, path, bucketName, errors, successes, cacheControl, upsert, supabase.storage])
 
   useEffect(() => {
     if (files.length === 0) {
@@ -176,7 +179,7 @@ const useSupabaseUpload = (options: UseSupabaseUploadOptions) => {
         setFiles(newFiles)
       }
     }
-  }, [files.length, setFiles, maxFiles])
+  }, [files, maxFiles])
 
   return {
     files,

@@ -56,7 +56,13 @@ async function runWarnings(): Promise<{ warned_count: number; executed_at: strin
   for (const profile of profiles) {
     if (!profile.email) continue;
 
-    const prenom = profile.prenom || 'Utilisateur';
+    const rawPrenom = profile.prenom || 'Utilisateur';
+    const prenom = rawPrenom
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
     const html = `
       <div style="font-family: sans-serif; max-width: 560px; margin: 0 auto; padding: 24px;">
         <h2 style="color: #1a1a1a;">⚠️ Votre compte EDUDESK sera supprimé dans 7 jours</h2>
@@ -105,15 +111,52 @@ async function runWarnings(): Promise<{ warned_count: number; executed_at: strin
   return { warned_count: warnedCount, executed_at: new Date().toISOString() };
 }
 
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
 // Handler HTTP (déclenchement manuel ou webhook cron externe)
 Deno.serve(async (req) => {
-  const authHeader = req.headers.get('Authorization');
-  const expectedSecret = Deno.env.get('CLEANUP_SECRET');
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { status: 200, headers: corsHeaders });
+  }
 
-  if (expectedSecret && authHeader !== `Bearer ${expectedSecret}`) {
+  const authHeader = req.headers.get('Authorization') || '';
+  const bearerToken = authHeader.replace(/^Bearer\s+/i, '').trim();
+  const expectedSecret = Deno.env.get('CLEANUP_SECRET') || '';
+
+  let isAuthorized = false;
+  if (expectedSecret && bearerToken === expectedSecret) {
+    isAuthorized = true;
+  } else if (SERVICE_ROLE_KEY && bearerToken === SERVICE_ROLE_KEY) {
+    isAuthorized = true;
+  } else if (bearerToken) {
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY') || '';
+    const userClient = createClient(SUPABASE_URL, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } },
+      auth: { persistSession: false },
+    });
+    const { data: authData } = await userClient.auth.getUser();
+    if (authData?.user) {
+      const supabaseAdmin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
+        auth: { persistSession: false },
+      });
+      const { data: profile } = await supabaseAdmin
+        .from('profiles')
+        .select('role')
+        .eq('id', authData.user.id)
+        .maybeSingle();
+      if (profile?.role === 'admin' || profile?.role === 'super_admin') {
+        isAuthorized = true;
+      }
+    }
+  }
+
+  if (!isAuthorized) {
     return new Response(JSON.stringify({ error: 'Non autorisé' }), {
       status: 401,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
 
@@ -121,13 +164,13 @@ Deno.serve(async (req) => {
     const result = await runWarnings();
     return new Response(JSON.stringify(result), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     return new Response(JSON.stringify({ error: message }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
 });

@@ -5,6 +5,7 @@ import { Observer } from 'tailwindcss-intersect';
 const IntersectObserver = () => {
   const location = useLocation();
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: re-run observer on route location change
   useEffect(() => {
     // When the location changes, we need to restart the observer
     // to pick up new elements on the page.
@@ -14,7 +15,7 @@ const IntersectObserver = () => {
     }, 100);
 
     return () => clearTimeout(timer);
-  }, [location]);
+  }, [location.pathname]);
 
   return null;
 };

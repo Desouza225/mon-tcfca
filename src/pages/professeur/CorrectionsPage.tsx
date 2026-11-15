@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { supabase } from '@/db/supabase';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,10 +8,9 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ClipboardList, CheckCircle, FileText, Mic, User, RefreshCw, Search, Clock, Sparkles, ArrowUpDown } from 'lucide-react';
+import { ClipboardList, CheckCircle, FileText, Mic, User, RefreshCw, Search, Clock, ArrowUpDown } from 'lucide-react';
 import type { Production, Profile, NiveauCECRL } from '@/types/index';
 import {
-  pctToCECRL,
   scoreEeToCECRL,
   scoreEeToCECRLLabel,
   scoreEoToCECRL,
@@ -51,14 +50,22 @@ interface SessionGroup {
   epreuves: EpreuveGroup[];
 }
 
-function groupBySession(prods: (Production & { etudiant?: Profile; session?: { id: string; created_at: string; mode?: string } })[]): SessionGroup[] {
+type EnrichedProduction = Production & {
+  etudiant?: Profile;
+  session?: { id: string; created_at: string; mode?: string };
+};
+
+function groupBySession(prods: EnrichedProduction[]): SessionGroup[] {
   const map = new Map<string, SessionGroup>();
   for (const p of prods) {
     const sid = p.session_id || `standalone_${p.id}`;
     const date = p.session?.created_at ?? p.created_at;
     const mode = (p.session?.mode as 'entrainement' | 'examen_blanc') ?? 'entrainement';
-    if (!map.has(sid)) map.set(sid, { sessionId: sid, sessionDate: date, sessionMode: mode, etudiant: p.etudiant, epreuves: [] });
-    const sg = map.get(sid)!;
+    let sg = map.get(sid);
+    if (!sg) {
+      sg = { sessionId: sid, sessionDate: date, sessionMode: mode, etudiant: p.etudiant, epreuves: [] };
+      map.set(sid, sg);
+    }
     let eg = sg.epreuves.find(e => e.epreuve === p.epreuve);
     if (!eg) { eg = { epreuve: p.epreuve, productions: [] }; sg.epreuves.push(eg); }
     eg.productions.push(p);
@@ -68,6 +75,9 @@ function groupBySession(prods: (Production & { etudiant?: Profile; session?: { i
 
 export default function CorrectionsPage() {
   const { user } = useAuth();
+  const location = useLocation();
+  const basePath = location.pathname.startsWith('/admin') ? '/admin/corrections' : '/professeur/corrections';
+  const historyPath = location.pathname.startsWith('/admin') ? '/admin/suivi-etudiants' : '/professeur/historique';
   const [pendingGroups, setPendingGroups] = useState<SessionGroup[]>([]);
   const [pendingCount, setPendingCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -88,7 +98,7 @@ export default function CorrectionsPage() {
         .eq('statut_correction', 'en_attente')
         .order('created_at', { ascending: true });
 
-      let all: any[] = [];
+      let all: EnrichedProduction[] = [];
       if (error || !data) {
         // Fallback sans jointure explicite
         const { data: fallbackData } = await supabase
@@ -113,7 +123,7 @@ export default function CorrectionsPage() {
           }));
         }
       } else {
-        all = data;
+        all = data as EnrichedProduction[];
       }
 
       const groups = groupBySession(all);
@@ -312,7 +322,7 @@ export default function CorrectionsPage() {
                         </div>
 
                         <Button size="sm" variant="default" asChild className="shrink-0 shadow-xs">
-                          <Link to={`/professeur/corrections/${prod.id}`}>Évaluer & Corriger</Link>
+                          <Link to={`${basePath}/${prod.id}`}>Évaluer & Corriger</Link>
                         </Button>
                       </div>
                     );
@@ -426,8 +436,8 @@ export default function CorrectionsPage() {
       {!loading && (
         <div className="text-center pt-2">
           <Button variant="outline" asChild>
-            <Link to="/professeur/historique">
-              <ClipboardList className="w-4 h-4 mr-2" />Voir l'historique des corrections effectuées
+            <Link to={historyPath}>
+              <ClipboardList className="w-4 h-4 mr-2" />Voir le suivi et historique des corrections
             </Link>
           </Button>
         </div>

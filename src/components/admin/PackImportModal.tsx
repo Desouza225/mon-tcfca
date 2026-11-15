@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { supabase } from '@/db/supabase';
+import { supabase, decodeHtmlEntities } from '@/db/supabase';
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter,
 } from '@/components/ui/dialog';
@@ -262,11 +262,11 @@ export default function PackImportModal({ open, onOpenChange, onImportSuccess }:
           // Formater les choix si propositions est un objet { A: '...', B: '...', C: '...', D: '...' }
           let choixList: any[] = [];
           if (Array.isArray(item.choix)) {
-            choixList = item.choix;
+            choixList = item.choix.map((c: any) => ({ ...c, texte: decodeHtmlEntities(c.texte) }));
           } else if (item.propositions && typeof item.propositions === 'object') {
             choixList = Object.entries(item.propositions).map(([key, val]) => ({
               id: key,
-              texte: String(val || '')
+              texte: decodeHtmlEntities(String(val || ''))
             }));
           }
 
@@ -294,12 +294,12 @@ export default function PackImportModal({ open, onOpenChange, onImportSuccess }:
             epreuve: pack.id,
             reference: ref,
             niveau: item.niveau || null,
-            texte: item.texte || item.consigne || null,
+            texte: decodeHtmlEntities(item.texte || item.consigne || null),
             audio_url: audioUrl,
             image_url: imageUrl,
             choix: choixList.length > 0 ? choixList : null,
             bonne_reponse: item.bonne_reponse || 'A',
-            explication: item.explication || null,
+            explication: decodeHtmlEntities(item.explication || null),
             ordre: ordreNum,
             actif: true,
           };

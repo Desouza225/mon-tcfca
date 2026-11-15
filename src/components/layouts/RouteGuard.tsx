@@ -24,32 +24,20 @@ export function RouteGuard({ children, allowedRoles, redirectTo = '/connexion' }
     );
   }
 
-  if (!user) {
+  if (!user || !profile || profile.bloque) {
     return <Navigate to={redirectTo} state={{ from: location }} replace />;
   }
 
-  // Attendre que le profil soit chargé avant de rendre la page
-  // (évite la page blanche après connexion causée par profile=null)
-  if (!profile) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-background">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-          <p className="text-muted-foreground text-sm">Chargement du profil...</p>
-        </div>
-      </div>
-    );
-  }
+  const role = profile.role;
+  const isAuthorized = allowedRoles.includes(role) || 
+    (allowedRoles.includes('admin') && (role === 'admin' || role === 'super_admin' || role === 'professeur'));
 
-  if (!allowedRoles.includes(profile.role)) {
+  if (!isAuthorized) {
     // Rediriger vers l'espace approprié selon le rôle
-    const roleRedirects: Record<UserRole, string> = {
-      super_admin: '/admin',
-      admin: '/admin',
-      professeur: '/professeur',
-      etudiant: '/etudiant',
-    };
-    return <Navigate to={roleRedirects[profile.role]} replace />;
+    if (role === 'admin' || role === 'super_admin' || role === 'professeur') {
+      return <Navigate to="/admin" replace />;
+    }
+    return <Navigate to="/etudiant" replace />;
   }
 
   return <>{children}</>;

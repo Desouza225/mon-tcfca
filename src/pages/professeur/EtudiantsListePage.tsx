@@ -80,7 +80,7 @@ function scoreColor(score: number | null): string {
 }
 
 export default function EtudiantsListePage() {
-  const { user } = useAuth();
+  const { user, isAdmin, isProfesseur } = useAuth();
   const [etudiants, setEtudiants] = useState<EtudiantStats[]>([]);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -114,8 +114,9 @@ export default function EtudiantsListePage() {
             profiles = Array.isArray(stdProfiles) ? stdProfiles : [];
           }
         } else {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          profiles = (attributions || []).map((a: any) => a.etudiant as Profile).filter(Boolean);
+          profiles = (attributions as { etudiant?: Profile | Profile[] | null }[])
+            .map(a => (Array.isArray(a.etudiant) ? a.etudiant[0] : a.etudiant))
+            .filter((p): p is Profile => Boolean(p));
         }
 
         // Si aucune attribution explicite n'est trouvée, fallback vers tous les étudiants
@@ -183,10 +184,10 @@ export default function EtudiantsListePage() {
             const sEO = sessions.find(s => s.score_expression_orale !== null && s.statut === 'termine');
 
             const dernieresNotes = {
-              co: sCO ? { score: sCO.score_oral!, niveau: pctToCECRL(Math.round((sCO.score_oral! / SCORE_MAX) * 100)), date: sCO.created_at, mode: sCO.mode } : null,
-              ce: sCE ? { score: sCE.score_ecrit!, niveau: pctToCECRL(Math.round((sCE.score_ecrit! / SCORE_MAX) * 100)), date: sCE.created_at, mode: sCE.mode } : null,
-              ee: sEE ? { score: sEE.score_expression_ecrite!, niveau: pctToCECRL(Math.round((sEE.score_expression_ecrite! / SCORE_MAX) * 100)), date: sEE.created_at, mode: sEE.mode } : null,
-              eo: sEO ? { score: sEO.score_expression_orale!, niveau: pctToCECRL(Math.round((sEO.score_expression_orale! / SCORE_MAX) * 100)), date: sEO.created_at, mode: sEO.mode } : null,
+              co: sCO && sCO.score_oral !== null ? { score: sCO.score_oral, niveau: pctToCECRL(Math.round((sCO.score_oral / SCORE_MAX) * 100)), date: sCO.created_at, mode: sCO.mode } : null,
+              ce: sCE && sCE.score_ecrit !== null ? { score: sCE.score_ecrit, niveau: pctToCECRL(Math.round((sCE.score_ecrit / SCORE_MAX) * 100)), date: sCE.created_at, mode: sCE.mode } : null,
+              ee: sEE && sEE.score_expression_ecrite !== null ? { score: sEE.score_expression_ecrite, niveau: pctToCECRL(Math.round((sEE.score_expression_ecrite / SCORE_MAX) * 100)), date: sEE.created_at, mode: sEE.mode } : null,
+              eo: sEO && sEO.score_expression_orale !== null ? { score: sEO.score_expression_orale, niveau: pctToCECRL(Math.round((sEO.score_expression_orale / SCORE_MAX) * 100)), date: sEO.created_at, mode: sEO.mode } : null,
             };
 
             // Niveau global CECRL basé sur toutes les sessions (examen + entraînement)
@@ -233,6 +234,7 @@ export default function EtudiantsListePage() {
   }, [user]);
 
   const toggleExamenBlanc = async (etudiantId: string, current: boolean) => {
+    if (!isAdmin && !isProfesseur) return;
     setToggling(etudiantId);
     const { error } = await supabase
       .from('profiles')
@@ -254,6 +256,7 @@ export default function EtudiantsListePage() {
   };
 
   const toggleBloque = async (etudiantId: string, current: boolean) => {
+    if (!isAdmin && !isProfesseur) return;
     setBlocking(etudiantId);
     const { error } = await supabase
       .from('profiles')
@@ -378,59 +381,59 @@ export default function EtudiantsListePage() {
                 <CardContent className="p-4">
                   <div className="flex flex-col gap-3">
                     {/* Ligne 1 : Header cliquable pour déplier/replier les détails */}
-                    <div
-                      className="flex items-center gap-3 min-w-0 cursor-pointer select-none group"
-                      onClick={() => setExpanded(isExpanded ? null : profile.id)}
-                    >
-                      <div className={cn(
-                        'w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-transform group-hover:scale-105',
-                        estBloque ? 'bg-destructive/15' : 'bg-primary/15'
-                      )}>
-                        <span className={cn('text-sm font-semibold', estBloque ? 'text-destructive' : 'text-primary')}>
-                          {profile.prenom?.[0]}{profile.nom?.[0]}
-                        </span>
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <p className="font-semibold text-foreground group-hover:text-primary transition-colors">
-                            {profile.prenom} {profile.nom}
-                          </p>
-                          {niveauGlobal && (
-                            <Badge
-                              style={{ backgroundColor: CECRL_COLORS[niveauGlobal] }}
-                              className="text-white text-xs shrink-0"
-                              title="Niveau CECRL global (tous modes confondus)"
-                            >
-                              {niveauGlobal}
-                            </Badge>
-                          )}
-                          {estBloque && (
-                            <Badge variant="destructive" className="text-xs gap-1 shrink-0">
-                              <Ban className="w-3 h-3" /> Bloqué
-                            </Badge>
+                    <div className="flex items-center gap-3 min-w-0">
+                      <button
+                        type="button"
+                        className="flex items-center gap-3 min-w-0 flex-1 text-left cursor-pointer select-none group"
+                        onClick={() => setExpanded(isExpanded ? null : profile.id)}
+                      >
+                        <div className={cn(
+                          'w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-transform group-hover:scale-105',
+                          estBloque ? 'bg-destructive/15' : 'bg-primary/15'
+                        )}>
+                          <span className={cn('text-sm font-semibold', estBloque ? 'text-destructive' : 'text-primary')}>
+                            {profile.prenom?.[0]}{profile.nom?.[0]}
+                          </span>
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <p className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                              {profile.prenom} {profile.nom}
+                            </p>
+                            {niveauGlobal && (
+                              <Badge
+                                style={{ backgroundColor: CECRL_COLORS[niveauGlobal] }}
+                                className="text-white text-xs shrink-0"
+                                title="Niveau CECRL global (tous modes confondus)"
+                              >
+                                {niveauGlobal}
+                              </Badge>
+                            )}
+                            {estBloque && (
+                              <Badge variant="destructive" className="text-xs gap-1 shrink-0">
+                                <Ban className="w-3 h-3" /> Bloqué
+                              </Badge>
+                            )}
+                          </div>
+                          <p className="text-xs text-muted-foreground truncate">{profile.email}</p>
+                          {profile.last_active_at && (
+                            <p className="text-xs text-muted-foreground/70 mt-0.5 flex items-center gap-1">
+                              <Clock className="w-3 h-3 shrink-0" />
+                              {new Date(profile.last_active_at).toLocaleString('fr-FR', {
+                                day: '2-digit', month: 'short', year: 'numeric',
+                                hour: '2-digit', minute: '2-digit',
+                              })}
+                            </p>
                           )}
                         </div>
-                        <p className="text-xs text-muted-foreground truncate">{profile.email}</p>
-                        {profile.last_active_at && (
-                          <p className="text-xs text-muted-foreground/70 mt-0.5 flex items-center gap-1">
-                            <Clock className="w-3 h-3 shrink-0" />
-                            {new Date(profile.last_active_at).toLocaleString('fr-FR', {
-                              day: '2-digit', month: 'short', year: 'numeric',
-                              hour: '2-digit', minute: '2-digit',
-                            })}
-                          </p>
-                        )}
-                      </div>
+                      </button>
 
                       {/* Bouton Voir détails explicite */}
                       <Button
                         variant={isExpanded ? 'secondary' : 'outline'}
                         size="sm"
                         className="shrink-0 gap-1 text-xs h-8"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setExpanded(isExpanded ? null : profile.id);
-                        }}
+                        onClick={() => setExpanded(isExpanded ? null : profile.id)}
                       >
                         <span>{isExpanded ? 'Masquer' : 'Détails'}</span>
                         {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
@@ -438,7 +441,7 @@ export default function EtudiantsListePage() {
                     </div>
 
                     {/* Ligne 2 : stats + contrôles (les clics sur les boutons ne replient pas la carte) */}
-                    <div className="flex items-center gap-2 flex-wrap sm:pl-13 pt-1 border-t border-border/40" onClick={(e) => e.stopPropagation()}>
+                    <div className="flex items-center gap-2 flex-wrap sm:pl-13 pt-1 border-t border-border/40">
                       {/* Score */}
                       <div className="text-center pr-2">
                         <p className={cn('text-sm font-bold', scoreColor(dernierScore))}>

@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/db/supabase';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useAuth } from '@/contexts/AuthContext';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,7 +11,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select';
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend,
+  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend,
 } from 'recharts';
 import {
   Users, ChevronDown, ChevronUp, Search, TrendingUp,
@@ -20,6 +21,7 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import type { Profile, SessionExamen, NiveauCECRL } from '@/types/index';
 import { CECRL_COLORS, EPREUVE_LABELS, NIVEAU_CECRL_LIST, pctToCECRL, CECRL_DESCRIPTIONS } from '@/types/index';
+import { CountryFlag } from '@/components/ui/CountryFlag';
 
 interface EpreuveStats {
   label: string;
@@ -78,6 +80,7 @@ function scoreColor(score: number | null): string {
 }
 
 export default function SuiviEtudiantsPage() {
+  const { isAdmin } = useAuth();
   const [etudiants, setEtudiants] = useState<EtudiantStats[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -88,120 +91,131 @@ export default function SuiviEtudiantsPage() {
 
   useEffect(() => {
     const load = async () => {
-      const [profilesRes, attributionsRes, profsRes] = await Promise.all([
-        supabase.from('profiles').select('*').eq('role', 'etudiant').order('nom'),
-        supabase.from('attributions').select('etudiant_id, professeur_id'),
-        supabase.from('profiles').select('*').eq('role', 'professeur'),
-      ]);
+      try {
+        setLoading(true);
+        const [profilesRes, attributionsRes, profsRes] = await Promise.all([
+          supabase.from('profiles').select('*').eq('role', 'etudiant').order('nom'),
+          supabase.from('attributions').select('etudiant_id, professeur_id'),
+          supabase.from('profiles').select('*').eq('role', 'professeur'),
+        ]);
 
-      const profiles = Array.isArray(profilesRes.data) ? profilesRes.data : [];
-      const profMap = new Map((profsRes.data || []).map(p => [p.id, p]));
-      const attrMap = new Map((attributionsRes.data || []).map(a => [a.etudiant_id, profMap.get(a.professeur_id) || null]));
+        const profiles = Array.isArray(profilesRes.data) ? profilesRes.data : [];
+        const profMap = new Map((profsRes.data || []).map(p => [p.id, p]));
+        const attrMap = new Map((attributionsRes.data || []).map(a => [a.etudiant_id, profMap.get(a.professeur_id) || null]));
 
-      if (!profiles.length && profilesRes.error) { setLoading(false); return; }
+        if (!profiles.length && profilesRes.error) { return; }
 
-      const enriched = await Promise.all(
-        profiles.map(async (profile: Profile) => {
-          const [sessionsRes, pendingRes] = await Promise.all([
-            supabase
-              .from('sessions_examen')
-              .select('*')
-              .eq('etudiant_id', profile.id)
-              .order('created_at', { ascending: false })
-              .limit(50),
-            supabase
-              .from('productions')
-              .select('id', { count: 'exact' })
-              .eq('etudiant_id', profile.id)
-              .eq('statut_correction', 'en_attente')
-              .not('professeur_id', 'is', null),
-          ]);
+        const enriched = await Promise.all(
+          profiles.map(async (profile: Profile) => {
+            const [sessionsRes, pendingRes] = await Promise.all([
+              supabase
+                .from('sessions_examen')
+                .select('*')
+                .eq('etudiant_id', profile.id)
+                .order('created_at', { ascending: false })
+                .limit(50),
+              supabase
+                .from('productions')
+                .select('id', { count: 'exact' })
+                .eq('etudiant_id', profile.id)
+                .eq('statut_correction', 'en_attente')
+                .not('professeur_id', 'is', null),
+            ]);
 
-          const sessions: SessionExamen[] = Array.isArray(sessionsRes.data) ? sessionsRes.data : [];
-          const examSessions = sessions.filter(s => s.mode === 'examen_blanc' && s.statut === 'termine');
-          const trainSessions = sessions.filter(s => s.mode === 'entrainement' && s.statut === 'termine');
-          const scored = examSessions.filter(s => s.score_global !== null);
-          const scores = scored.map(s => s.score_global as number);
-          const scoreMoyen = avg(scores);
+            const sessions: SessionExamen[] = Array.isArray(sessionsRes.data) ? sessionsRes.data : [];
+            const examSessions = sessions.filter(s => s.mode === 'examen_blanc' && s.statut === 'termine');
+            const trainSessions = sessions.filter(s => s.mode === 'entrainement' && s.statut === 'termine');
+            const scored = examSessions.filter(s => s.score_global !== null);
+            const scores = scored.map(s => s.score_global as number);
+            const scoreMoyen = avg(scores);
 
-          // Dernier score général
-          const dernierScoreSession = sessions.find(s => s.statut === 'termine' && (s.score_global !== null || sessionEntrainementScore(s) !== null));
-          const dernierScore = dernierScoreSession
-            ? (dernierScoreSession.score_global ?? sessionEntrainementScore(dernierScoreSession))
-            : null;
-          const dernierScoreMode = (dernierScoreSession?.mode as 'entrainement' | 'examen_blanc') ?? null;
-          const dernierNiveau = dernierScoreSession?.niveau_cecrl
-            ? (dernierScoreSession.niveau_cecrl as NiveauCECRL)
-            : (dernierScore !== null ? pctToCECRL(Math.round((dernierScore / SCORE_MAX) * 100)) : null);
+            // Dernier score général
+            const dernierScoreSession = sessions.find(s => s.statut === 'termine' && (s.score_global !== null || sessionEntrainementScore(s) !== null));
+            const dernierScore = dernierScoreSession
+              ? (dernierScoreSession.score_global ?? sessionEntrainementScore(dernierScoreSession))
+              : null;
+            const dernierScoreMode = (dernierScoreSession?.mode as 'entrainement' | 'examen_blanc') ?? null;
+            const dernierNiveau = dernierScoreSession?.niveau_cecrl
+              ? (dernierScoreSession.niveau_cecrl as NiveauCECRL)
+              : (dernierScore !== null ? pctToCECRL(Math.round((dernierScore / SCORE_MAX) * 100)) : null);
 
-          const progression = scores.length >= 2 ? scores[0] - scores[1] : null;
+            const progression = scores.length >= 2 ? scores[0] - scores[1] : null;
 
-          // Moyennes par épreuve — séparées par mode
-          const epreuves: Array<{ label: string; key: keyof SessionExamen }> = [
-            { label: EPREUVE_LABELS.comprehension_oral,  key: 'score_oral' },
-            { label: EPREUVE_LABELS.comprehension_ecrit, key: 'score_ecrit' },
-            { label: EPREUVE_LABELS.expression_ecrite,   key: 'score_expression_ecrite' },
-            { label: EPREUVE_LABELS.expression_orale,    key: 'score_expression_orale' },
-          ];
-          const parEpreuve: EpreuveStats[] = epreuves.map(e => ({
-            label: e.label,
-            moyenneExamen: avg(examSessions.map(s => s[e.key] as number | null)),
-            moyenneEntrainement: avg(trainSessions.map(s => s[e.key] as number | null)),
-          }));
+            // Moyennes par épreuve — séparées par mode
+            const epreuves: Array<{ label: string; key: keyof SessionExamen }> = [
+              { label: EPREUVE_LABELS.comprehension_oral,  key: 'score_oral' },
+              { label: EPREUVE_LABELS.comprehension_ecrit, key: 'score_ecrit' },
+              { label: EPREUVE_LABELS.expression_ecrite,   key: 'score_expression_ecrite' },
+              { label: EPREUVE_LABELS.expression_orale,    key: 'score_expression_orale' },
+            ];
+            const parEpreuve: EpreuveStats[] = epreuves.map(e => ({
+              label: e.label,
+              moyenneExamen: avg(examSessions.map(s => s[e.key] as number | null)),
+              moyenneEntrainement: avg(trainSessions.map(s => s[e.key] as number | null)),
+            }));
 
-          // Dernières notes individuelles par épreuve
-          const sCO = sessions.find(s => s.score_oral !== null && s.statut === 'termine');
-          const sCE = sessions.find(s => s.score_ecrit !== null && s.statut === 'termine');
-          const sEE = sessions.find(s => s.score_expression_ecrite !== null && s.statut === 'termine');
-          const sEO = sessions.find(s => s.score_expression_orale !== null && s.statut === 'termine');
+            // Dernières notes individuelles par épreuve
+            const sCO = sessions.find(s => s.score_oral !== null && s.statut === 'termine');
+            const sCE = sessions.find(s => s.score_ecrit !== null && s.statut === 'termine');
+            const sEE = sessions.find(s => s.score_expression_ecrite !== null && s.statut === 'termine');
+            const sEO = sessions.find(s => s.score_expression_orale !== null && s.statut === 'termine');
 
-          const dernieresNotes = {
-            co: sCO ? { score: sCO.score_oral!, niveau: pctToCECRL(Math.round((sCO.score_oral! / SCORE_MAX) * 100)), date: sCO.created_at, mode: sCO.mode } : null,
-            ce: sCE ? { score: sCE.score_ecrit!, niveau: pctToCECRL(Math.round((sCE.score_ecrit! / SCORE_MAX) * 100)), date: sCE.created_at, mode: sCE.mode } : null,
-            ee: sEE ? { score: sEE.score_expression_ecrite!, niveau: pctToCECRL(Math.round((sEE.score_expression_ecrite! / SCORE_MAX) * 100)), date: sEE.created_at, mode: sEE.mode } : null,
-            eo: sEO ? { score: sEO.score_expression_orale!, niveau: pctToCECRL(Math.round((sEO.score_expression_orale! / SCORE_MAX) * 100)), date: sEO.created_at, mode: sEO.mode } : null,
-          };
+            const dernieresNotes = {
+              co: sCO && sCO.score_oral !== null ? { score: sCO.score_oral, niveau: pctToCECRL(Math.round((sCO.score_oral / SCORE_MAX) * 100)), date: sCO.created_at, mode: sCO.mode } : null,
+              ce: sCE && sCE.score_ecrit !== null ? { score: sCE.score_ecrit, niveau: pctToCECRL(Math.round((sCE.score_ecrit / SCORE_MAX) * 100)), date: sCE.created_at, mode: sCE.mode } : null,
+              ee: sEE && sEE.score_expression_ecrite !== null ? { score: sEE.score_expression_ecrite, niveau: pctToCECRL(Math.round((sEE.score_expression_ecrite / SCORE_MAX) * 100)), date: sEE.created_at, mode: sEE.mode } : null,
+              eo: sEO && sEO.score_expression_orale !== null ? { score: sEO.score_expression_orale, niveau: pctToCECRL(Math.round((sEO.score_expression_orale / SCORE_MAX) * 100)), date: sEO.created_at, mode: sEO.mode } : null,
+            };
 
-          // Niveau global CECRL — toutes sessions confondues
-          const allScores: number[] = [];
-          sessions.forEach(s => {
-            if (s.mode === 'examen_blanc' && s.score_global !== null) {
-              allScores.push(s.score_global as number);
-            } else {
-              const sc = sessionEntrainementScore(s);
-              if (sc !== null) allScores.push(sc);
-            }
-          });
-          const globalAvg = avg(allScores);
-          const niveauGlobal: NiveauCECRL | null = globalAvg !== null
-            ? pctToCECRL(Math.round((globalAvg / SCORE_MAX) * 100))
-            : null;
+            // Niveau global CECRL — toutes sessions confondues
+            const allScores: number[] = [];
+            sessions.forEach(s => {
+              if (s.mode === 'examen_blanc' && s.score_global !== null) {
+                allScores.push(s.score_global as number);
+              } else {
+                const sc = sessionEntrainementScore(s);
+                if (sc !== null) allScores.push(sc);
+              }
+            });
+            const globalAvg = avg(allScores);
+            const niveauGlobal: NiveauCECRL | null = globalAvg !== null
+              ? pctToCECRL(Math.round((globalAvg / SCORE_MAX) * 100))
+              : null;
 
-          return {
-            profile,
-            professeur: attrMap.get(profile.id) || null,
-            sessions,
-            sessionsTotal: sessions.length,
-            examsBlancs: examSessions.length,
-            correctionsEnAttente: pendingRes.count || 0,
-            dernierScore,
-            dernierScoreMode,
-            dernierNiveau,
-            scoreMoyen,
-            progression,
-            niveauGlobal,
-            parEpreuve,
-            dernieresNotes,
-          } as EtudiantStats;
-        })
-      );
-      setEtudiants(enriched);
-      setLoading(false);
+            return {
+              profile,
+              professeur: attrMap.get(profile.id) || null,
+              sessions,
+              sessionsTotal: sessions.length,
+              examsBlancs: examSessions.length,
+              correctionsEnAttente: pendingRes.count || 0,
+              dernierScore,
+              dernierScoreMode,
+              dernierNiveau,
+              scoreMoyen,
+              progression,
+              niveauGlobal,
+              parEpreuve,
+              dernieresNotes,
+            } as EtudiantStats;
+          })
+        );
+        setEtudiants(enriched);
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : 'Erreur lors du chargement du suivi étudiant.';
+        toast.error(msg);
+      } finally {
+        setLoading(false);
+      }
     };
     load();
   }, []);
 
   const toggleExamenBlanc = async (etudiantId: string, current: boolean) => {
+    if (!isAdmin) {
+      toast.error('Action réservée aux administrateurs.');
+      return;
+    }
     setToggling(etudiantId);
     const { error } = await supabase
       .from('profiles')
@@ -373,7 +387,14 @@ export default function SuiviEtudiantsPage() {
                             </Link>
                           )}
                         </div>
-                        <p className="text-xs text-muted-foreground truncate">{profile.email}</p>
+                        <p className="text-xs text-muted-foreground truncate flex items-center gap-2 flex-wrap">
+                          <span>{profile.email}</span>
+                          {profile.pays && (
+                            <span className="text-foreground/80 font-medium inline-flex items-center gap-1">
+                              · <CountryFlag country={profile.pays} showName />
+                            </span>
+                          )}
+                        </p>
                       </div>
                       {/* Expand en haut à droite */}
                       <Button

@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { supabase, fetchAllQuestions } from '@/db/supabase';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { useSearchParams, useLocation } from 'react-router-dom';
+import { supabase, fetchAllQuestions, deduplicateQuestions, isQuestionDuplicate, registerQuestionFingerprints } from '@/db/supabase';
 import { useAuth } from '@/contexts/AuthContext';
+import { cn } from '@/lib/utils';
 import { getAudioClaritySetting, attachAudioClarityProcessor } from '@/lib/audioProcessing';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,14 +11,25 @@ import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
+  Dialog, DialogContent, DialogHeader, DialogTitle,
+} from '@/components/ui/dialog';
+import {
   Headphones, FileText, PenLine, Mic, Play, Pause,
   CheckCircle2, XCircle, ChevronLeft, ChevronRight,
   BookOpen, Clock, Loader2, Trophy, Square, AlertTriangle,
-  Send, Info, Layers, Mail, MessageSquare, Sparkles, RefreshCw,
+  Send, Info, Layers, Mail, MessageSquare, Sparkles, RefreshCw, Maximize2,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import type { Question, Tache, EpreuveType, NiveauCECRL } from '@/types/index';
 import { EPREUVE_LABELS, CECRL_COLORS, CECRL_DESCRIPTIONS, pctToCECRL } from '@/types/index';
+import AICorrectionResultView from '@/components/ai/AICorrectionResultView';
+import QuotaExhaustedModal from '@/components/ai/QuotaExhaustedModal';
+import {
+  checkUserQuota,
+  requestAICorrection,
+  blobToBase64,
+  type CorrectionResponse,
+} from '@/services/aiCorrection';
 
 const QCM_SESSION_SIZE = 20;
 const MAX_PENDING = 2; // Limite d'épreuves en attente de correction
@@ -118,30 +130,65 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-function selectAlternatingQuestions(all: Question[]): Question[] {
-  const byNiveau: Record<string, Question[]> = {};
-  for (const q of all) {
-    const key = q.niveau || 'null';
-    if (!byNiveau[key]) byNiveau[key] = [];
-    byNiveau[key].push(q);
+function selectAlternatingQuestions(all: Question[], epreuve?: string): Question[] {
+  const deduplicatedAll = deduplicateQuestions(all);
+  if (deduplicatedAll.length === 0) return [];
+
+  const storageKey = epreuve ? `mon_tcfca_seen_q_${epreuve}` : null;
+  let seenIds = new Set<string>();
+  if (storageKey) {
+    try {
+      const raw = localStorage.getItem(storageKey);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) seenIds = new Set(parsed.map(String));
+      }
+    } catch {
+      /* ignore localStorage errors */
+    }
   }
-  Object.keys(byNiveau).forEach(k => { byNiveau[k] = shuffle(byNiveau[k]); });
-  const orderedKeys = [
-    ...NIVEAU_ORDER.filter(n => byNiveau[n]?.length),
-    ...(byNiveau['null']?.length ? ['null'] : []),
-  ];
-  if (orderedKeys.length === 0) return shuffle(all).slice(0, QCM_SESSION_SIZE);
+
+  // Séparer les questions pas encore vues et celles déjà vues, puis mélanger aléatoirement
+  const unseen = shuffle(deduplicatedAll.filter(q => !seenIds.has(String(q.id))));
+  const seen = shuffle(deduplicatedAll.filter(q => seenIds.has(String(q.id))));
+
   const result: Question[] = [];
-  const cursors: Record<string, number> = {};
-  orderedKeys.forEach(k => { cursors[k] = 0; });
-  let ki = 0;
-  while (result.length < QCM_SESSION_SIZE) {
-    const key = orderedKeys[ki % orderedKeys.length];
-    const pool = byNiveau[key];
-    if (cursors[key] < pool.length) { result.push(pool[cursors[key]]); cursors[key]++; }
-    ki++;
-    if (ki > QCM_SESSION_SIZE * orderedKeys.length) break;
+  const sessionFingerprints = new Set<string>();
+
+  const tryAdd = (q: Question): boolean => {
+    if (!q) return false;
+    if (isQuestionDuplicate(q, sessionFingerprints)) return false;
+    registerQuestionFingerprints(q, sessionFingerprints);
+    result.push(q);
+    return true;
+  };
+
+  // 1. Sélection totalement aléatoire parmi les questions non encore vues (100% de la banque accessible)
+  for (const q of unseen) {
+    if (result.length >= QCM_SESSION_SIZE) break;
+    tryAdd(q);
   }
+
+  // 2. Si moins de 20 questions inédites restent, compléter aléatoirement et réinitialiser le cycle
+  const cycleReset = result.length < QCM_SESSION_SIZE;
+  if (cycleReset) {
+    for (const q of seen) {
+      if (result.length >= QCM_SESSION_SIZE) break;
+      tryAdd(q);
+    }
+  }
+
+  if (storageKey) {
+    try {
+      const nextSeen = cycleReset
+        ? result.map(q => String(q.id))
+        : [...seenIds, ...result.map(q => String(q.id))];
+      localStorage.setItem(storageKey, JSON.stringify(nextSeen));
+    } catch {
+      /* ignore localStorage errors */
+    }
+  }
+
   return result.slice(0, QCM_SESSION_SIZE);
 }
 
@@ -151,6 +198,7 @@ function AudioPlayer({ url }: { url: string }) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    if (!url) return;
     let isMounted = true;
     const initClarity = async () => {
       const isClarityEnabled = await getAudioClaritySetting();
@@ -183,7 +231,7 @@ function AudioPlayer({ url }: { url: string }) {
 
   return (
     <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
-      <button onClick={toggle} className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-primary-foreground shrink-0">
+      <button type="button" onClick={toggle} className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-primary-foreground shrink-0">
         {playing ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
       </button>
       <div className="flex-1 min-w-0"><Progress value={progress} className="h-1.5" /></div>
@@ -198,7 +246,9 @@ function AudioPlayer({ url }: { url: string }) {
           if (a.duration) setProgress((a.currentTime / a.duration) * 100);
         }}
         onEnded={() => setPlaying(false)}
-      />
+      >
+        <track kind="captions" />
+      </audio>
     </div>
   );
 }
@@ -240,7 +290,7 @@ function AudioRecorder({ tacheNum, onRecorded, disabled, initialRecorded = false
       mr.ondataavailable = e => { if (e.data.size > 0) chunksRef.current.push(e.data); };
       mr.onstop = () => {
         const blob = new Blob(chunksRef.current, { type: mimeType });
-        stream.getTracks().forEach(t => t.stop());
+        stream.getTracks().forEach(t => { t.stop(); });
         onRecorded(tacheNum, blob);
         setHasRecording(true);
         setRecording(false);
@@ -326,10 +376,34 @@ function LimiteAtteintCard({ epreuve, onBack }: { epreuve: EpreuveType; onBack: 
 // ─── Page principale ─────────────────────────────────────────────────────────
 export default function EntrainementPage() {
   const [searchParams] = useSearchParams();
-  const [selectedEpreuve, setSelectedEpreuve] = useState<EpreuveType | null>(
-    (searchParams.get('epreuve') as EpreuveType) || null
+  const location = useLocation();
+  const redoState = (location.state as {
+    redoConsigne?: string;
+    redoReference?: string | null;
+    redoEpreuve?: EpreuveType;
+    redoTache?: number;
+  } | null) ?? null;
+
+  const initialEpreuve =
+    redoState?.redoEpreuve || (searchParams.get('epreuve') as EpreuveType) || null;
+  const tacheQuery = searchParams.get('tache');
+  const initialTacheMode: 'all' | number | null =
+    redoState?.redoTache ??
+    (tacheQuery === 'all' ? 'all' : tacheQuery && !Number.isNaN(Number(tacheQuery)) ? Number(tacheQuery) : null);
+
+  const [selectedEpreuve, setSelectedEpreuve] = useState<EpreuveType | null>(initialEpreuve);
+  const [selectedTacheMode, setSelectedTacheMode] = useState<'all' | number | null>(initialTacheMode);
+  const [redoTarget, setRedoTarget] = useState<{
+    reference?: string | null;
+    consigne?: string;
+  } | null>(
+    searchParams.get('ref') || redoState?.redoConsigne
+      ? {
+          reference: redoState?.redoReference ?? searchParams.get('ref'),
+          consigne: redoState?.redoConsigne,
+        }
+      : null
   );
-  const [selectedTacheMode, setSelectedTacheMode] = useState<'all' | number | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [taches, setTaches] = useState<Tache[]>([]);
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -350,61 +424,37 @@ export default function EntrainementPage() {
   const eeTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const { user } = useAuth();
 
-  useEffect(() => {
-    if (!selectedEpreuve) {
-      setSelectedTacheMode(null);
-      return;
-    }
-    // Pour QCM, chargement direct
-    if (selectedEpreuve === 'comprehension_oral' || selectedEpreuve === 'comprehension_ecrit') {
-      loadContent(selectedEpreuve);
-    } else if (selectedTacheMode !== null) {
-      // Pour Expression, chargement une fois la tâche choisie
-      loadContent(selectedEpreuve, selectedTacheMode);
-    }
-  }, [selectedEpreuve, selectedTacheMode, sessionKey]);
+  // États pour la correction automatique par IA
+  const [aiResult, setAiResult] = useState<CorrectionResponse | null>(null);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiStep, setAiStep] = useState<string>('');
+  const [quotaModalOpen, setQuotaModalOpen] = useState(false);
+  const [quotaModalType, setQuotaModalType] = useState<'ee' | 'eo'>('ee');
+  const [quotaRestant, setQuotaRestant] = useState<{ ee: number; eo: number }>({ ee: 0, eo: 0 });
+  const [zoomImageUrl, setZoomImageUrl] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!timerActive || timerSeconds <= 0) return;
-    const interval = setInterval(() => setTimerSeconds(s => s > 0 ? s - 1 : 0), 1000);
-    return () => clearInterval(interval);
-  }, [timerActive, timerSeconds]);
-
-  // Chronomètre expression écrite : démarre uniquement lors de la phase de rédaction
-  useEffect(() => {
-    if (selectedEpreuve === 'expression_ecrite' && selectedTacheMode !== null) {
-      setEeElapsed(0);
-      eeTimerRef.current = setInterval(() => setEeElapsed(e => e + 1), 1000);
-    } else {
-      if (eeTimerRef.current) { clearInterval(eeTimerRef.current); eeTimerRef.current = null; }
-    }
-    return () => { if (eeTimerRef.current) { clearInterval(eeTimerRef.current); eeTimerRef.current = null; } };
-  }, [selectedEpreuve, selectedTacheMode]);
-
-  // Vérifier la limite avant d'afficher l'épreuve d'expression
-  const checkAndSelectEpreuve = async (epreuve: EpreuveType) => {
-    setSelectedTacheMode(null);
-    if (epreuve !== 'expression_ecrite' && epreuve !== 'expression_orale') {
-      setSelectedEpreuve(epreuve);
-      return;
-    }
+  const refreshQuotas = useCallback(async () => {
     if (!user) return;
-    setCheckingLimit(true);
-    const { data, error } = await supabase.rpc('count_pending_expression_entrainement', {
-      p_etudiant_id: user.id,
-      p_epreuve: epreuve,
-    });
-    setCheckingLimit(false);
-    if (error) {
-      toast.error('Erreur lors de la vérification. Veuillez réessayer.');
-      return;
+    try {
+      const [eeQ, eoQ] = await Promise.all([
+        checkUserQuota('ee'),
+        checkUserQuota('eo'),
+      ]);
+      setQuotaRestant({ ee: eeQ.remaining, eo: eoQ.remaining });
+    } catch (e) {
+      console.warn('Erreur refreshQuotas:', e);
     }
-    const count = data as number ?? 0;
-    setPendingCount(prev => ({ ...prev, [epreuve]: count }));
-    setSelectedEpreuve(epreuve);
-  };
+  }, [user]);
 
-  const loadContent = async (epreuve: EpreuveType, tacheMode: 'all' | number = 'all') => {
+  useEffect(() => {
+    refreshQuotas();
+  }, [refreshQuotas]);
+
+  const loadContent = useCallback(async (
+    epreuve: EpreuveType,
+    tacheMode: 'all' | number = 'all',
+    targetOverride?: { reference?: string | null; consigne?: string } | null
+  ) => {
     setLoading(true);
     setCurrentIdx(0);
     setReponses({});
@@ -422,6 +472,54 @@ export default function EntrainementPage() {
       const selectedTaches: Tache[] = [];
 
       for (const num of requiredNums) {
+        // 0. Si on relance un exercice précis depuis l'historique
+        if (targetOverride && requiredNums.length === 1) {
+          if (targetOverride.reference) {
+            const { data: exactTache } = await supabase
+              .from('taches')
+              .select('*')
+              .eq('epreuve', epreuve)
+              .eq('reference', targetOverride.reference)
+              .maybeSingle();
+            if (exactTache) {
+              selectedTaches.push(exactTache);
+              continue;
+            }
+            const { data: exactQuestion } = await supabase
+              .from('questions')
+              .select('*')
+              .eq('epreuve', epreuve)
+              .eq('reference', targetOverride.reference)
+              .maybeSingle();
+            if (exactQuestion) {
+              selectedTaches.push({
+                id: exactQuestion.id,
+                epreuve,
+                numero_tache: num,
+                reference: exactQuestion.reference || targetOverride.reference,
+                consigne: exactQuestion.texte || targetOverride.consigne || '',
+                duree_secondes: epreuve === 'expression_orale' ? (num === 1 ? 120 : num === 2 ? 330 : 270) : null,
+                actif: true,
+                created_at: new Date().toISOString(),
+              } as Tache);
+              continue;
+            }
+          }
+          if (targetOverride.consigne) {
+            selectedTaches.push({
+              id: `redo_${epreuve}_${num}`,
+              epreuve,
+              numero_tache: num,
+              reference: targetOverride.reference || (epreuve === 'expression_ecrite' ? `EE_T${num}` : `EO_T${num}`),
+              consigne: targetOverride.consigne,
+              duree_secondes: epreuve === 'expression_orale' ? (num === 1 ? 120 : num === 2 ? 330 : 270) : null,
+              actif: true,
+              created_at: new Date().toISOString(),
+            } as Tache);
+            continue;
+          }
+        }
+
         // 1. Chercher dans `taches`
         const { data: pool } = await supabase
           .from('taches')
@@ -474,9 +572,65 @@ export default function EntrainementPage() {
       setTaches(selectedTaches);
     } else {
       const all = await fetchAllQuestions<Question>(epreuve);
-      setQuestions(shuffle(all).slice(0, QCM_SESSION_SIZE));
+      setQuestions(selectAlternatingQuestions(all, epreuve));
     }
     setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    if (!selectedEpreuve) {
+      setSelectedTacheMode(null);
+      return;
+    }
+    if (sessionKey < 0) return;
+    // Pour QCM, chargement direct
+    if (selectedEpreuve === 'comprehension_oral' || selectedEpreuve === 'comprehension_ecrit') {
+      loadContent(selectedEpreuve);
+    } else if (selectedTacheMode !== null) {
+      // Pour Expression, chargement une fois la tâche choisie
+      loadContent(selectedEpreuve, selectedTacheMode, redoTarget);
+    }
+  }, [selectedEpreuve, selectedTacheMode, sessionKey, redoTarget, loadContent]);
+
+  useEffect(() => {
+    if (!timerActive || timerSeconds <= 0) return;
+    const interval = setInterval(() => setTimerSeconds(s => s > 0 ? s - 1 : 0), 1000);
+    return () => clearInterval(interval);
+  }, [timerActive, timerSeconds]);
+
+  // Chronomètre expression écrite : démarre uniquement lors de la phase de rédaction
+  useEffect(() => {
+    if (selectedEpreuve === 'expression_ecrite' && selectedTacheMode !== null) {
+      setEeElapsed(0);
+      eeTimerRef.current = setInterval(() => setEeElapsed(e => e + 1), 1000);
+    } else {
+      if (eeTimerRef.current) { clearInterval(eeTimerRef.current); eeTimerRef.current = null; }
+    }
+    return () => { if (eeTimerRef.current) { clearInterval(eeTimerRef.current); eeTimerRef.current = null; } };
+  }, [selectedEpreuve, selectedTacheMode]);
+
+  // Vérifier la limite avant d'afficher l'épreuve d'expression
+  const checkAndSelectEpreuve = async (epreuve: EpreuveType) => {
+    setSelectedTacheMode(null);
+    setRedoTarget(null);
+    if (epreuve !== 'expression_ecrite' && epreuve !== 'expression_orale') {
+      setSelectedEpreuve(epreuve);
+      return;
+    }
+    if (!user) return;
+    setCheckingLimit(true);
+    const { data, error } = await supabase.rpc('count_pending_expression_entrainement', {
+      p_etudiant_id: user.id,
+      p_epreuve: epreuve,
+    });
+    setCheckingLimit(false);
+    if (error) {
+      toast.error('Erreur lors de la vérification. Veuillez réessayer.');
+      return;
+    }
+    const count = data as number ?? 0;
+    setPendingCount(prev => ({ ...prev, [epreuve]: count }));
+    setSelectedEpreuve(epreuve);
   };
 
   const handleAnswer = (choixId: string) => {
@@ -673,40 +827,329 @@ export default function EntrainementPage() {
     }
   };
 
+  // ─── Correction automatique IA : Expression Écrite ───────────────────────────
+  const handleAICorrectionEcrite = async (tacheNum?: number) => {
+    if (!user) return;
+    const targetTache = tacheNum ? taches.find(t => t.numero_tache === tacheNum) : taches[0];
+    if (!targetTache) return;
+
+    const texte = texteReponses[targetTache.numero_tache]?.trim();
+    if (!texte) {
+      toast.error('Veuillez rédiger votre réponse avant de demander la correction par IA.');
+      return;
+    }
+
+    // 1. Vérification du quota
+    const q = await checkUserQuota('ee');
+    if (q.remaining <= 0) {
+      setQuotaModalType('ee');
+      setQuotaModalOpen(true);
+      return;
+    }
+
+    setAiLoading(true);
+    setAiStep("Analyse de la consigne et évaluation par notre IA...");
+    if (eeTimerRef.current) { clearInterval(eeTimerRef.current); eeTimerRef.current = null; }
+    const dureeCapturee = eeElapsed;
+
+    try {
+      const taskType = `EE_tache${targetTache.numero_tache}` as any;
+
+      // 1. Enregistrement préalable de la session d'entraînement pour l'historique
+      const { data: newSession } = await supabase.from('sessions_examen').insert({
+        etudiant_id: user.id,
+        mode: 'entrainement',
+        epreuve_actuelle: 'expression_ecrite',
+        statut: 'termine',
+        termine_at: new Date().toISOString(),
+        duree_expression_ecrite: dureeCapturee > 0 ? dureeCapturee : null,
+      }).select().maybeSingle();
+
+      // 2. Enregistrement de la production associée
+      let prodId: string | undefined = undefined;
+      if (newSession) {
+        const { data: newProd } = await supabase.from('productions').insert({
+          session_id: newSession.id,
+          etudiant_id: user.id,
+          epreuve: 'expression_ecrite',
+          numero_tache: targetTache.numero_tache,
+          reference: targetTache.reference || null,
+          contenu_texte: texte,
+          statut_correction: 'en_attente',
+        }).select().maybeSingle();
+        if (newProd) prodId = newProd.id;
+      }
+
+      // 3. Appel de l'Edge function avec rattachement historique
+      const response = await requestAICorrection({
+        task_type: taskType,
+        consigne: targetTache.consigne,
+        raw_text: texte,
+        reference: targetTache.reference || undefined,
+        session_id: newSession?.id,
+        production_id: prodId,
+      });
+
+      // 4. Mise à jour de la session avec le score global sur 699
+      if (newSession && response.correction) {
+        const total = response.correction.total ?? 0;
+        const score699 = Math.round((total / 20) * 699);
+        await supabase.from('sessions_examen').update({
+          score_expression_ecrite: score699,
+          score_global: score699,
+          niveau_cecrl: response.correction.niveau_cecrl || null,
+        }).eq('id', newSession.id);
+      }
+
+      toast.success('Correction par notre IA terminée avec succès !');
+      setAiResult(response);
+      setQuotaRestant(prev => ({ ...prev, ee: response.quota_restant }));
+    } catch (err: any) {
+      console.error('Erreur correction IA EE:', err);
+      if (err.isQuotaExhausted) {
+        setQuotaModalType('ee');
+        setQuotaModalOpen(true);
+      } else {
+        toast.error(err?.message || 'Une erreur est survenue lors de la correction par notre IA.');
+      }
+    } finally {
+      setAiLoading(false);
+    }
+  };
+
+  // ─── Correction automatique IA : Expression Orale ───────────────────────────
+  const handleAICorrectionOrale = async (tacheNum?: number) => {
+    if (!user) return;
+    const num = tacheNum || taches[currentIdx]?.numero_tache || taches[0]?.numero_tache;
+    const targetTache = taches.find(t => t.numero_tache === num);
+    if (!targetTache) return;
+
+    const blob = audioBlobs[targetTache.numero_tache];
+    if (!blob) {
+      toast.error('Veuillez d\'abord enregistrer votre réponse audio.');
+      return;
+    }
+
+    // 1. Vérification du quota
+    const q = await checkUserQuota('eo');
+    if (q.remaining <= 0) {
+      setQuotaModalType('eo');
+      setQuotaModalOpen(true);
+      return;
+    }
+
+    setAiLoading(true);
+    setAiStep("Étape 1/2 : Transcription de votre enregistrement audio...");
+
+    try {
+      const base64Audio = await blobToBase64(blob);
+
+      setAiStep("Étape 2/2 : Évaluation détaillée de votre prestation orale par notre IA...");
+      const taskType = `EO_tache${targetTache.numero_tache}` as any;
+
+      // 1. Enregistrement préalable de la session d'entraînement pour l'historique
+      const { data: newSession } = await supabase.from('sessions_examen').insert({
+        etudiant_id: user.id,
+        mode: 'entrainement',
+        epreuve_actuelle: 'expression_orale',
+        statut: 'termine',
+        termine_at: new Date().toISOString(),
+      }).select().maybeSingle();
+
+      // Upload de l'audio vers productions-audio pour l'historique
+      let uploadedAudioUrl: string | undefined = undefined;
+      try {
+        const filename = `${user.id}/${newSession?.id || Date.now()}_tache${targetTache.numero_tache}.webm`;
+        const { error: uploadErr } = await supabase.storage
+          .from('productions-audio')
+          .upload(filename, blob, { contentType: blob.type || 'audio/webm', upsert: true });
+        if (!uploadErr) {
+          const { data: urlData } = supabase.storage.from('productions-audio').getPublicUrl(filename);
+          uploadedAudioUrl = urlData.publicUrl;
+        }
+      } catch (uploadEx) {
+        console.warn('Upload audio EO IA optionnel échoué:', uploadEx);
+      }
+
+      // 2. Enregistrement de la production associée
+      let prodId: string | undefined = undefined;
+      if (newSession) {
+        const { data: newProd } = await supabase.from('productions').insert({
+          session_id: newSession.id,
+          etudiant_id: user.id,
+          epreuve: 'expression_orale',
+          numero_tache: targetTache.numero_tache,
+          audio_url: uploadedAudioUrl || null,
+          reference: targetTache.reference || null,
+          statut_correction: 'en_attente',
+        }).select().maybeSingle();
+        if (newProd) prodId = newProd.id;
+      }
+
+      // 3. Appel de l'Edge function avec rattachement historique
+      const response = await requestAICorrection({
+        task_type: taskType,
+        consigne: targetTache.consigne,
+        audio_url: uploadedAudioUrl,
+        audio_base64: base64Audio,
+        mime_type: blob.type || 'audio/webm',
+        reference: targetTache.reference || undefined,
+        session_id: newSession?.id,
+        production_id: prodId,
+      });
+
+      // 4. Mise à jour de la session avec le score global sur 699
+      if (newSession && response.correction) {
+        const total = response.correction.total ?? 0;
+        const score699 = Math.round((total / 20) * 699);
+        await supabase.from('sessions_examen').update({
+          score_expression_orale: score699,
+          score_global: score699,
+          niveau_cecrl: response.correction.niveau_cecrl || null,
+        }).eq('id', newSession.id);
+      }
+
+      toast.success('Transcription et évaluation par IA terminées !');
+      setAiResult(response);
+      setQuotaRestant(prev => ({ ...prev, eo: response.quota_restant }));
+    } catch (err: any) {
+      console.error('Erreur correction IA EO:', err);
+      if (err.isQuotaExhausted) {
+        setQuotaModalType('eo');
+        setQuotaModalOpen(true);
+      } else {
+        toast.error(err?.message || 'Une erreur est survenue lors de l\'évaluation par IA.');
+      }
+    } finally {
+      setAiLoading(false);
+    }
+  };
+
+  // ─── Vue Résultat de Correction Automatique IA ─────────────────────────────
+  if (aiResult) {
+    return (
+      <AICorrectionResultView
+        data={aiResult}
+        onNewAttempt={() => {
+          setAiResult(null);
+          setTexteReponses({});
+          setAudioBlobs({});
+          setSelectedTacheMode(null);
+          setSessionKey(k => k + 1);
+          refreshQuotas();
+        }}
+        onBackToList={() => {
+          setAiResult(null);
+          setSelectedEpreuve(null);
+          setSelectedTacheMode(null);
+          refreshQuotas();
+        }}
+      />
+    );
+  }
+
+  // ─── Vue de Chargement IA en cours ─────────────────────────────────────────
+  if (aiLoading) {
+    return (
+      <div className="max-w-xl mx-auto py-12 px-4 space-y-6 fade-in text-center">
+        <Card className="rounded-2xl border border-[#d3e4fe] shadow-sm p-8 space-y-5 bg-white">
+          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary/10 to-primary/20 text-primary flex items-center justify-center mx-auto animate-pulse">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+          <div className="space-y-2">
+            <Badge className="bg-[#eff4ff] text-[#0d233a] border-[#d3e4fe] text-xs font-semibold px-3 py-1">
+              <Sparkles className="w-3.5 h-3.5 text-[#d97706] mr-1.5" />
+              IA Évaluateur Expert TCF Canada
+            </Badge>
+            <h2 className="text-xl sm:text-2xl font-heading font-extrabold text-[#0d233a]">
+              Correction en cours...
+            </h2>
+            <p className="text-sm text-slate-600 leading-relaxed font-medium">
+              {aiStep || "Analyse de votre production en cours selon les critères officiels..."}
+            </p>
+          </div>
+          <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200/80 text-xs text-slate-600 text-left space-y-1.5">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span>Notation rigoureuse sur 20 points par <strong>notre IA</strong></span>
+            </div>
+            {selectedEpreuve === 'expression_orale' && (
+              <div className="flex items-center gap-2">
+                <Mic className="w-4 h-4 text-[#e53e3e] shrink-0" />
+                <span>Transcription audio haute précision par <strong>notre IA</strong></span>
+              </div>
+            )}
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span>Grille officielle CECRL (critères linguistiques, pragmatiques et sociolinguistiques)</span>
+            </div>
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
   // ─── Sélection épreuve principale ──────────────────────────────────────────
   if (!selectedEpreuve) {
     return (
-      <div className="max-w-3xl mx-auto space-y-6 fade-in">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground text-balance">Mode Entraînement</h1>
-          <p className="text-muted-foreground mt-1">Choisissez une épreuve pour commencer</p>
+      <div className="max-w-4xl mx-auto space-y-6 pb-12 fade-in">
+        <div className="space-y-1">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#eff4ff] text-[#0d233a] border border-[#d3e4fe] text-xs font-heading font-semibold mb-1">
+            <Sparkles className="w-3.5 h-3.5 text-[#e53e3e]" />
+            <span>Entraînement Libre &amp; Fiches Pédagogiques</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-[#0d233a] tracking-tight">
+            Entraînement Ciblé
+          </h1>
+          <p className="text-xs sm:text-sm text-[#475569]">
+            Choisissez une épreuve pour travailler spécifiquement vos compétences et obtenir une correction immédiate ou tutorée.
+          </p>
         </div>
         {checkingLimit && (
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Loader2 className="w-4 h-4 animate-spin" /> Vérification en cours…
+          <div className="flex items-center gap-2 text-xs sm:text-sm text-[#475569] bg-[#eff4ff] p-3 rounded-xl border border-[#d3e4fe]">
+            <Loader2 className="w-4 h-4 animate-spin text-[#0d233a]" /> Vérification des sessions en cours…
           </div>
         )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {(Object.keys(EPREUVE_LABELS) as EpreuveType[]).map(epreuve => {
             const Icon = EPREUVE_ICONS[epreuve];
+            const isOral = epreuve === 'expression_orale';
+            const isEcrit = epreuve === 'expression_ecrite';
+            
+            const badgeLabel = (isEcrit || isOral) ? 'Professeur & IA' : 'QCM Auto-corrigé';
+            const badgeClass = (isEcrit || isOral) ? 'bg-[#ffdcc3] text-[#6e3900]' : 'bg-[#dce9ff] text-[#0d233a]';
+            const iconBg = isOral ? 'bg-[#ffdad7] text-[#e53e3e]' : isEcrit ? 'bg-[#ffdcc3] text-[#cf7100]' : 'bg-[#eff4ff] text-[#0d233a]';
+
             return (
               <Card
                 key={epreuve}
-                className="cursor-pointer hover:border-primary/50 hover:shadow-md transition-all h-full"
+                className="cursor-pointer hover:border-[#0d233a]/40 hover:shadow-md transition-all duration-200 h-full rounded-2xl border border-[#e2e8f0] bg-white group overflow-hidden"
                 onClick={() => checkAndSelectEpreuve(epreuve)}
               >
-                <CardContent className="p-6 flex items-start gap-4 h-full">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                    <Icon className="w-6 h-6 text-primary" />
+                <CardContent className="p-6 flex flex-col justify-between h-full space-y-4">
+                  <div className="space-y-3">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform ${iconBg}`}>
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <Badge className={`text-xs font-semibold px-2.5 py-0.5 rounded-full border-0 ${badgeClass}`}>
+                        {badgeLabel}
+                      </Badge>
+                    </div>
+                    <div>
+                      <h3 className="font-heading font-bold text-lg text-[#0d233a]">{EPREUVE_LABELS[epreuve]}</h3>
+                      <p className="text-xs sm:text-sm text-[#475569] mt-1 leading-relaxed">
+                        {epreuve === 'comprehension_oral' && `${QCM_SESSION_SIZE} questions QCM aléatoires avec audios, voix et accents canadiens.`}
+                        {epreuve === 'comprehension_ecrit' && `${QCM_SESSION_SIZE} questions QCM aléatoires basées sur des textes officiels FEI.`}
+                        {epreuve === 'expression_ecrite' && 'Rédaction guidée des tâches 1, 2 ou 3 avec pré-correction IA et validation professeur.'}
+                        {epreuve === 'expression_orale' && 'Enregistrement vocal direct des tâches avec grille d\'évaluation FEI et retour personnalisé.'}
+                      </p>
+                    </div>
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="font-semibold text-foreground text-balance">{EPREUVE_LABELS[epreuve]}</h3>
-                    <p className="text-sm text-muted-foreground mt-1 text-pretty">
-                      {epreuve === 'comprehension_oral' && `${QCM_SESSION_SIZE} questions QCM aléatoires avec audio et images`}
-                      {epreuve === 'comprehension_ecrit' && `${QCM_SESSION_SIZE} questions QCM aléatoires basées sur des textes`}
-                      {epreuve === 'expression_ecrite' && 'Choix de tâche spécifique ou session complète (3 tâches)'}
-                      {epreuve === 'expression_orale' && 'Choix de tâche spécifique (1 ou 3) ou session complète'}
-                    </p>
+
+                  <div className="pt-2 border-t border-[#e2e8f0]/60 flex items-center justify-between text-xs font-heading font-bold text-[#0d233a]">
+                    <span>Commencer l'épreuve</span>
+                    <ChevronRight className="w-4 h-4 text-[#e53e3e] group-hover:translate-x-1 transition-transform" />
                   </div>
                 </CardContent>
               </Card>
@@ -874,13 +1317,33 @@ export default function EntrainementPage() {
           </div>
         </div>
 
-        <Alert className="border-primary/30 bg-primary/5">
-          <AlertDescription className="text-pretty">
-            {isSingleTask
-              ? 'Rédigez votre réponse pour cette tâche. Votre production sera envoyée à votre professeur pour correction.'
-              : 'Rédigez vos réponses pour chaque tâche. Vos productions seront envoyées à votre professeur pour correction.'}
-          </AlertDescription>
-        </Alert>
+        {/* Bandeau d'information IA & Quota */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-2xl bg-gradient-to-r from-[#eff4ff] to-[#f8fbff] border border-[#d3e4fe] shadow-xs">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
+              <Sparkles className="w-4 h-4 text-[#d97706]" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-[#0d233a]">
+                Évaluation Experte par notre IA activée
+              </p>
+              <p className="text-[11px] text-slate-500">
+                Notation rigoureuse selon les 9 critères officiels du TCF Canada
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 self-end sm:self-auto">
+            <Badge variant="outline" className="bg-white border-[#d3e4fe] font-bold text-[#0d233a] text-xs">
+              {quotaRestant.ee} correction(s) restante(s)
+            </Badge>
+            <a
+              href="/etudiant/abonnement"
+              className="text-xs text-primary font-semibold hover:underline bg-white px-2.5 py-1 rounded-lg border border-[#d3e4fe]"
+            >
+              Recharger
+            </a>
+          </div>
+        </div>
 
         {taches.length === 0 && (
           <Card><CardContent className="p-8 text-center text-muted-foreground">Aucune tâche disponible pour cette sélection.</CardContent></Card>
@@ -924,27 +1387,54 @@ export default function EntrainementPage() {
                   onPaste={e => e.preventDefault()}
                   onDrop={e => e.preventDefault()}
                 />
-                <div className="flex items-center justify-between text-xs text-muted-foreground">
-                  <span>Recommandé : <strong className="text-foreground">{recommended}</strong></span>
-                  <span className={wordCount > 0 ? "font-semibold text-primary" : ""}>
-                    {wordCount} mot{wordCount > 1 ? 's' : ''}
-                  </span>
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2">
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span>Recommandé : <strong className="text-foreground">{recommended}</strong></span>
+                    <span>·</span>
+                    <span className={wordCount > 0 ? "font-semibold text-primary" : ""}>
+                      {wordCount} mot{wordCount > 1 ? 's' : ''}
+                    </span>
+                  </div>
                 </div>
               </CardContent>
             </Card>
           );
         })}
 
+        {/* Boutons d'action globale */}
         {taches.length > 0 && (
-          <Button onClick={submitExpressionEcrite} disabled={submitting} className="w-full gap-2">
-            {submitting
-              ? <><Loader2 className="w-4 h-4 animate-spin" />Envoi en cours…</>
-              : isSingleTask
-                ? <><Send className="w-4 h-4" />Envoyer ma réponse pour correction</>
-                : <><Send className="w-4 h-4" />Envoyer mes réponses pour correction</>
-            }
-          </Button>
+          <div className="space-y-3 pt-2">
+            {isSingleTask && (
+              <Button
+                onClick={() => handleAICorrectionEcrite(taches[0]?.numero_tache)}
+                disabled={aiLoading || !texteReponses[taches[0]?.numero_tache]?.trim()}
+                size="lg"
+                className="w-full gap-2 text-base font-bold bg-gradient-to-r from-[#0d233a] to-[#1a365d] text-white hover:opacity-95 shadow-md"
+              >
+                <Sparkles className="w-5 h-5 text-[#ffdcc3]" />
+                Lancer la correction complète par notre IA
+              </Button>
+            )}
+
+            <Button
+              onClick={submitExpressionEcrite}
+              disabled={submitting || aiLoading}
+              variant="outline"
+              className="w-full gap-2 text-xs text-muted-foreground hover:text-foreground"
+            >
+              {submitting
+                ? <><Loader2 className="w-4 h-4 animate-spin" />Envoi en cours…</>
+                : <><Send className="w-4 h-4" />Transmettre au professeur tuteur (sans IA)</>
+              }
+            </Button>
+          </div>
         )}
+
+        <QuotaExhaustedModal
+          open={quotaModalOpen}
+          onOpenChange={setQuotaModalOpen}
+          type={quotaModalType}
+        />
       </div>
     );
   }
@@ -990,6 +1480,34 @@ export default function EntrainementPage() {
           </div>
         </div>
 
+        {/* Bandeau d'information IA & Quota EO */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-2xl bg-gradient-to-r from-[#eff4ff] to-[#f8fbff] border border-[#d3e4fe] shadow-xs">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
+              <Sparkles className="w-4 h-4 text-[#e53e3e]" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-[#0d233a]">
+                Évaluation Experte par notre IA activée
+              </p>
+              <p className="text-[11px] text-slate-500">
+                Transcription mot à mot &amp; notation rigoureuse selon les 8 critères officiels
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 self-end sm:self-auto">
+            <Badge variant="outline" className="bg-white border-[#d3e4fe] font-bold text-[#0d233a] text-xs">
+              {quotaRestant.eo} crédit(s) restant(s)
+            </Badge>
+            <a
+              href="/etudiant/abonnement"
+              className="text-xs text-primary font-semibold hover:underline bg-white px-2.5 py-1 rounded-lg border border-[#d3e4fe]"
+            >
+              Recharger
+            </a>
+          </div>
+        </div>
+
         {taches.length === 0 && (
           <Card><CardContent className="p-8 text-center text-muted-foreground">Aucune tâche disponible.</CardContent></Card>
         )}
@@ -1002,6 +1520,7 @@ export default function EntrainementPage() {
               const hasAudio = audioBlobs[t.numero_tache];
               return (
                 <button
+                  type="button"
                   key={t.id || i}
                   onClick={() => { setCurrentIdx(i); setTimerActive(false); }}
                   className={cn(
@@ -1076,7 +1595,7 @@ export default function EntrainementPage() {
                         Exercice en interaction avec un examinateur
                       </p>
                       <p className="text-xs text-muted-foreground leading-relaxed">
-                        Cette épreuve se déroule sous forme de dialogue direct (poser une dizaine de questions pour obtenir des informations détaillées). En mode entraînement, préparez vos questions et entraînez-vous à voix haute avec un professeur ou un camarade.
+                        Cette épreuve se déroule sous forme de dialogue direct (poser une dizaine de questions pour obtenir des informations détaillées). Pendant l'entraînement, préparez vos questions et entraînez-vous à voix haute avec un professeur ou un camarade.
                       </p>
                       <p className="text-xs font-semibold text-amber-600 dark:text-amber-400 pt-1">
                         ✓ Cette tâche ne nécessite ni enregistrement audio ni soumission.
@@ -1146,19 +1665,46 @@ export default function EntrainementPage() {
           </div>
         )}
 
-        {/* Bouton soumettre (uniquement si au moins une tâche enregistrable est présente) */}
+        {/* Bouton IA pour la tâche active si enregistrée */}
+        {!isTask2 && audioBlobs[tache?.numero_tache] && (
+          <div className="p-4 rounded-xl bg-gradient-to-br from-[#eff4ff] to-[#f8fbff] border border-[#d3e4fe] space-y-3">
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-semibold text-[#0d233a] flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-[#d97706]" />
+                Évaluation Experte IA Immédiate (Tâche {tache.numero_tache})
+              </span>
+              <Badge variant="outline" className="bg-white border-[#d3e4fe] font-bold text-[#0d233a]">
+                {quotaRestant.eo} crédit(s) restant(s)
+              </Badge>
+            </div>
+            <Button
+              onClick={() => handleAICorrectionOrale(tache.numero_tache)}
+              disabled={aiLoading}
+              size="lg"
+              className="w-full gap-2 text-sm sm:text-base font-bold bg-gradient-to-r from-[#0d233a] to-[#1a365d] text-white hover:opacity-95 shadow-md"
+            >
+              <Sparkles className="w-5 h-5 text-[#ffdcc3]" />
+              Évaluer la Tâche {tache.numero_tache} par notre IA
+            </Button>
+            <p className="text-[11px] text-slate-500 text-center">
+              Transcription haute précision · Notation officielle par notre IA (/20)
+            </p>
+          </div>
+        )}
+
+        {/* Bouton soumettre au professeur */}
         {!isSingleTask && recordableTasks.length > 0 && (
           <Button
             onClick={submitExpressionOrale}
-            disabled={submitting || !anyRecordableDone}
-            className="w-full gap-2 shadow-md"
-            size="lg"
+            disabled={submitting || !anyRecordableDone || aiLoading}
+            variant="outline"
+            className="w-full gap-2 text-xs text-muted-foreground hover:text-foreground"
           >
             {submitting
               ? <><Loader2 className="w-4 h-4 animate-spin" />Envoi en cours…</>
               : allRecordableDone
-                ? <><Send className="w-4 h-4" />Envoyer les tâches enregistrées (Tâches 1 & 3) pour correction</>
-                : <><Send className="w-4 h-4" />Envoyer les tâches enregistrées ({recordableTasks.filter(t => audioBlobs[t.numero_tache]).length}/{recordableTasks.length})</>
+                ? <><Send className="w-4 h-4" />Transmettre les tâches 1 &amp; 3 au professeur tuteur</>
+                : <><Send className="w-4 h-4" />Transmettre au professeur tuteur ({recordableTasks.filter(t => audioBlobs[t.numero_tache]).length}/{recordableTasks.length})</>
             }
           </Button>
         )}
@@ -1166,16 +1712,22 @@ export default function EntrainementPage() {
         {isSingleTask && !isTask2 && (
           <Button
             onClick={submitExpressionOrale}
-            disabled={submitting || !audioBlobs[taches[0]?.numero_tache]}
-            className="w-full gap-2 shadow-md"
-            size="lg"
+            disabled={submitting || !audioBlobs[taches[0]?.numero_tache] || aiLoading}
+            variant="outline"
+            className="w-full gap-2 text-xs text-muted-foreground hover:text-foreground"
           >
             {submitting
               ? <><Loader2 className="w-4 h-4 animate-spin" />Envoi en cours…</>
-              : <><Send className="w-4 h-4" />Envoyer mon enregistrement pour correction</>
+              : <><Send className="w-4 h-4" />Transmettre au professeur tuteur (sans IA)</>
             }
           </Button>
         )}
+
+        <QuotaExhaustedModal
+          open={quotaModalOpen}
+          onOpenChange={setQuotaModalOpen}
+          type={quotaModalType}
+        />
       </div>
     );
   }
@@ -1291,7 +1843,7 @@ export default function EntrainementPage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto space-y-4 fade-in">
+    <div className="max-w-4xl mx-auto space-y-4 fade-in">
       <div className="flex items-center gap-3">
         <Button variant="ghost" size="icon" onClick={() => setSelectedEpreuve(null)}>
           <ChevronLeft className="w-5 h-5" />
@@ -1304,15 +1856,36 @@ export default function EntrainementPage() {
       </div>
       <Progress value={((currentIdx + 1) / questions.length) * 100} className="h-2" />
       <Card className="h-full">
-        <CardContent className="p-6 space-y-4">
+        <CardContent className="p-6 space-y-5">
           {question?.audio_url && <AudioPlayer url={question.audio_url} />}
           {question?.image_url && (
-            <div className="rounded-lg overflow-hidden max-h-48">
-              <img src={question.image_url} alt="Question" className="w-full h-full object-cover" />
+            <div className="relative group rounded-xl border border-border/80 bg-slate-50/70 dark:bg-slate-900/40 p-2 sm:p-3 overflow-hidden flex flex-col items-center justify-center">
+              <button
+                type="button"
+                onClick={() => setZoomImageUrl(question.image_url)}
+                className="w-full flex items-center justify-center focus:outline-none"
+              >
+                <img
+                  src={question.image_url}
+                  alt="Document de compréhension"
+                  className="w-full h-auto max-h-[560px] md:max-h-[640px] object-contain rounded-lg shadow-xs select-none cursor-zoom-in transition-transform duration-200 hover:scale-[1.006]"
+                />
+              </button>
+              <div className="w-full flex items-center justify-between pt-2 px-1 text-xs text-muted-foreground border-t border-border/40 mt-2">
+                <span className="italic text-[11px]">Document support de l'épreuve</span>
+                <button
+                  type="button"
+                  onClick={() => setZoomImageUrl(question.image_url)}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-background hover:bg-muted text-foreground font-medium border border-border/70 shadow-xs transition-colors cursor-pointer text-xs"
+                >
+                  <Maximize2 className="w-3.5 h-3.5 text-primary" />
+                  <span>Agrandir le document</span>
+                </button>
+              </div>
             </div>
           )}
           {question?.texte && (
-            <p className="text-sm text-foreground leading-relaxed text-pretty whitespace-pre-wrap">{question.texte}</p>
+            <p className="text-sm text-foreground leading-relaxed text-pretty whitespace-pre-wrap font-medium">{question.texte}</p>
           )}
           <div className="space-y-2 pt-2">
             {question?.choix?.map(choix => {
@@ -1325,6 +1898,7 @@ export default function EntrainementPage() {
               } else if (isSelected) cls = 'border-primary bg-primary/10';
               return (
                 <button
+                  type="button"
                   key={choix.id}
                   onClick={() => handleAnswer(choix.id)}
                   disabled={answered}
@@ -1355,6 +1929,25 @@ export default function EntrainementPage() {
           }
         </Button>
       )}
+
+      {/* Modal d'agrandissement plein écran pour les documents CE/CO */}
+      <Dialog open={!!zoomImageUrl} onOpenChange={open => !open && setZoomImageUrl(null)}>
+        <DialogContent className="max-w-5xl w-[96vw] max-h-[92vh] p-3 sm:p-5 bg-background/98 backdrop-blur-md flex flex-col">
+          <DialogHeader className="pb-2 border-b">
+            <DialogTitle className="text-base font-semibold flex items-center gap-2">
+              <FileText className="w-4 h-4 text-primary" />
+              Document officiel en taille réelle
+            </DialogTitle>
+          </DialogHeader>
+          <div className="flex-1 overflow-auto flex items-center justify-center p-2 bg-muted/20 rounded-lg min-h-[300px]">
+            <img
+              src={zoomImageUrl || ''}
+              alt="Document agrandi"
+              className="max-w-full max-h-[78vh] w-auto h-auto object-contain rounded-md shadow-md select-none"
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

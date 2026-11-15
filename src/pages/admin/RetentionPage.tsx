@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/db/supabase';
+import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -69,6 +70,7 @@ function fmt(date: string | null) {
 }
 
 export default function RetentionPage() {
+  const { isAdmin } = useAuth();
   const [logs, setLogs] = useState<AuditSuppression[]>([]);
   const [loading, setLoading] = useState(true);
   const [running, setRunning] = useState(false);
@@ -78,75 +80,101 @@ export default function RetentionPage() {
   const [confirmChecked, setConfirmChecked] = useState(false);
 
   const loadLogs = useCallback(async () => {
-    setLoading(true);
-    const { data } = await supabase
-      .from('audit_suppressions')
-      .select('*')
-      .order('supprime_at', { ascending: false })
-      .limit(100);
-    setLogs(Array.isArray(data) ? data : []);
-    setLoading(false);
+    try {
+      setLoading(true);
+      const { data } = await supabase
+        .from('audit_suppressions')
+        .select('*')
+        .order('supprime_at', { ascending: false })
+        .limit(100);
+      setLogs(Array.isArray(data) ? data : []);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Erreur lors du chargement du journal.';
+      toast.error(msg);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => { loadLogs(); }, [loadLogs]);
 
   const runCleanupNow = async () => {
-    setRunning(true);
-    setConfirmChecked(false);
-    const { data, error } = await supabase.rpc('cleanup_expired_profiles', { dry_run: false });
-    setRunning(false);
-    if (error) {
-      toast.error(`Erreur lors du nettoyage : ${error.message}`);
+    if (!isAdmin) {
+      toast.error('Action réservée aux administrateurs.');
       return;
     }
-    const count = (data as { deleted_count: number })?.deleted_count ?? 0;
-    toast.success(
-      count > 0
-        ? `${count} profil(s) supprimé(s) avec succès.`
-        : 'Aucun profil à supprimer pour le moment.'
-    );
-    // Effacer les résultats de simulation après la vraie suppression
-    setDryRunResults(null);
-    loadLogs();
+    setRunning(true);
+    setConfirmChecked(false);
+    try {
+      const { data, error } = await supabase.rpc('cleanup_expired_profiles', { dry_run: false });
+      if (error) {
+        toast.error(`Erreur lors du nettoyage : ${error.message}`);
+        return;
+      }
+      const count = (data as { deleted_count: number })?.deleted_count ?? 0;
+      toast.success(
+        count > 0
+          ? `${count} profil(s) supprimé(s) avec succès.`
+          : 'Aucun profil à supprimer pour le moment.'
+      );
+      // Effacer les résultats de simulation après la vraie suppression
+      setDryRunResults(null);
+      loadLogs();
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Erreur lors du nettoyage.';
+      toast.error(msg);
+    } finally {
+      setRunning(false);
+    }
   };
 
   // Correction 5 — Simulation dry_run avant suppression réelle
   const runSimulation = async () => {
+    if (!isAdmin) {
+      toast.error('Action réservée aux administrateurs.');
+      return;
+    }
     setSimulating(true);
     setDryRunResults(null);
     setConfirmChecked(false);
-    const { data, error } = await supabase.rpc('cleanup_expired_profiles', { dry_run: true });
-    setSimulating(false);
-    if (error) {
-      toast.error(`Erreur simulation : ${error.message}`);
-      return;
+    try {
+      const { data, error } = await supabase.rpc('cleanup_expired_profiles', { dry_run: true });
+      if (error) {
+        toast.error(`Erreur simulation : ${error.message}`);
+        return;
+      }
+      const count = (data as { deleted_count: number })?.deleted_count ?? 0;
+      if (count === 0) {
+        toast.info('Aucun profil ne serait supprimé avec les règles actuelles.');
+        setDryRunResults([]);
+        return;
+      }
+      // Récupérer les détails des profils qui seraient supprimés
+      const ids: string[] = (data as { deleted_ids: string[] })?.deleted_ids ?? [];
+      if (ids.length > 0) {
+        const { data: profiles } = await supabase
+          .from('profiles')
+          .select('id, role, email, prenom, nom, created_at, last_active_at')
+          .in('id', ids);
+        setDryRunResults(
+          (profiles ?? []).map(p => ({
+            ...p,
+            raison: p.role === 'professeur' ? 'inactivite_professeur'
+              : new Date(p.created_at) < new Date(Date.now() - 365 * 86400_000)
+                ? 'expiration_1_an'
+                : 'inactivite_etudiant',
+          }))
+        );
+      } else {
+        setDryRunResults([]);
+      }
+      toast.warning(`${count} profil(s) seraient supprimés. Vérifiez la liste avant de confirmer.`);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Erreur lors de la simulation.';
+      toast.error(msg);
+    } finally {
+      setSimulating(false);
     }
-    const count = (data as { deleted_count: number })?.deleted_count ?? 0;
-    if (count === 0) {
-      toast.info('Aucun profil ne serait supprimé avec les règles actuelles.');
-      setDryRunResults([]);
-      return;
-    }
-    // Récupérer les détails des profils qui seraient supprimés
-    const ids: string[] = (data as { deleted_ids: string[] })?.deleted_ids ?? [];
-    if (ids.length > 0) {
-      const { data: profiles } = await supabase
-        .from('profiles')
-        .select('id, role, email, prenom, nom, created_at, last_active_at')
-        .in('id', ids);
-      setDryRunResults(
-        (profiles ?? []).map(p => ({
-          ...p,
-          raison: p.role === 'professeur' ? 'inactivite_professeur'
-            : new Date(p.created_at) < new Date(Date.now() - 365 * 86400_000)
-              ? 'expiration_1_an'
-              : 'inactivite_etudiant',
-        }))
-      );
-    } else {
-      setDryRunResults([]);
-    }
-    toast.warning(`${count} profil(s) seraient supprimés. Vérifiez la liste avant de confirmer.`);
   };
 
   const stats = {
@@ -338,7 +366,7 @@ export default function RetentionPage() {
 
                 {/* Case à cocher obligatoire + bouton de suppression définitive */}
                 <div className="space-y-3 pt-2 border-t border-border">
-                  <label className="flex items-start gap-3 cursor-pointer">
+                  <label htmlFor="confirm-delete" className="flex items-start gap-3 cursor-pointer">
                     <Checkbox
                       id="confirm-delete"
                       checked={confirmChecked}

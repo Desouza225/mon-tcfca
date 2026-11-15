@@ -58,7 +58,7 @@
       "A": "Il va avoir de nouveaux horaires",
       "B": "Il va changer de propriétaire",
       "C": "Il va déménager en septembre",
-      "D": "Il va fermer pendant l&#8217;été"
+      "D": "Il va fermer pendant l'été"
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -455,8 +455,8 @@
     "audio": null,
     "image": "images/CE_T01_Q29.jpg",
     "propositions": {
-      "A": "Ils donnent l&#8217;impression de vénérer les produits",
-      "B": "Ils ont l&#8217;air éblouis par le gigantisme des magasins",
+      "A": "Ils donnent l'impression de vénérer les produits",
+      "B": "Ils ont l'air éblouis par le gigantisme des magasins",
       "C": "Ils paraissent manipulés par une force supérieure",
       "D": "Ils semblent perdus dans le labyrinthe des rayons"
     },
@@ -12633,7 +12633,7 @@
     "propositions": {
       "A": "Beaucoup de personnes le visitent.",
       "B": "Il vend des articles bon marché.",
-      "C": "Il y a un célèbre musée à l&#8217;intérieur.",
+      "C": "Il y a un célèbre musée à l'intérieur.",
       "D": "On y donne des cours de cuisine."
     },
     "bonne_reponse": "A",
@@ -12663,8 +12663,8 @@
     "audio": null,
     "image": "images/CE_T21_Q12.jpg",
     "propositions": {
-      "A": "L&#8217;agrandir.",
-      "B": "L&#8217;échanger.",
+      "A": "L'agrandir.",
+      "B": "L'échanger.",
       "C": "La louer.",
       "D": "La vendre."
     },
@@ -12841,7 +12841,7 @@
     "propositions": {
       "A": "Elle est simple à mettre en place, mais aussi très couteuse.",
       "B": "Elle est source d’infection pour des patients déjà fragiles.",
-      "C": "Elle entraine une trop grande consommation d&#8217;énergie.",
+      "C": "Elle entraine une trop grande consommation d'énergie.",
       "D": "Elle concurrence des modes naturels de rafraîchissement de l’air."
     },
     "bonne_reponse": "C",
@@ -12873,7 +12873,7 @@
     "propositions": {
       "A": "Par l’abolition des relations hiérarchiques classiques.",
       "B": "Par la mise en place d’une carte écologique commune.",
-      "C": "Par la primauté de l&#8217;intérêt collectif sur bénéfices.",
+      "C": "Par la primauté de l'intérêt collectif sur bénéfices.",
       "D": "Par la répartition équitable des profits entre salariés."
     },
     "bonne_reponse": "C",
@@ -12887,10 +12887,10 @@
     "audio": null,
     "image": "images/CE_T21_Q26.jpg",
     "propositions": {
-      "A": "L&#8217;avenir de son travail est menacé par l’industrie agroalimentaire.",
+      "A": "L'avenir de son travail est menacé par l’industrie agroalimentaire.",
       "B": "La qualité des produits charcutiers est reconnue par les médecins.",
       "C": "Le passage d’un métier de bouche à un autre se fait facilement.",
-      "D": "L&#8217;image attachée à sa profession est stéréotypée et peu valorisante."
+      "D": "L'image attachée à sa profession est stéréotypée et peu valorisante."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -12937,7 +12937,7 @@
     "propositions": {
       "A": "Commencer une thérapie.",
       "B": "Multiplier les passe-temps.",
-      "C": "Rechercher l&#8217;âme sœur.",
+      "C": "Rechercher l'âme sœur.",
       "D": "Travailler sur soi-même."
     },
     "bonne_reponse": "D",
@@ -12970,7 +12970,7 @@
       "A": "Abandonner le travail du bois.",
       "B": "Aider les plus démunis à se loger.",
       "C": "Bâtir des locaux commerciaux.",
-      "D": "Développer l&#8217;activité de recyclage."
+      "D": "Développer l'activité de recyclage."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -12983,8 +12983,8 @@
     "audio": null,
     "image": "images/CE_T21_Q32.jpg",
     "propositions": {
-      "A": "L&#8217;attirance pour les espaces naturels.",
-      "B": "L&#8217;insécurité des zones urbaines.",
+      "A": "L'attirance pour les espaces naturels.",
+      "B": "L'insécurité des zones urbaines.",
       "C": "La précarité du monde professionnel.",
       "D": "Le désir de vivre en communauté."
     },
@@ -13000,7 +13000,7 @@
     "image": "images/CE_T21_Q33.jpg",
     "propositions": {
       "A": "Il est imposé sans explications aux enseignants.",
-      "B": "Il manque de finesse dans l&#8217;analyse des résultats.",
+      "B": "Il manque de finesse dans l'analyse des résultats.",
       "C": "Il propose des questions inadaptées aux enfants.",
       "D": "Il remet en question des traditions profondément ancrées."
     },
@@ -13079,7 +13079,7 @@
     "audio": null,
     "image": "images/CE_T21_Q38.jpg",
     "propositions": {
-      "A": "Ils ont une influence très préoccupante sur l&#8217;économie.",
+      "A": "Ils ont une influence très préoccupante sur l'économie.",
       "B": "Ils se produisent dans les entreprises industrielles.",
       "C": "Ils sont remplacés par des pathologies professionnelles.",
       "D": "Ils sont source de traumatismes musculaires."
@@ -13098,7 +13098,7 @@
       "A": "À établir un lien entre robotique et individualisme.",
       "B": "À évaluer l’action des robots dans la lutte contre la solitude.",
       "C": "À répéter les dérivés issus de la robotique dans le quotidien.",
-      "D": "À vérifier l&#8217;empathie ressentie envers les robots."
+      "D": "À vérifier l'empathie ressentie envers les robots."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -13159,7 +13159,7 @@
     "audio": null,
     "image": "images/CE_T22_Q04.jpg",
     "propositions": {
-      "A": "D&#8217;aller à un concert.",
+      "A": "D'aller à un concert.",
       "B": "D’organiser un voyage.",
       "C": "De déjeuner chez lui.",
       "D": "De garder les enfants."
@@ -13176,7 +13176,7 @@
     "image": "images/CE_T22_Q05.jpg",
     "propositions": {
       "A": "Un repas au restaurant.",
-      "B": "Un séjour à l&#8217;hôtel.",
+      "B": "Un séjour à l'hôtel.",
       "C": "Une commande de matériel.",
       "D": "Une location de voiture."
     },
@@ -13191,8 +13191,8 @@
     "audio": null,
     "image": "images/CE_T22_Q06.jpg",
     "propositions": {
-      "A": "D&#8217;écrire aux invites.",
-      "B": "D&#8217;organiser la fête.",
+      "A": "D'écrire aux invites.",
+      "B": "D'organiser la fête.",
       "C": "De garder des enfants.",
       "D": "De préparer des danses."
     },
@@ -13272,7 +13272,7 @@
     "image": "images/CE_T22_Q11.jpg",
     "propositions": {
       "A": "Des informations sur les sports.",
-      "B": "Des activités pour l&#8217;été.",
+      "B": "Des activités pour l'été.",
       "C": "Des promotions pour les enfants.",
       "D": "Des visites de Paris."
     },
@@ -13319,7 +13319,7 @@
     "audio": null,
     "image": "images/CE_T22_Q14.jpg",
     "propositions": {
-      "A": "D&#8217;une banque pour les mineurs.",
+      "A": "D'une banque pour les mineurs.",
       "B": "D’une idée nouvelle de recyclage.",
       "C": "Des enfants qui doivent travailler.",
       "D": "Du problème créé par les déchets."
@@ -13543,7 +13543,7 @@
     "audio": null,
     "image": "images/CE_T22_Q28.jpg",
     "propositions": {
-      "A": "Il est difficile d&#8217;en évaluer l’impact sur la santé.",
+      "A": "Il est difficile d'en évaluer l’impact sur la santé.",
       "B": "Il permet la consommation de médicaments.",
       "C": "Le sénat a toujours refusé de voter une loi sur le sujet.",
       "D": "Les Français sont encore attachés à cette tradition."
@@ -13639,7 +13639,7 @@
     "audio": null,
     "image": "images/CE_T22_Q34.jpg",
     "propositions": {
-      "A": "Sa structure est identique chez l&#8217;homme et l’animal.",
+      "A": "Sa structure est identique chez l'homme et l’animal.",
       "B": "Sa taille influe sur les compétences cognitives.",
       "C": "Son développement est ralenti les premiers mois.",
       "D": "Son fonctionnement est encore mystérieux."
@@ -13721,7 +13721,7 @@
     "propositions": {
       "A": "Elle représenterait l’influence de l’inconscient.",
       "B": "Elle résulterait de l’observation de normes.",
-      "C": "Elle révélerait la part de l&#8217;acquis due au groupe",
+      "C": "Elle révélerait la part de l'acquis due au groupe",
       "D": "Elle serait issue du patrimoine génétique."
     },
     "bonne_reponse": "B",
@@ -14999,10 +14999,10 @@
     "audio": null,
     "image": "images/CE_T25_Q02.jpg",
     "propositions": {
-      "A": "C&#8217;est un succès.",
+      "A": "C'est un succès.",
       "B": "Elle changera de lieu.",
       "C": "Elle est déjà finie.",
-      "D": "L&#8217;entrée est gratuite."
+      "D": "L'entrée est gratuite."
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -15047,7 +15047,7 @@
     "audio": null,
     "image": "images/CE_T25_Q05.jpg",
     "propositions": {
-      "A": "L&#8217;Internet.",
+      "A": "L'Internet.",
       "B": "La presse.",
       "C": "La radio.",
       "D": "La télévision."
@@ -15065,7 +15065,7 @@
     "propositions": {
       "A": "Beaucoup de personnes le visitent.",
       "B": "Il vend des articles bon marché.",
-      "C": "Il y a un célèbre musée à l&#8217;intérieur.",
+      "C": "Il y a un célèbre musée à l'intérieur.",
       "D": "On y donne des cours de cuisine."
     },
     "bonne_reponse": "A",
@@ -15095,7 +15095,7 @@
     "audio": null,
     "image": "images/CE_T25_Q08.jpg",
     "propositions": {
-      "A": "Elles ont besoin d&#8217;accompagnement.",
+      "A": "Elles ont besoin d'accompagnement.",
       "B": "Elles ont peur de quitter leur logement.",
       "C": "Elles souffrent de grande solitude.",
       "D": "Elles suivent des traitements coûteux."
@@ -15128,7 +15128,7 @@
     "image": "images/CE_T25_Q10.jpg",
     "propositions": {
       "A": "D’aider à organiser une",
-      "B": "Devenir membre d&#8217;une association.",
+      "B": "Devenir membre d'une association.",
       "C": "Distribuer des repas gratuits.",
       "D": "De participer à un événement sportif."
     },
@@ -15145,7 +15145,7 @@
     "propositions": {
       "A": "De cuisiner tous ensemble.",
       "B": "De faire un repas entre voisins.",
-      "C": "De s&#8217;inscrire à des activités.",
+      "C": "De s'inscrire à des activités.",
       "D": "De visiter de nouveaux logements."
     },
     "bonne_reponse": "B",
@@ -15162,7 +15162,7 @@
       "A": "Avoir des réductions sur certains articles.",
       "B": "Faire des courses dans un magasin.",
       "C": "Offrir une surprise pour un anniversaire.",
-      "D": "Retirer de l&#8217;argent à un distributeur."
+      "D": "Retirer de l'argent à un distributeur."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -15191,10 +15191,10 @@
     "audio": null,
     "image": "images/CE_T25_Q14.jpg",
     "propositions": {
-      "A": "L&#8217;offre spéciale de l&#8217;été.",
+      "A": "L'offre spéciale de l'été.",
       "B": "La date des vacances.",
-      "C": "Le prix de l&#8217;entrée.",
-      "D": "Les heures d&#8217;ouverture."
+      "C": "Le prix de l'entrée.",
+      "D": "Les heures d'ouverture."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -15210,7 +15210,7 @@
       "A": "Avoir des réductions sur certains produits.",
       "B": "Bénéficier de facilités de paiement.",
       "C": "Faire ses courses plus rapidement.",
-      "D": "Recevoir sans frais des produits d&#8217;essai."
+      "D": "Recevoir sans frais des produits d'essai."
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -15271,10 +15271,10 @@
     "audio": null,
     "image": "images/CE_T25_Q19.jpg",
     "propositions": {
-      "A": "Si c&#8217;est une occasion d&#8217;élargir son réseau social.",
-      "B": "Si c&#8217;est une opportunité de changer de mode de vie.",
-      "C": "Si c&#8217;est la possibilité de trouver un emploi.",
-      "D": "Si c&#8217;est le fruit d&#8217;une décision personnelle."
+      "A": "Si c'est une occasion d'élargir son réseau social.",
+      "B": "Si c'est une opportunité de changer de mode de vie.",
+      "C": "Si c'est la possibilité de trouver un emploi.",
+      "D": "Si c'est le fruit d'une décision personnelle."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -15306,7 +15306,7 @@
       "A": "Le dessinateur utilise une technique inédite.",
       "B": "Le public se reconnaît à travers le héros.",
       "C": "Le scénario repose sur une intrigue excitante.",
-      "D": "Les adolescents adorent l&#8217;univers imaginé."
+      "D": "Les adolescents adorent l'univers imaginé."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -15320,7 +15320,7 @@
     "image": "images/CE_T25_Q22.jpg",
     "propositions": {
       "A": "À un vol interstellaire vers une planète lointaine.",
-      "B": "À une expérience d&#8217;autosuffisance alimentaire.",
+      "B": "À une expérience d'autosuffisance alimentaire.",
       "C": "À une exploration de cratères de volcans.",
       "D": "À une simulation de mission spatiale."
     },
@@ -15335,9 +15335,9 @@
     "audio": null,
     "image": "images/CE_T25_Q23.jpg",
     "propositions": {
-      "A": "Avoir une expérience dans l&#8217;enseignement.",
+      "A": "Avoir une expérience dans l'enseignement.",
       "B": "Être impérativement disponible le matin.",
-      "C": "Être titulaire d&#8217;une formation reconnue.",
+      "C": "Être titulaire d'une formation reconnue.",
       "D": "Pouvoir travailler en totale autonomie."
     },
     "bonne_reponse": "C",
@@ -15353,7 +15353,7 @@
     "propositions": {
       "A": "Allouer une bourse aux plus modestes.",
       "B": "Épauler les familles en difficulté.",
-      "C": "Favoriser l&#8217;égalité des chances.",
+      "C": "Favoriser l'égalité des chances.",
       "D": "Garantir une pédagogie différenciée."
     },
     "bonne_reponse": "C",
@@ -15368,8 +15368,8 @@
     "image": "images/CE_T25_Q25.jpg",
     "propositions": {
       "A": "Chaque magasin met en place son propre système.",
-      "B": "Elles diminuent avec l&#8217;automatisation des caisses.",
-      "C": "L&#8217;optimisation de leur gestion est en cours d&#8217;étude.",
+      "B": "Elles diminuent avec l'automatisation des caisses.",
+      "C": "L'optimisation de leur gestion est en cours d'étude.",
       "D": "Leur multiplication réduit le stress des consommateurs."
     },
     "bonne_reponse": "C",
@@ -15384,8 +15384,8 @@
     "image": "images/CE_T25_Q26.jpg",
     "propositions": {
       "A": "Les producteurs évitent de prendre des risques.",
-      "B": "Les réalisateurs sont à la recherche d&#8217;idées neuves.",
-      "C": "Les scénaristes font preuve d&#8217;une imagination limitée.",
+      "B": "Les réalisateurs sont à la recherche d'idées neuves.",
+      "C": "Les scénaristes font preuve d'une imagination limitée.",
       "D": "Les spectateurs privilégient les créations classiques."
     },
     "bonne_reponse": "A",
@@ -15402,7 +15402,7 @@
       "A": "Elle abrite une vie animée.",
       "B": "Elle perpétue des traditions.",
       "C": "Elle se préserve du tourisme.",
-      "D": "Elle tente d&#8217;imiter sa voisine."
+      "D": "Elle tente d'imiter sa voisine."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -15447,10 +15447,10 @@
     "audio": null,
     "image": "images/CE_T25_Q30.jpg",
     "propositions": {
-      "A": "Elle représenterait l&#8217;influence de l&#8217;inconscient.",
-      "B": "Elle résulterait de l&#8217;observation de normes.",
+      "A": "Elle représenterait l'influence de l'inconscient.",
+      "B": "Elle résulterait de l'observation de normes.",
       "C": "Elle serait issue du patrimoine génétique.",
-      "D": "Elle révèlerait la part de l&#8217;acquis due au groupe."
+      "D": "Elle révèlerait la part de l'acquis due au groupe."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -15480,9 +15480,9 @@
     "image": "images/CE_T25_Q32.jpg",
     "propositions": {
       "A": "Il déconseille au grand public de les adopter.",
-      "B": "Il estime qu&#8217;elles sont insuffisamment promues.",
+      "B": "Il estime qu'elles sont insuffisamment promues.",
       "C": "Il remet en question leurs retombées positives.",
-      "D": "Il révèle qu&#8217;elles contribuent au déclin industriel."
+      "D": "Il révèle qu'elles contribuent au déclin industriel."
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -15497,7 +15497,7 @@
     "propositions": {
       "A": "Ce sont des blessures corporelles superficielles.",
       "B": "Elles sont commises par des groupes minoritaires.",
-      "C": "Les autorités universitaires s&#8217;en préoccupent peu.",
+      "C": "Les autorités universitaires s'en préoccupent peu.",
       "D": "Lutter contre elles peut nuire à certaines libertés."
     },
     "bonne_reponse": "D",
@@ -15512,7 +15512,7 @@
     "image": "images/CE_T25_Q34.jpg",
     "propositions": {
       "A": "Aider les femmes à se battre pour améliorer leur situation familiale.",
-      "B": "Amener les spectateurs à s&#8217;émouvoir d&#8217;un quotidien douloureux.",
+      "B": "Amener les spectateurs à s'émouvoir d'un quotidien douloureux.",
       "C": "Démontrer que la condition de la femme dans les cités est désastreuse.",
       "D": "Informer des difficultés que peuvent rencontrer les enfants des cités."
     },
@@ -15559,10 +15559,10 @@
     "audio": null,
     "image": "images/CE_T25_Q37.jpg",
     "propositions": {
-      "A": "Elles bénéficient d&#8217;un effet de mode.",
+      "A": "Elles bénéficient d'un effet de mode.",
       "B": "Elles inquiètent les jeunes enfants.",
-      "C": "Elles relèvent d&#8217;un genre spécifique.",
-      "D": "Elles symbolisent la peur de l&#8217;inconnu."
+      "C": "Elles relèvent d'un genre spécifique.",
+      "D": "Elles symbolisent la peur de l'inconnu."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -15577,7 +15577,7 @@
     "propositions": {
       "A": "La formation au métier de journaliste est devenue tout à fait inutile.",
       "B": "Une frontière est apparue entre les journalistes confirmés et les autres.",
-      "C": "L&#8217;évolution d&#8217;Internet a affaibli le respect porté au statut de journaliste.",
+      "C": "L'évolution d'Internet a affaibli le respect porté au statut de journaliste.",
       "D": "Des internautes publiant sur le net se prennent pour des journalistes."
     },
     "bonne_reponse": "B",
@@ -15591,10 +15591,10 @@
     "audio": null,
     "image": "images/CE_T25_Q39.jpg",
     "propositions": {
-      "A": "Il est à l&#8217;origine d&#8217;une politique de diminution des flux.",
+      "A": "Il est à l'origine d'une politique de diminution des flux.",
       "B": "Il nécessite une réorganisation des lieux les plus visités.",
       "C": "Il permet de répartir les voyageurs sur tout le territoire.",
-      "D": "Il suscite l&#8217;engouement des professionnels du secteur."
+      "D": "Il suscite l'engouement des professionnels du secteur."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -15623,10 +15623,10 @@
     "audio": null,
     "image": "images/CE_T26_Q02.jpg",
     "propositions": {
-      "A": "A Ils ont besoin de l&#8217;aide de leur famille.",
+      "A": "A Ils ont besoin de l'aide de leur famille.",
       "B": "Ils travaillent pour payer leur logement.",
       "C": "Ils veulent finir leurs études rapidement.",
-      "D": "Ils vont à l&#8217;université dans une autre ville."
+      "D": "Ils vont à l'université dans une autre ville."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -15655,8 +15655,8 @@
     "audio": null,
     "image": "images/CE_T26_Q04.jpg",
     "propositions": {
-      "A": "D&#8217;aller à un concert.",
-      "B": "D&#8217;organiser un voyage.",
+      "A": "D'aller à un concert.",
+      "B": "D'organiser un voyage.",
       "C": "De déjeuner chez lui.",
       "D": "De garder ses enfants."
     },
@@ -15735,7 +15735,7 @@
     "audio": null,
     "image": "images/CE_T26_Q09.jpg",
     "propositions": {
-      "A": "D&#8217;acheter des plantes à bon prix.",
+      "A": "D'acheter des plantes à bon prix.",
       "B": "De faire des courses en ligne.",
       "C": "De participer à un concours.",
       "D": "De recevoir des outils gratuits."
@@ -15752,9 +15752,9 @@
     "image": "images/CE_T26_Q10.jpg",
     "propositions": {
       "A": "Participer à un stage de plusieurs jours.",
-      "B": "S&#8217;informer sur le monde professionnel.",
-      "C": "S&#8217;inscrire à un cours réservé aux jeunes.",
-      "D": "Trouver de l&#8217;aide pour écrire un CV."
+      "B": "S'informer sur le monde professionnel.",
+      "C": "S'inscrire à un cours réservé aux jeunes.",
+      "D": "Trouver de l'aide pour écrire un CV."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -15769,7 +15769,7 @@
     "propositions": {
       "A": "Acheter des articles de bureau.",
       "B": "Commander une imprimante.",
-      "C": "Demander de l&#8217;encre et du papier.",
+      "C": "Demander de l'encre et du papier.",
       "D": "Lister leurs besoins de matériel."
     },
     "bonne_reponse": "D",
@@ -15784,7 +15784,7 @@
     "image": "images/CE_T26_Q12.jpg",
     "propositions": {
       "A": "Ils ont été invités à une fête en ville",
-      "B": "Ils ont eu une coupure d&#8217;Internet.",
+      "B": "Ils ont eu une coupure d'Internet.",
       "C": "Ils ont fait le plein à très bas prix.",
       "D": "Ils ont pu téléphoner gratuitement."
     },
@@ -15801,7 +15801,7 @@
     "propositions": {
       "A": "Pour éviter de tomber malades.",
       "B": "Pour profiter de tarifs avantageux.",
-      "C": "Pour protéger l&#8217;environnement.",
+      "C": "Pour protéger l'environnement.",
       "D": "Pour soutenir les paysans locaux."
     },
     "bonne_reponse": "A",
@@ -15849,7 +15849,7 @@
     "propositions": {
       "A": "De développer des projets collectifs pour la ville.",
       "B": "De donner un avis sur les nouveaux bâtiments.",
-      "C": "De participer à des débats sur l&#8217;environnement.",
+      "C": "De participer à des débats sur l'environnement.",
       "D": "De visiter des expositions dans des lieux insolites."
     },
     "bonne_reponse": "A",
@@ -15895,10 +15895,10 @@
     "audio": null,
     "image": "images/CE_T26_Q19.jpg",
     "propositions": {
-      "A": "C&#8217;est un succès.",
+      "A": "C'est un succès.",
       "B": "Elle changera de lieu.",
       "C": "Elle est déjà finie.",
-      "D": "L&#8217;entrée est gratuite."
+      "D": "L'entrée est gratuite."
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -15911,8 +15911,8 @@
     "audio": null,
     "image": "images/CE_T26_Q20.jpg",
     "propositions": {
-      "A": "Il cite un extrait d&#8217;une œuvre de Modiano.",
-      "B": "Il explique l&#8217;idée de départ d&#8217;un livre de Modiano.",
+      "A": "Il cite un extrait d'une œuvre de Modiano.",
+      "B": "Il explique l'idée de départ d'un livre de Modiano.",
       "C": "Il présente le métier de Modiano à ses débuts.",
       "D": "Il raconte la rencontre entre Modiano et sa femme."
     },
@@ -15927,9 +15927,9 @@
     "audio": null,
     "image": "images/CE_T26_Q21.jpg",
     "propositions": {
-      "A": "La priorité donnée à l&#8217;aspect écologique.",
-      "B": "La prise en compte de l&#8217;opinion publique.",
-      "C": "Le caractère provisoire de l&#8217;installation.",
+      "A": "La priorité donnée à l'aspect écologique.",
+      "B": "La prise en compte de l'opinion publique.",
+      "C": "Le caractère provisoire de l'installation.",
       "D": "Le choix des matériaux de fabrication."
     },
     "bonne_reponse": "B",
@@ -15959,8 +15959,8 @@
     "audio": null,
     "image": "images/CE_T26_Q23.jpg",
     "propositions": {
-      "A": "D&#8217;élargir leurs perspectives professionnelles.",
-      "B": "D&#8217;évaluer les possibilités d&#8217;évolution de leur carrière.",
+      "A": "D'élargir leurs perspectives professionnelles.",
+      "B": "D'évaluer les possibilités d'évolution de leur carrière.",
       "C": "De faire un bilan de leurs aptitudes.",
       "D": "De privilégier leur épanouissement personnel."
     },
@@ -15977,8 +15977,8 @@
     "propositions": {
       "A": "Ils élaborent de nouvelles techniques.",
       "B": "Ils emploient des procédés traditionnels.",
-      "C": "Ils intègrent l&#8217;ancien à leurs constructions.",
-      "D": "Ils restaurent à l&#8217;identique de vieux édifices."
+      "C": "Ils intègrent l'ancien à leurs constructions.",
+      "D": "Ils restaurent à l'identique de vieux édifices."
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -16024,9 +16024,9 @@
     "image": "images/CE_T26_Q27.jpg",
     "propositions": {
       "A": "Il déconseille au grand public de les adopter.",
-      "B": "Il estime qu&#8217;elles sont insuffisamment promues.",
+      "B": "Il estime qu'elles sont insuffisamment promues.",
       "C": "Il remet en question leurs retombées positives.",
-      "D": "Il révèle qu&#8217;elles contribuent au déclin industriel."
+      "D": "Il révèle qu'elles contribuent au déclin industriel."
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -16039,10 +16039,10 @@
     "audio": null,
     "image": "images/CE_T26_Q28.jpg",
     "propositions": {
-      "A": "La constitution d&#8217;une culture nationale.",
+      "A": "La constitution d'une culture nationale.",
       "B": "La stimulation de la croissance économique.",
-      "C": "L&#8217;amélioration des comportements sanitaires.",
-      "D": "Le développement d&#8217;une conscience civique."
+      "C": "L'amélioration des comportements sanitaires.",
+      "D": "Le développement d'une conscience civique."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -16088,9 +16088,9 @@
     "image": "images/CE_T26_Q31.jpg",
     "propositions": {
       "A": "La multiplication des nuisances sonores sur la commune.",
-      "B": "L&#8217;accroissement du taux de chômage de ses administrés.",
-      "C": "L&#8217;agrandissement de l&#8217;espace consacré aux spectacles",
-      "D": "L&#8217;augmentation du prix des entrées pour les spectateurs."
+      "B": "L'accroissement du taux de chômage de ses administrés.",
+      "C": "L'agrandissement de l'espace consacré aux spectacles",
+      "D": "L'augmentation du prix des entrées pour les spectateurs."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -16119,8 +16119,8 @@
     "audio": null,
     "image": "images/CE_T26_Q33.jpg",
     "propositions": {
-      "A": "Des méthodes innovantes sur l&#8217;usage des TIC.",
-      "B": "Des pistes de recherche sur l&#8217;apprentissage.",
+      "A": "Des méthodes innovantes sur l'usage des TIC.",
+      "B": "Des pistes de recherche sur l'apprentissage.",
       "C": "Un état des lieux des ressources pédagogiques.",
       "D": "Une analyse du contexte socio-éducatif actuel."
     },
@@ -16135,7 +16135,7 @@
     "audio": null,
     "image": "images/CE_T26_Q34.jpg",
     "propositions": {
-      "A": "Sa structure est identique chez l&#8217;homme et l&#8217;animal.",
+      "A": "Sa structure est identique chez l'homme et l'animal.",
       "B": "Sa taille influe sur les compétences cognitives.",
       "C": "Son développement est ralenti les premiers mois.",
       "D": "Son fonctionnement est encore mystérieux."
@@ -16154,7 +16154,7 @@
       "A": "Aborder des œuvres réputées difficiles avec leurs élèves.",
       "B": "Encourager leurs élèves à écrire des textes littéraires.",
       "C": "Inviter régulièrement des écrivains célèbres dans leur classe.",
-      "D": "Monter des pièces de théâtre d&#8217;auteurs classiques."
+      "D": "Monter des pièces de théâtre d'auteurs classiques."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -16168,9 +16168,9 @@
     "image": "images/CE_T26_Q36.jpg",
     "propositions": {
       "A": "Elle a été adaptée pour la télévision.",
-      "B": "Elle s&#8217;inspire de la vie des jeunes.",
-      "C": "La clé de l&#8217;énigme sera éditée plus tard.",
-      "D": "L&#8217;auteur a imaginé différents scenarios."
+      "B": "Elle s'inspire de la vie des jeunes.",
+      "C": "La clé de l'énigme sera éditée plus tard.",
+      "D": "L'auteur a imaginé différents scenarios."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -16199,10 +16199,10 @@
     "audio": null,
     "image": "images/CE_T26_Q38.jpg",
     "propositions": {
-      "A": "L&#8217;alternance entre le comique et le drame.",
-      "B": "L&#8217;atmosphère énigmatique et inquiétante.",
+      "A": "L'alternance entre le comique et le drame.",
+      "B": "L'atmosphère énigmatique et inquiétante.",
       "C": "La présentation de particularités régionales.",
-      "D": "L&#8217;émancipation des héros au cours du récit."
+      "D": "L'émancipation des héros au cours du récit."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -16231,10 +16231,10 @@
     "audio": null,
     "image": "images/CE_T27_Q01.jpg",
     "propositions": {
-      "A": "D&#8217;un déménagement.",
-      "B": "D&#8217;un grand voyage.",
-      "C": "D&#8217;une réunion de travail.",
-      "D": "D&#8217;une sortie culturelle."
+      "A": "D'un déménagement.",
+      "B": "D'un grand voyage.",
+      "C": "D'une réunion de travail.",
+      "D": "D'une sortie culturelle."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -16249,7 +16249,7 @@
     "propositions": {
       "A": "Des informations culturelles.",
       "B": "Des visites en ligne gratuites.",
-      "C": "Un cours d&#8217;initiation à l&#8217;art.",
+      "C": "Un cours d'initiation à l'art.",
       "D": "Un travail à temps partiel."
     },
     "bonne_reponse": "D",
@@ -16282,7 +16282,7 @@
       "A": "Compléter une fiche.",
       "B": "Proposer une recette.",
       "C": "Répondre à une question.",
-      "D": "S&#8217;inscrire sur Internet."
+      "D": "S'inscrire sur Internet."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -16409,7 +16409,7 @@
     "propositions": {
       "A": "De participer à un jeu.",
       "B": "De préparer un repas.",
-      "C": "De recevoir de l&#8217;argent.",
+      "C": "De recevoir de l'argent.",
       "D": "De remplir un formulaire."
     },
     "bonne_reponse": "A",
@@ -16471,10 +16471,10 @@
     "audio": null,
     "image": "images/CE_T27_Q16.jpg",
     "propositions": {
-      "A": "D&#8217;avoir rapidement un emploi.",
+      "A": "D'avoir rapidement un emploi.",
       "B": "De bien choisir une formation.",
-      "C": "De s&#8217;entretenir avec des élus.",
-      "D": "De s&#8217;inscrire dans une école."
+      "C": "De s'entretenir avec des élus.",
+      "D": "De s'inscrire dans une école."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -16519,7 +16519,7 @@
     "audio": null,
     "image": "images/CE_T27_Q19.jpg",
     "propositions": {
-      "A": "Il est facile de s&#8217;identifier aux personnages.",
+      "A": "Il est facile de s'identifier aux personnages.",
       "B": "Les lieux de tournage sont authentiques.",
       "C": "On y dresse un portrait juste de la société.",
       "D": "Son humour fait passer un message sérieux."
@@ -16585,7 +16585,7 @@
     "propositions": {
       "A": "Il a écrit une œuvre abondante et variée.",
       "B": "Il a toujours rêvé de devenir médecin.",
-      "C": "Il est emballé par les histoires d&#8217;épouvante.",
+      "C": "Il est emballé par les histoires d'épouvante.",
       "D": "Il peine à écrire depuis quelque temps."
     },
     "bonne_reponse": "A",
@@ -16600,8 +16600,8 @@
     "image": "images/CE_T27_Q24.jpg",
     "propositions": {
       "A": "Elles concurrencent le marché numérique.",
-      "B": "Elles contribuent à protéger l&#8217;environnement.",
-      "C": "Elles favorisent l&#8217;épargne des citoyens.",
+      "B": "Elles contribuent à protéger l'environnement.",
+      "C": "Elles favorisent l'épargne des citoyens.",
       "D": "Elles sécurisent les modes de paiement."
     },
     "bonne_reponse": "B",
@@ -16616,9 +16616,9 @@
     "image": "images/CE_T27_Q25.jpg",
     "propositions": {
       "A": "Il sera éloigné des magasins.",
-      "B": "Il sera isolé au milieu d&#8217;un parc.",
-      "C": "Il sera proche d&#8217;un jardin public.",
-      "D": "Il sera situé près d&#8217;un axe routier."
+      "B": "Il sera isolé au milieu d'un parc.",
+      "C": "Il sera proche d'un jardin public.",
+      "D": "Il sera situé près d'un axe routier."
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -16633,7 +16633,7 @@
     "propositions": {
       "A": "Elle est dépendante de décisions politiques.",
       "B": "Elle est limitée par les intellectuels.",
-      "C": "Elle est menacée par l&#8217;essor d&#8217;autres langues.",
+      "C": "Elle est menacée par l'essor d'autres langues.",
       "D": "Elle est modelée par ses locuteurs."
     },
     "bonne_reponse": "D",
@@ -16664,8 +16664,8 @@
     "image": "images/CE_T27_Q28.jpg",
     "propositions": {
       "A": "Démontrer les dégâts des méthodes de culture intensive.",
-      "B": "Prouver l&#8217;efficacité des insectes contre les parasites.",
-      "C": "Recommander des procédés de gestion durable de l&#8217;eau.",
+      "B": "Prouver l'efficacité des insectes contre les parasites.",
+      "C": "Recommander des procédés de gestion durable de l'eau.",
       "D": "Vulgariser des techniques de rendement des terres."
     },
     "bonne_reponse": "A",
@@ -16679,8 +16679,8 @@
     "audio": null,
     "image": "images/CE_T27_Q29.jpg",
     "propositions": {
-      "A": "Elle a peu d&#8217;action sur le dérèglement climatique.",
-      "B": "Elle demande trop d&#8217;entretien aux petites villes.",
+      "A": "Elle a peu d'action sur le dérèglement climatique.",
+      "B": "Elle demande trop d'entretien aux petites villes.",
       "C": "Elle doit figurer dans les programmes électoraux.",
       "D": "Elle est incompatible avec les objectifs politiques."
     },
@@ -16698,7 +16698,7 @@
       "A": "Ce sont les violons récents qui sont les plus estimés.",
       "B": "Il est difficile de maîtriser les violons anciens.",
       "C": "La qualité des violons évolue avec le temps.",
-      "D": "Voir le violon modifie l&#8217;appréciation de l&#8217;auditeur."
+      "D": "Voir le violon modifie l'appréciation de l'auditeur."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -16746,7 +16746,7 @@
       "A": "Il est méconnu du public visé.",
       "B": "Il est restreint à quelques pays",
       "C": "Il favorise certains établissements",
-      "D": "Il souffre d&#8217;une image négative."
+      "D": "Il souffre d'une image négative."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -16759,7 +16759,7 @@
     "audio": null,
     "image": "images/CE_T27_Q34.jpg",
     "propositions": {
-      "A": "Sa structure est identique chez l&#8217;homme et l&#8217;animal.",
+      "A": "Sa structure est identique chez l'homme et l'animal.",
       "B": "Sa taille influe sur les compétences cognitives.",
       "C": "Son développement est ralenti les premiers mois.",
       "D": "Son fonctionnement est encore mystérieux."
@@ -16807,8 +16807,8 @@
     "audio": null,
     "image": "images/CE_T27_Q37.jpg",
     "propositions": {
-      "A": "Il analyse l&#8217;établissement d&#8217;une dynastie royale.",
-      "B": "Il explique l&#8217;origine d&#8217;une légende médiévale.",
+      "A": "Il analyse l'établissement d'une dynastie royale.",
+      "B": "Il explique l'origine d'une légende médiévale.",
       "C": "Il explore la construction identitaire des Français.",
       "D": "Il renforce le mythe de la bataille de Bouvines."
     },
@@ -16826,7 +16826,7 @@
       "A": "Former des scientifiques à la prévention de risques écologiques.",
       "B": "Innover dans les moyens de lutte contre les pollutions fluviales.",
       "C": "Observer l’écosystème dans une région de grands fleuves.",
-      "D": "Représenter le gouvernement français lors d&#8217;une rencontre."
+      "D": "Représenter le gouvernement français lors d'une rencontre."
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -16840,9 +16840,9 @@
     "image": "images/CE_T27_Q39.jpg",
     "propositions": {
       "A": "Ils défendent les pratiques traditionnelles.",
-      "B": "Ils éprouvent le sentiment d&#8217;être incompris.",
+      "B": "Ils éprouvent le sentiment d'être incompris.",
       "C": "Ils réfutent les reproches qui leur sont faits.",
-      "D": "Ils sont fiers de leurs apports à l&#8217;économie."
+      "D": "Ils sont fiers de leurs apports à l'économie."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -17031,8 +17031,8 @@
     "audio": null,
     "image": "images/CE_T28_Q12.jpg",
     "propositions": {
-      "A": "D&#8217;assister à un concert à Rouen.",
-      "B": "De devenir membre de l&#8217;orchestre municipal.",
+      "A": "D'assister à un concert à Rouen.",
+      "B": "De devenir membre de l'orchestre municipal.",
       "C": "De suivre des cours de musique à la rentrée.",
       "D": "De visiter le conservatoire."
     },
@@ -17049,7 +17049,7 @@
     "propositions": {
       "A": "À un échange de maison.",
       "B": "Un studio en centre-ville.",
-      "C": "Une chambre chez l&#8217;habitant.",
+      "C": "Une chambre chez l'habitant.",
       "D": "Une colocation entre étudiants."
     },
     "bonne_reponse": "C",
@@ -17063,7 +17063,7 @@
     "audio": null,
     "image": "images/CE_T28_Q14.jpg",
     "propositions": {
-      "A": "L&#8217;assistance d&#8217;une personne.",
+      "A": "L'assistance d'une personne.",
       "B": "Le menu de vos déjeuners.",
       "C": "Le programme de la réunion.",
       "D": "Le plan des transports publics."
@@ -17082,7 +17082,7 @@
       "A": "Le grand nombre de vendeurs ambulants.",
       "B": "Les dangers des aliments mal conservés.",
       "C": "Les méfaits des collations après le bain.",
-      "D": "L&#8217;inconscience des enfants imprudents."
+      "D": "L'inconscience des enfants imprudents."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -17097,7 +17097,7 @@
     "propositions": {
       "A": "De diffuser de la musique.",
       "B": "De réutiliser des objets.",
-      "C": "De s&#8217;engager en politique.",
+      "C": "De s'engager en politique.",
       "D": "De tourner des publicités."
     },
     "bonne_reponse": "B",
@@ -17111,7 +17111,7 @@
     "audio": null,
     "image": "images/CE_T28_Q17.jpg",
     "propositions": {
-      "A": "De découvrir un parc d&#8217;animation.",
+      "A": "De découvrir un parc d'animation.",
       "B": "De gagner un séjour en famille.",
       "C": "De se promener dans une ferme.",
       "D": "De visiter une grande exposition."
@@ -17127,7 +17127,7 @@
     "audio": null,
     "image": "images/CE_T28_Q18.jpg",
     "propositions": {
-      "A": "L&#8217;ajout d&#8217;ingrédients malsains.",
+      "A": "L'ajout d'ingrédients malsains.",
       "B": "Le prix des produits exotiques.",
       "C": "Les annonces publicitaires.",
       "D": "Les étiquettes trompeuses."
@@ -17143,10 +17143,10 @@
     "audio": null,
     "image": "images/CE_T28_Q19.jpg",
     "propositions": {
-      "A": "C&#8217;est un succès.",
+      "A": "C'est un succès.",
       "B": "Elle changera de lieu.",
       "C": "Elle est déjà finie.",
-      "D": "L&#8217;entrée est gratuite."
+      "D": "L'entrée est gratuite."
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -17162,7 +17162,7 @@
       "A": "Il a avalé un mauvais morceau de fromage.",
       "B": "Il a trouvé quelque chose dans son fromage.",
       "C": "Il est tombé malade en mangeant du fromage.",
-      "D": "Il s&#8217;est fait mal aux dents avec le fromage."
+      "D": "Il s'est fait mal aux dents avec le fromage."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -17223,10 +17223,10 @@
     "audio": null,
     "image": "images/CE_T28_Q24.jpg",
     "propositions": {
-      "A": "le résultat d&#8217;une lutte menée par des gens orgueilleux et intolérants.",
-      "B": "le triomphe d&#8217;une opinion émise par Apollinaire, mais autrefois combattue.",
+      "A": "le résultat d'une lutte menée par des gens orgueilleux et intolérants.",
+      "B": "le triomphe d'une opinion émise par Apollinaire, mais autrefois combattue.",
       "C": "un miracle dû à la persévérance des archéologues sur plusieurs continents.",
-      "D": "la consécration des œuvres européennes jusqu&#8217;alors remisées dans les musées."
+      "D": "la consécration des œuvres européennes jusqu'alors remisées dans les musées."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -17241,8 +17241,8 @@
     "propositions": {
       "A": "De protéger les droits du personnel.",
       "B": "De vérifier le profil des postulants.",
-      "C": "D&#8217;encourager la création d&#8217;emplois.",
-      "D": "D&#8217;éviter la discrimination à l&#8217;embauche."
+      "C": "D'encourager la création d'emplois.",
+      "D": "D'éviter la discrimination à l'embauche."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -17256,9 +17256,9 @@
     "image": "images/CE_T28_Q26.jpg",
     "propositions": {
       "A": "Il déconseille au grand public de les adopter.",
-      "B": "Il estime qu&#8217;elles sont insuffisamment promues.",
+      "B": "Il estime qu'elles sont insuffisamment promues.",
       "C": "Il remet en question leurs retombées positives.",
-      "D": "Il révèle qu&#8217;elles contribuent au déclin industriel."
+      "D": "Il révèle qu'elles contribuent au déclin industriel."
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -17271,7 +17271,7 @@
     "audio": null,
     "image": "images/CE_T28_Q27.jpg",
     "propositions": {
-      "A": "L&#8217;efficacité d&#8217;un slogan choc.",
+      "A": "L'efficacité d'un slogan choc.",
       "B": "La coopération de ses membres.",
       "C": "La distribution de brochures.",
       "D": "La promotion en ligne de la campagne."
@@ -17306,7 +17306,7 @@
       "A": "Les données des malades sont transmises aux fabricants.",
       "B": "Les incidents dus aux erreurs de diagnostic augmentent.",
       "C": "Les patients se méfient des innovations technologiques.",
-      "D": "Les recherches sont limitées par le manque d&#8217;informations."
+      "D": "Les recherches sont limitées par le manque d'informations."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -17319,10 +17319,10 @@
     "audio": null,
     "image": "images/CE_T28_Q30.jpg",
     "propositions": {
-      "A": "Il est stimulé en phase d&#8217;apprentissage du langage.",
+      "A": "Il est stimulé en phase d'apprentissage du langage.",
       "B": "À chaque activité correspond une région précise.",
       "C": "Les neurones sont concentrés dans quelques zones.",
-      "D": "Son développement est lié au caractère d&#8217;un individu."
+      "D": "Son développement est lié au caractère d'un individu."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -17351,9 +17351,9 @@
     "audio": null,
     "image": "images/CE_T28_Q32.jpg",
     "propositions": {
-      "A": "D&#8217;anciens artistes ont l&#8217;occasion de monter sur scène.",
+      "A": "D'anciens artistes ont l'occasion de monter sur scène.",
       "B": "Les financements publics contribuent à leur expansion.",
-      "C": "Les organisateurs s&#8217;adaptent aux nouvelles tendances.",
+      "C": "Les organisateurs s'adaptent aux nouvelles tendances.",
       "D": "Les tarifs proposés dépendent de la programmation."
     },
     "bonne_reponse": "B",
@@ -17370,7 +17370,7 @@
       "A": "Il est méconnu du public visé.",
       "B": "Il est restreint à quelques pays.",
       "C": "Il favorise certains établissements.",
-      "D": "Il souffre d&#8217;une image négative."
+      "D": "Il souffre d'une image négative."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -17401,8 +17401,8 @@
     "propositions": {
       "A": "Il aimerait que sa région soit plus combative et engagée face aux problèmes locaux.",
       "B": "Il réclame de nouvelles dispositions tarifaires pour que les factures soient moins élevées.",
-      "C": "Il s&#8217;indigne en estimant que les reproches faits aux consommateurs sont injustifiés.",
-      "D": "Il trouve inquiétantes les conséquences de la mauvaise gestion des sources d&#8217;énergie"
+      "C": "Il s'indigne en estimant que les reproches faits aux consommateurs sont injustifiés.",
+      "D": "Il trouve inquiétantes les conséquences de la mauvaise gestion des sources d'énergie"
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -17415,10 +17415,10 @@
     "audio": null,
     "image": "images/CE_T28_Q36.jpg",
     "propositions": {
-      "A": "L&#8217;écologie est avant tout une affaire d&#8217;État.",
-      "B": "La concertation est la clé d&#8217;une action réussie.",
+      "A": "L'écologie est avant tout une affaire d'État.",
+      "B": "La concertation est la clé d'une action réussie.",
       "C": "Les mesures protectionnistes sont dépassées.",
-      "D": "L&#8217;influence des lobbies est à prendre en compte."
+      "D": "L'influence des lobbies est à prendre en compte."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -17431,7 +17431,7 @@
     "audio": null,
     "image": "images/CE_T28_Q37.jpg",
     "propositions": {
-      "A": "Attirer davantage d&#8217;étudiants brillants.",
+      "A": "Attirer davantage d'étudiants brillants.",
       "B": "Être à la pointe de la technologie.",
       "C": "Ouvrir ses cours à un public élargi.",
       "D": "Proposer des disciplines inédites."
@@ -17447,7 +17447,7 @@
     "audio": null,
     "image": "images/CE_T28_Q38.jpg",
     "propositions": {
-      "A": "L&#8217;évolution des aptitudes mentales.",
+      "A": "L'évolution des aptitudes mentales.",
       "B": "La mondialisation de la recherche scientifique.",
       "C": "La transformation des savoirs fondamentaux.",
       "D": "Le maintien du patrimoine culturel."
@@ -17464,7 +17464,7 @@
     "image": "images/CE_T28_Q39.jpg",
     "propositions": {
       "A": "Elles diminuent dans toutes les organisations.",
-      "B": "Elles résultent du fonctionnement d&#8217;une société.",
+      "B": "Elles résultent du fonctionnement d'une société.",
       "C": "Elles se combattent mieux avec de la sincérité.",
       "D": "Elles se justifient par des arguments fallacieux."
     },
@@ -17639,10 +17639,10 @@
     "audio": null,
     "image": "images/CE_T29_Q11.jpg",
     "propositions": {
-      "A": "L&#8217;agrandissement d&#8217;un parking.",
-      "B": "La modernisation d&#8217;un bâtiment.",
-      "C": "La transformation d&#8217;un logement.",
-      "D": "Le déménagement d&#8217;une locataire."
+      "A": "L'agrandissement d'un parking.",
+      "B": "La modernisation d'un bâtiment.",
+      "C": "La transformation d'un logement.",
+      "D": "Le déménagement d'une locataire."
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -17656,7 +17656,7 @@
     "image": "images/CE_T29_Q12.jpg",
     "propositions": {
       "A": "Accueillir les étudiants étrangers.",
-      "B": "Faciliter la recherche d&#8217;emploi.",
+      "B": "Faciliter la recherche d'emploi.",
       "C": "Préparer la rentrée universitaire.",
       "D": "Présenter de nouvelles formations."
     },
@@ -17735,7 +17735,7 @@
     "audio": null,
     "image": "images/CE_T29_Q17.jpg",
     "propositions": {
-      "A": "Des enregistrements sonores d&#8217;articles de journaux.",
+      "A": "Des enregistrements sonores d'articles de journaux.",
       "B": "Des extraits choisis de romans classiques.",
       "C": "Des publications résumées de contenus de sites web.",
       "D": "Des sélections de répliques de théâtre célèbres."
@@ -17767,9 +17767,9 @@
     "audio": null,
     "image": "images/CE_T29_Q19.jpg",
     "propositions": {
-      "A": "Participer à un concours international d&#8217;astronomie.",
-      "B": "Réaliser une étude d&#8217;observation des astres.",
-      "C": "Se joindre à une formation d&#8217;enseignants en sciences.",
+      "A": "Participer à un concours international d'astronomie.",
+      "B": "Réaliser une étude d'observation des astres.",
+      "C": "Se joindre à une formation d'enseignants en sciences.",
       "D": "Suivre un cours de rattrapage en sciences physiques."
     },
     "bonne_reponse": "B",
@@ -17799,10 +17799,10 @@
     "audio": null,
     "image": "images/CE_T29_Q21.jpg",
     "propositions": {
-      "A": "a un timbre qui n&#8217;existe pas naturellement.",
-      "B": "se confond avec la voix de l&#8217;enfant qui joue.",
+      "A": "a un timbre qui n'existe pas naturellement.",
+      "B": "se confond avec la voix de l'enfant qui joue.",
       "C": "enregistre et reproduit les voix entendues.",
-      "D": "imite à la perfection la voix d&#8217;un enfant."
+      "D": "imite à la perfection la voix d'un enfant."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -17815,7 +17815,7 @@
     "audio": null,
     "image": "images/CE_T29_Q22.jpg",
     "propositions": {
-      "A": "Ils ont de moins en moins d&#8217;espace naturel.",
+      "A": "Ils ont de moins en moins d'espace naturel.",
       "B": "Ils permettent de protéger la biodiversité.",
       "C": "Ils représentent un danger exagéré.",
       "D": "Ils sont décimés par la maladie."
@@ -17848,8 +17848,8 @@
     "image": "images/CE_T29_Q24.jpg",
     "propositions": {
       "A": "Elles concurrencent le marché numérique.",
-      "B": "Elles contribuent à protéger l&#8217;environnement.",
-      "C": "Elles favorisent l&#8217;épargne des citoyens.",
+      "B": "Elles contribuent à protéger l'environnement.",
+      "C": "Elles favorisent l'épargne des citoyens.",
       "D": "Elles sécurisent les modes de paiement."
     },
     "bonne_reponse": "B",
@@ -17863,9 +17863,9 @@
     "audio": null,
     "image": "images/CE_T29_Q25.jpg",
     "propositions": {
-      "A": "En limitant la part de l&#8217;apprentissage pratique.",
+      "A": "En limitant la part de l'apprentissage pratique.",
       "B": "En rendant compréhensibles les décisions politiques.",
-      "C": "En renouvelant les perspectives d&#8217;évolution.",
+      "C": "En renouvelant les perspectives d'évolution.",
       "D": "En révisant les conditions de rémunération."
     },
     "bonne_reponse": "D",
@@ -17913,7 +17913,7 @@
     "propositions": {
       "A": "Changer la façon de gérer des équipes.",
       "B": "Compenser le manque de formateurs.",
-      "C": "Réussir au sein d&#8217;une société.",
+      "C": "Réussir au sein d'une société.",
       "D": "Transmettre des connaissances."
     },
     "bonne_reponse": "D",
@@ -17930,7 +17930,7 @@
       "A": "Elles détruisent les cellules du cerveau.",
       "B": "Elles développent la mémoire à court terme.",
       "C": "Elles modifient nos processus cognitifs.",
-      "D": "Elles provoquent la disparition de l&#8217;écriture."
+      "D": "Elles provoquent la disparition de l'écriture."
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -17959,10 +17959,10 @@
     "audio": null,
     "image": "images/CE_T29_Q31.jpg",
     "propositions": {
-      "A": "C&#8217;est la photographie qui est la forme d&#8217;art la moins valorisée.",
-      "B": "Il y a peu d&#8217;événements culturels consacrés à la photographie.",
+      "A": "C'est la photographie qui est la forme d'art la moins valorisée.",
+      "B": "Il y a peu d'événements culturels consacrés à la photographie.",
       "C": "Les photographies sont commercialisées à bas prix.",
-      "D": "N&#8217;importe qui peut s&#8217;improviser photographe."
+      "D": "N'importe qui peut s'improviser photographe."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -17975,7 +17975,7 @@
     "audio": null,
     "image": "images/CE_T29_Q32.jpg",
     "propositions": {
-      "A": "De participer à l&#8217;exploration du monde numérique.",
+      "A": "De participer à l'exploration du monde numérique.",
       "B": "De restreindre le temps consacré aux jeux vidéo.",
       "C": "De sélectionner des contenus adaptés aux enfants.",
       "D": "De surveiller la navigation des jeunes sur la toile."
@@ -17991,7 +17991,7 @@
     "audio": null,
     "image": "images/CE_T29_Q33.jpg",
     "propositions": {
-      "A": "L&#8217;absence de modèle comparatif de mobilité.",
+      "A": "L'absence de modèle comparatif de mobilité.",
       "B": "La déresponsabilisation des usagers.",
       "C": "Le déficit provoqué par son financement.",
       "D": "Le risque de saturation des réseaux."
@@ -18007,8 +18007,8 @@
     "audio": null,
     "image": "images/CE_T29_Q34.jpg",
     "propositions": {
-      "A": "Des méthodes innovantes sur l&#8217;usage des TIC.",
-      "B": "Des pistes de recherche sur l&#8217;apprentissage.",
+      "A": "Des méthodes innovantes sur l'usage des TIC.",
+      "B": "Des pistes de recherche sur l'apprentissage.",
       "C": "Un état des lieux des ressources pédagogiques.",
       "D": "Une analyse du contexte socio-éducatif actuel."
     },
@@ -18042,7 +18042,7 @@
       "A": "Il revit des souvenirs lointains dans le bureau de la maison familiale.",
       "B": "Il se rappelle une pièce de travail poussiéreuse interdite aux enfants.",
       "C": "Il raconte son apprentissage de la lecture auprès de son grand-père.",
-      "D": "Il évoque ses rentrées scolaires alors qu&#8217;il ne savait pas encore lire."
+      "D": "Il évoque ses rentrées scolaires alors qu'il ne savait pas encore lire."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -18055,7 +18055,7 @@
     "audio": null,
     "image": "images/CE_T29_Q37.jpg",
     "propositions": {
-      "A": "Attirer davantage d&#8217;étudiants brillants.",
+      "A": "Attirer davantage d'étudiants brillants.",
       "B": "Être à la pointe de la technologie.",
       "C": "Ouvrir ses cours à un public élargi.",
       "D": "Proposer des disciplines inédites."
@@ -18071,10 +18071,10 @@
     "audio": null,
     "image": "images/CE_T29_Q38.jpg",
     "propositions": {
-      "A": "L&#8217;alternance entre le comique et le drame.",
-      "B": "L&#8217;atmosphère énigmatique et inquiétante.",
+      "A": "L'alternance entre le comique et le drame.",
+      "B": "L'atmosphère énigmatique et inquiétante.",
       "C": "La présentation de particularités régionales.",
-      "D": "L&#8217;émancipation des héros au cours du récit."
+      "D": "L'émancipation des héros au cours du récit."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -18087,10 +18087,10 @@
     "audio": null,
     "image": "images/CE_T29_Q39.jpg",
     "propositions": {
-      "A": "La dégradation des relations sociales à cause d&#8217;Internet.",
-      "B": "La multiplication des sources d&#8217;information.",
+      "A": "La dégradation des relations sociales à cause d'Internet.",
+      "B": "La multiplication des sources d'information.",
       "C": "La nocivité des écrans sur le développement des enfants.",
-      "D": "La recrudescence d&#8217;informations mensongères."
+      "D": "La recrudescence d'informations mensongères."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -18362,7 +18362,7 @@
       "A": "Elle abrite une vie animée.",
       "B": "Elle perpétue des traditions.",
       "C": "Elle se préserve du tourisme.",
-      "D": "Elle tente d&#8217;imiter sa voisine."
+      "D": "Elle tente d'imiter sa voisine."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -18376,8 +18376,8 @@
     "image": "images/CE_T30_Q18.jpg",
     "propositions": {
       "A": "Les producteurs évitent de prendre des risques.",
-      "B": "Les réalisateurs sont à la recherche d&#8217;idées neuves.",
-      "C": "Les scénaristes font preuve d&#8217;une imagination limitée.",
+      "B": "Les réalisateurs sont à la recherche d'idées neuves.",
+      "C": "Les scénaristes font preuve d'une imagination limitée.",
       "D": "Les spectateurs privilégient les créations classiques."
     },
     "bonne_reponse": "A",
@@ -18440,7 +18440,7 @@
     "image": "images/CE_T30_Q22.jpg",
     "propositions": {
       "A": "Acheter les meilleurs produits et dépenser le moins possible.",
-      "B": "Avoir la garantie de la qualité du produit et ignorer d&#8217;où il vient",
+      "B": "Avoir la garantie de la qualité du produit et ignorer d'où il vient",
       "C": "Être amateur de viande et militer pour le bien-être animal.",
       "D": "Privilégier les aliments bio et avoir du mal à s’en procurer."
     },
@@ -18807,8 +18807,8 @@
     "audio": null,
     "image": "images/CE_T31_Q06.jpg",
     "propositions": {
-      "A": "D&#8217;écrire aux invités.",
-      "B": "D&#8217;organiser la fête.",
+      "A": "D'écrire aux invités.",
+      "B": "D'organiser la fête.",
       "C": "De garder des enfants.",
       "D": "De préparer des danses."
     },
@@ -18903,10 +18903,10 @@
     "audio": null,
     "image": "images/CE_T31_Q12.jpg",
     "propositions": {
-      "A": "L&#8217;anniversaire d&#8217;un magasin.",
-      "B": "L&#8217;augmentation des ventes.",
-      "C": "L&#8217;ouverture d&#8217;un commerce.",
-      "D": "Le début des soldes d&#8217;été."
+      "A": "L'anniversaire d'un magasin.",
+      "B": "L'augmentation des ventes.",
+      "C": "L'ouverture d'un commerce.",
+      "D": "Le début des soldes d'été."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -18920,9 +18920,9 @@
     "image": "images/CE_T31_Q13.jpg",
     "propositions": {
       "A": "De parler de ses qualités personnelles.",
-      "B": "De préparer un entretien d&#8217;embauche.",
-      "C": "D&#8217;élaborer un curriculum vitae original.",
-      "D": "D&#8217;insister sur sa formation universitaire."
+      "B": "De préparer un entretien d'embauche.",
+      "C": "D'élaborer un curriculum vitae original.",
+      "D": "D'insister sur sa formation universitaire."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -18951,10 +18951,10 @@
     "audio": null,
     "image": "images/CE_T31_Q15.jpg",
     "propositions": {
-      "A": "De l&#8217;utilisation du portable.",
+      "A": "De l'utilisation du portable.",
       "B": "De la sécurité au volant.",
       "C": "Du bruit de la circulation.",
-      "D": "Du vote d&#8217;une nouvelle loi."
+      "D": "Du vote d'une nouvelle loi."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -18969,7 +18969,7 @@
     "propositions": {
       "A": "De diffuser de la musique.",
       "B": "De réutiliser des objets.",
-      "C": "De s&#8217;engager en politique.",
+      "C": "De s'engager en politique.",
       "D": "De tourner des publicités."
     },
     "bonne_reponse": "B",
@@ -19000,8 +19000,8 @@
     "image": "images/CE_T31_Q18.jpg",
     "propositions": {
       "A": "Ils apprennent à se servir correctement des réseaux sociaux.",
-      "B": "Ils communiquent plus facilement avec l&#8217;instituteur.",
-      "C": "Ils comprennent mieux l&#8217;intérêt des apprentissages proposés.",
+      "B": "Ils communiquent plus facilement avec l'instituteur.",
+      "C": "Ils comprennent mieux l'intérêt des apprentissages proposés.",
       "D": "Ils sont plus attentifs après un moment de détente."
     },
     "bonne_reponse": "C",
@@ -19047,10 +19047,10 @@
     "audio": null,
     "image": "images/CE_T31_Q21.jpg",
     "propositions": {
-      "A": "L&#8217;adaptation de l&#8217;offre culinaire à la mode actuelle.",
+      "A": "L'adaptation de l'offre culinaire à la mode actuelle.",
       "B": "La baisse de la qualité des établissements.",
       "C": "La disparition graduelle de la cuisine traditionnelle.",
-      "D": "L&#8217;hostilité des critiques spécialisés locaux."
+      "D": "L'hostilité des critiques spécialisés locaux."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -19079,10 +19079,10 @@
     "audio": null,
     "image": "images/CE_T31_Q23.jpg",
     "propositions": {
-      "A": "Elle attire beaucoup d&#8217;investisseurs.",
+      "A": "Elle attire beaucoup d'investisseurs.",
       "B": "Elle enregistre des ventes record.",
       "C": "Elle recherche une clientèle aisée",
-      "D": "Elle soutient l&#8217;esprit de création."
+      "D": "Elle soutient l'esprit de création."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -19095,7 +19095,7 @@
     "audio": null,
     "image": "images/CE_T31_Q24.jpg",
     "propositions": {
-      "A": "Ils ont plus de facilités d&#8217;apprentissage.",
+      "A": "Ils ont plus de facilités d'apprentissage.",
       "B": "Ils ont une idée claire de leur futur métier.",
       "C": "Ils sont déterminés à travailler beaucoup.",
       "D": "Ils sont plus sûrs de leur nouveau choix."
@@ -19128,8 +19128,8 @@
     "image": "images/CE_T31_Q26.jpg",
     "propositions": {
       "A": "De nouvelles pédagogies semblent nécessaires.",
-      "B": "Il conviendrait d&#8217;améliorer les résultats des élèvés.",
-      "C": "L&#8217;Europe doit engager une réforme des programmes.",
+      "B": "Il conviendrait d'améliorer les résultats des élèvés.",
+      "C": "L'Europe doit engager une réforme des programmes.",
       "D": "Un soutien scolaire journalier serait bénéfique."
     },
     "bonne_reponse": "A",
@@ -19145,7 +19145,7 @@
     "propositions": {
       "A": "Des libraires menacent de fermer boutique.",
       "B": "La qualité des livres publiés est catastrophique.",
-      "C": "Le nombre d&#8217;ouvrages à paraître a diminué.",
+      "C": "Le nombre d'ouvrages à paraître a diminué.",
       "D": "Un éditeur refuse de participer à cette tradition."
     },
     "bonne_reponse": "C",
@@ -19159,9 +19159,9 @@
     "audio": null,
     "image": "images/CE_T31_Q28.jpg",
     "propositions": {
-      "A": "Ils perpétuent une forme d&#8217;exclusion.",
-      "B": "Le nombre de candidats s&#8217;amenuise.",
-      "C": "Leur niveau d&#8217;exigence diminue.",
+      "A": "Ils perpétuent une forme d'exclusion.",
+      "B": "Le nombre de candidats s'amenuise.",
+      "C": "Leur niveau d'exigence diminue.",
       "D": "On les réforme régulièrement."
     },
     "bonne_reponse": "A",
@@ -19191,10 +19191,10 @@
     "audio": null,
     "image": "images/CE_T31_Q30.jpg",
     "propositions": {
-      "A": "L&#8217;accès universel à des aliments bon marché.",
-      "B": "L&#8217;innovation des procédés de production.",
+      "A": "L'accès universel à des aliments bon marché.",
+      "B": "L'innovation des procédés de production.",
       "C": "Le développement du commerce équitable.",
-      "D": "Le partage d&#8217;expériences traditionnelles."
+      "D": "Le partage d'expériences traditionnelles."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -19223,8 +19223,8 @@
     "audio": null,
     "image": "images/CE_T31_Q32.jpg",
     "propositions": {
-      "A": "L&#8217;attirance pour les espaces naturels.",
-      "B": "L&#8217;insécurité des zones urbaines.",
+      "A": "L'attirance pour les espaces naturels.",
+      "B": "L'insécurité des zones urbaines.",
       "C": "La précarité du monde professionnel.",
       "D": "Le désir de vivre en communauté"
     },
@@ -19242,7 +19242,7 @@
       "A": "Ils créent un climat de méfiance envers la technologie.",
       "B": "Ils entraînent la disparition de pratiques traditionnelles.",
       "C": "Ils facilitent la vie quotidienne des personnes âgées.",
-      "D": "Ils sont à l&#8217;origine de l&#8217;expansion économique du pays."
+      "D": "Ils sont à l'origine de l'expansion économique du pays."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -19256,7 +19256,7 @@
     "image": "images/CE_T31_Q34.jpg",
     "propositions": {
       "A": "Ils correspondent à des programmes scolaires obsolètes.",
-      "B": "Ils méconnaissent l&#8217;existence des familles recomposées.",
+      "B": "Ils méconnaissent l'existence des familles recomposées.",
       "C": "Ils présentent un partage sexiste des tâches dans le couple.",
       "D": "Ils se moquent du quotidien des personnes sans emploi."
     },
@@ -19273,7 +19273,7 @@
     "propositions": {
       "A": "Ils se détériorent après un certain temps.",
       "B": "Ils sont dangereux pour la santé.",
-      "C": "Ils sont nuisibles pour l&#8217;environnement.",
+      "C": "Ils sont nuisibles pour l'environnement.",
       "D": "Ils sont vendus à des prix élevés."
     },
     "bonne_reponse": "A",
@@ -19287,7 +19287,7 @@
     "audio": null,
     "image": "images/CE_T31_Q36.jpg",
     "propositions": {
-      "A": "Être au plus près de l&#8217;actualité.",
+      "A": "Être au plus près de l'actualité.",
       "B": "Présenter des histoires positives.",
       "C": "Proposer des anecdotes amusantes.",
       "D": "Recenser les dérives de la société."
@@ -19303,8 +19303,8 @@
     "audio": null,
     "image": "images/CE_T31_Q37.jpg",
     "propositions": {
-      "A": "Il analyse l&#8217;établisserient d&#8217;une dynastie royale.",
-      "B": "Il explique l&#8217;origine d&#8217;une légende médiévale.",
+      "A": "Il analyse l'établisserient d'une dynastie royale.",
+      "B": "Il explique l'origine d'une légende médiévale.",
       "C": "Il explore la construction identitaire des Français.",
       "D": "Il renforce le mythe de la bataille de Bouvines."
     },
@@ -19336,9 +19336,9 @@
     "image": "images/CE_T31_Q39.jpg",
     "propositions": {
       "A": "Ils augmentent les ressources des municipalités.",
-      "B": "Ils contribuent à la protection de l&#8217;environnement.",
-      "C": "Ils garantissent la fourniture continue d&#8217;énergie.",
-      "D": "Ils participent à l&#8217;élimination des animaux nuisibles."
+      "B": "Ils contribuent à la protection de l'environnement.",
+      "C": "Ils garantissent la fourniture continue d'énergie.",
+      "D": "Ils participent à l'élimination des animaux nuisibles."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -19353,7 +19353,7 @@
     "propositions": {
       "A": "Une aide aux devoirs",
       "B": "Une chambre à louer",
-      "C": "Une garde d&#8217;animaux",
+      "C": "Une garde d'animaux",
       "D": "Une visite touristique"
     },
     "bonne_reponse": "C",
@@ -19495,8 +19495,8 @@
     "audio": null,
     "image": "images/CE_T32_Q10.jpg",
     "propositions": {
-      "A": "D&#8217;envoyer des photos",
-      "B": "D&#8217;inventer une recette",
+      "A": "D'envoyer des photos",
+      "B": "D'inventer une recette",
       "C": "De créer un spectacle",
       "D": "De découvrir une langue"
     },
@@ -19576,7 +19576,7 @@
     "image": "images/CE_T32_Q15.jpg",
     "propositions": {
       "A": "Echanger avec d’autres passionnés de tennis",
-      "B": "Participer à la rédaction d&#8217;articles",
+      "B": "Participer à la rédaction d'articles",
       "C": "Prendre rendez-vous pour des matchs",
       "D": "Raconter son histoire personnelle"
     },
@@ -19591,10 +19591,10 @@
     "audio": null,
     "image": "images/CE_T32_Q16.jpg",
     "propositions": {
-      "A": "D&#8217;installer des ruches sur les toits",
+      "A": "D'installer des ruches sur les toits",
       "B": "De jardiner dans des lieux publics",
-      "C": "De s&#8217;associer à la rénovation des bâtiments",
-      "D": "De s&#8217;inscrire à des formations à L&#8217;agriculture"
+      "C": "De s'associer à la rénovation des bâtiments",
+      "D": "De s'inscrire à des formations à L'agriculture"
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -19623,10 +19623,10 @@
     "audio": null,
     "image": "images/CE_T32_Q18.jpg",
     "propositions": {
-      "A": "Du dernier habitant d&#8217;un village.",
+      "A": "Du dernier habitant d'un village.",
       "B": "Du dernier village de Provence.",
-      "C": "De l&#8217;arrivée d&#8217;une femme dans un village.",
-      "D": "de l&#8217;amitié dans un lieu abandonné."
+      "C": "De l'arrivée d'une femme dans un village.",
+      "D": "de l'amitié dans un lieu abandonné."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -19639,7 +19639,7 @@
     "audio": null,
     "image": "images/CE_T32_Q19.jpg",
     "propositions": {
-      "A": "Il est facile de s&#8217;identifier aux personnages",
+      "A": "Il est facile de s'identifier aux personnages",
       "B": "Les lieux de tournage sont authentiques",
       "C": "On y dresse un portrait juste de la société.",
       "D": "Son humour fait passer un message sérieux"
@@ -19672,9 +19672,9 @@
     "image": "images/CE_T32_Q21.jpg",
     "propositions": {
       "A": "Acheter les meilleurs produits et dépenser le moins possible",
-      "B": "Avoir la garantie de la qualité du produit et ignorer d&#8217;où il vient",
+      "B": "Avoir la garantie de la qualité du produit et ignorer d'où il vient",
       "C": "Être amateur de viande et militer pour le bien-être animal",
-      "D": "Privilégier les aliments bio et avoir du mal à s&#8217;en procurer"
+      "D": "Privilégier les aliments bio et avoir du mal à s'en procurer"
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -19767,10 +19767,10 @@
     "audio": null,
     "image": "images/CE_T32_Q27.jpg",
     "propositions": {
-      "A": "D&#8217;un rassemblement de clients mécontents",
-      "B": "D&#8217;une opération de vente promotionnelle",
-      "C": "De l&#8217;inauguration d&#8217;un nouvel établissement.",
-      "D": "De l&#8217;organisation d&#8217;une animation clandestine"
+      "A": "D'un rassemblement de clients mécontents",
+      "B": "D'une opération de vente promotionnelle",
+      "C": "De l'inauguration d'un nouvel établissement.",
+      "D": "De l'organisation d'une animation clandestine"
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -19799,7 +19799,7 @@
     "audio": null,
     "image": "images/CE_T32_Q29.jpg",
     "propositions": {
-      "A": "La mise en oeuvre d&#8217;une action collective",
+      "A": "La mise en oeuvre d'une action collective",
       "B": "La mission des organisations professionnelles",
       "C": "Le contenu des revendications présentes",
       "D": "Les orientations pédagogiques à soutenir"
@@ -19815,10 +19815,10 @@
     "audio": null,
     "image": "images/CE_T32_Q30.jpg",
     "propositions": {
-      "A": "Comme un défaut d&#8217;honnêteté",
+      "A": "Comme un défaut d'honnêteté",
       "B": "Comme un manque de confiance",
       "C": "Comme une appréciation déguisée",
-      "D": "Comme une incitation à l&#8217;action"
+      "D": "Comme une incitation à l'action"
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -19864,9 +19864,9 @@
     "image": "images/CE_T32_Q33.jpg",
     "propositions": {
       "A": "La pénurie de logement liée à la présence des touristes.",
-      "B": "L&#8217;avidité financière des acteurs du secteur touristique.",
+      "B": "L'avidité financière des acteurs du secteur touristique.",
       "C": "Le mépris des touristes pour les considérations écologiques.",
-      "D": "L&#8217;exclusion des classes populaires des activités touristiques."
+      "D": "L'exclusion des classes populaires des activités touristiques."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -19879,7 +19879,7 @@
     "audio": null,
     "image": "images/CE_T32_Q34.jpg",
     "propositions": {
-      "A": "Attirer l&#8217;attention grâce à un coup de publicité.",
+      "A": "Attirer l'attention grâce à un coup de publicité.",
       "B": "Concurrencer les autres moyens de locomotion",
       "C": "Multiplier le nombre de souscriptions par Internet",
       "D": "Permettre de voyager extramuros à moindre frais"
@@ -19896,8 +19896,8 @@
     "image": "images/CE_T32_Q35.jpg",
     "propositions": {
       "A": "Un manque de volontaires au sein des entreprises.",
-      "B": "Un risque pour l&#8217;entreprise de voir son rendement baisser.",
-      "C": "Une absence d&#8217;équipements modernes adéquats.",
+      "B": "Un risque pour l'entreprise de voir son rendement baisser.",
+      "C": "Une absence d'équipements modernes adéquats.",
       "D": "Une crainte de la hiérarchie quant à la qualité du travail fourni."
     },
     "bonne_reponse": "D",
@@ -19911,9 +19911,9 @@
     "audio": null,
     "image": "images/CE_T32_Q36.jpg",
     "propositions": {
-      "A": "Elle favorise l&#8217;égalité des chances.",
+      "A": "Elle favorise l'égalité des chances.",
       "B": "Elle prépare à la vie professionnelle.",
-      "C": "Elle remplace l&#8217;évaluation continue.",
+      "C": "Elle remplace l'évaluation continue.",
       "D": "Elle simplifie le travail des enseignants"
     },
     "bonne_reponse": "A",
@@ -19943,8 +19943,8 @@
     "audio": null,
     "image": "images/CE_T32_Q38.jpg",
     "propositions": {
-      "A": "L&#8217;importance de la gestion des ressources humaines.",
-      "B": "L&#8217;intérêt d&#8217;éviter les inconvénients liés à l&#8217;isolement.",
+      "A": "L'importance de la gestion des ressources humaines.",
+      "B": "L'intérêt d'éviter les inconvénients liés à l'isolement.",
       "C": "La facilité de réaliser des projets communs à distance.",
       "D": "La nécessité de souder les équipes dans une entreprise."
     },
@@ -19959,7 +19959,7 @@
     "audio": null,
     "image": "images/CE_T32_Q39.jpg",
     "propositions": {
-      "A": "D&#8217;arrêter les présentations de collections.",
+      "A": "D'arrêter les présentations de collections.",
       "B": "De diminuer la production de vêtements.",
       "C": "De sensibiliser les jeunes consommateurs.",
       "D": "De soutenir les entreprises responsables."
@@ -19991,7 +19991,7 @@
     "audio": null,
     "image": "images/CE_T33_Q02.jpg",
     "propositions": {
-      "A": "Acheter un billet d&#8217;avion.",
+      "A": "Acheter un billet d'avion.",
       "B": "Aller à Marseille.",
       "C": "Prendre un rendez-vous.",
       "D": "Téléphoner à un collègue."
@@ -20024,7 +20024,7 @@
     "image": "images/CE_T33_Q04.jpg",
     "propositions": {
       "A": "Des cours gratuits.",
-      "B": "Des postes à l&#8217;étranger.",
+      "B": "Des postes à l'étranger.",
       "C": "Des stages en Italie.",
       "D": "Des voyages en Europe."
     },
@@ -20039,10 +20039,10 @@
     "audio": null,
     "image": "images/CE_T33_Q05.jpg",
     "propositions": {
-      "A": "La visite d&#8217;un bateau.",
+      "A": "La visite d'un bateau.",
       "B": "Une promenade en mer.",
       "C": "Une promenade en ville.",
-      "D": "La visite du port d&#8217;Arcachon."
+      "D": "La visite du port d'Arcachon."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -20087,7 +20087,7 @@
     "audio": null,
     "image": "images/CE_T33_Q08.jpg",
     "propositions": {
-      "A": "D&#8217;acheter des plantes à bon prix.",
+      "A": "D'acheter des plantes à bon prix.",
       "B": "De faire des courses en ligne.",
       "C": "De participer à un concours.",
       "D": "De recevoir des outils gratuits."
@@ -20103,8 +20103,8 @@
     "audio": null,
     "image": "images/CE_T33_Q09.jpg",
     "propositions": {
-      "A": "D&#8217;apporter le déjeuner.",
-      "B": "D&#8217;avancer le rendez-vous.",
+      "A": "D'apporter le déjeuner.",
+      "B": "D'avancer le rendez-vous.",
       "C": "De consulter les documents.",
       "D": "De prévenir les collègues."
     },
@@ -20167,7 +20167,7 @@
     "audio": null,
     "image": "images/CE_T33_Q13.jpg",
     "propositions": {
-      "A": "C&#8217;est son mode de communication favori.",
+      "A": "C'est son mode de communication favori.",
       "B": "Il a entamé une formation de journaliste.",
       "C": "il peut partager sa passion avec un public.",
       "D": "Pour répondre aux attentes de son public."
@@ -20184,8 +20184,8 @@
     "image": "images/CE_T33_Q14.jpg",
     "propositions": {
       "A": "Pour venir lui déposer des documents.",
-      "B": "Pour lui demander l&#8217;envoi de documents.",
-      "C": "Pour lui rendre compte du déroulement d&#8217;un stage.",
+      "B": "Pour lui demander l'envoi de documents.",
+      "C": "Pour lui rendre compte du déroulement d'un stage.",
       "D": "Pour lui proposer des dates de rencontre."
     },
     "bonne_reponse": "D",
@@ -20200,9 +20200,9 @@
     "image": "images/CE_T33_Q15.jpg",
     "propositions": {
       "A": "Obtenir un poste chez un libraire.",
-      "B": "Se spécialiser dans l&#8217;art et la culture.",
-      "C": "S&#8217;inscrire à un cours de langue.",
-      "D": "Travailler dans une maison d&#8217;édition."
+      "B": "Se spécialiser dans l'art et la culture.",
+      "C": "S'inscrire à un cours de langue.",
+      "D": "Travailler dans une maison d'édition."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -20216,9 +20216,9 @@
     "image": "images/CE_T33_Q16.jpg",
     "propositions": {
       "A": "Le choix des matières est vaste.",
-      "B": "Le nombre d&#8217;étudiants est limité.",
+      "B": "Le nombre d'étudiants est limité.",
       "C": "Le prix des études est peu élevé.",
-      "D": "L&#8217;enseignement est d&#8217;un bon niveau."
+      "D": "L'enseignement est d'un bon niveau."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -20231,9 +20231,9 @@
     "audio": null,
     "image": "images/CE_T33_Q17.jpg",
     "propositions": {
-      "A": "ne rapportent pas assez d&#8217;argent.",
-      "B": "commencent plus tôt que d&#8217;habitude.",
-      "C": "n&#8217;attirent pas beaucoup de clients.",
+      "A": "ne rapportent pas assez d'argent.",
+      "B": "commencent plus tôt que d'habitude.",
+      "C": "n'attirent pas beaucoup de clients.",
       "D": "sont organisés uniquement à Paris."
     },
     "bonne_reponse": "B",
@@ -20279,7 +20279,7 @@
     "audio": null,
     "image": "images/CE_T33_Q20.jpg",
     "propositions": {
-      "A": "En achetant les billets à l&#8217;avance.",
+      "A": "En achetant les billets à l'avance.",
       "B": "En choisissant des places pour quatre matchs.",
       "C": "En prenant des billets pour un groupe.",
       "D": "En présentant une carte de club de sport."
@@ -20295,10 +20295,10 @@
     "audio": null,
     "image": "images/CE_T33_Q21.jpg",
     "propositions": {
-      "A": "L&#8217;organisation d&#8217;un événement culturel.",
-      "B": "L&#8217;ouverture d&#8217;une salle de cinéma.",
-      "C": "La construction d&#8217;un musée futuriste.",
-      "D": "La sortie d&#8217;un nouveau jeu vidéo."
+      "A": "L'organisation d'un événement culturel.",
+      "B": "L'ouverture d'une salle de cinéma.",
+      "C": "La construction d'un musée futuriste.",
+      "D": "La sortie d'un nouveau jeu vidéo."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -20312,9 +20312,9 @@
     "image": "images/CE_T33_Q22.jpg",
     "propositions": {
       "A": "ll néglige les commerces dans les rues piétonnes.",
-      "B": "Il rend difficile l&#8217;accès aux secteurs touristiques.",
+      "B": "Il rend difficile l'accès aux secteurs touristiques.",
       "C": "Il répond peu aux besoins en pistes cyclables des habitants.",
-      "D": "Il risque d&#8217;entraver la circulation des véhicules de secours."
+      "D": "Il risque d'entraver la circulation des véhicules de secours."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -20344,7 +20344,7 @@
     "image": "images/CE_T33_Q24.jpg",
     "propositions": {
       "A": "Animer des lectures publiques.",
-      "B": "Faire la promotion d&#8217;un club de lecteurs.",
+      "B": "Faire la promotion d'un club de lecteurs.",
       "C": "Ouvrir une bibliothèque pour tous.",
       "D": "Publier une méthode pour apprendre à lire."
     },
@@ -20359,7 +20359,7 @@
     "audio": null,
     "image": "images/CE_T33_Q25.jpg",
     "propositions": {
-      "A": "L&#8217;originalité des pays visités.",
+      "A": "L'originalité des pays visités.",
       "B": "La description des habitudes quotidiennes.",
       "C": "La diversité des portraits présentés.",
       "D": "Les qualités littéraires des écrivains."
@@ -20376,9 +20376,9 @@
     "image": "images/CE_T33_Q26.jpg",
     "propositions": {
       "A": "Pour demander une diminution des frais.",
-      "B": "Pour dénoncer le manque d&#8217;entretien.",
+      "B": "Pour dénoncer le manque d'entretien.",
       "C": "Pour exiger plus de variété de plantes.",
-      "D": "Pour réclamer l&#8217;ouverture d&#8217;autres parcs."
+      "D": "Pour réclamer l'ouverture d'autres parcs."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -20391,7 +20391,7 @@
     "audio": null,
     "image": "images/CE_T33_Q27.jpg",
     "propositions": {
-      "A": "La réalisation de l&#8217;œuvre manque de maîtrise.",
+      "A": "La réalisation de l'œuvre manque de maîtrise.",
       "B": "Le film tombe dans les stéréotypes du genre.",
       "C": "Le jeu des comédiens lui semble plutôt médiocre.",
       "D": "Le scénario du film est maladroitement construit."
@@ -20423,10 +20423,10 @@
     "audio": null,
     "image": "images/CE_T33_Q29.jpg",
     "propositions": {
-      "A": "Demander à une cliente de payer l&#8217;intégralité de sa commande.",
+      "A": "Demander à une cliente de payer l'intégralité de sa commande.",
       "B": "Prévenir une cliente que sa commande sera livrée en retard.",
       "C": "Confirmer à une cliente que sa commande a bien été expédiée.",
-      "D": "Prévenir une cliente qu&#8217;elle devra payer 20 euros de frais d&#8217;envoi."
+      "D": "Prévenir une cliente qu'elle devra payer 20 euros de frais d'envoi."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -20455,10 +20455,10 @@
     "audio": null,
     "image": "images/CE_T33_Q31.jpg",
     "propositions": {
-      "A": "L&#8217;anniversaire d&#8217;une radio.",
-      "B": "La 200e édition d&#8217;une émission.",
-      "C": "Le départ d&#8217;une animatrice.",
-      "D": "Le travail d&#8217;un directeur."
+      "A": "L'anniversaire d'une radio.",
+      "B": "La 200e édition d'une émission.",
+      "C": "Le départ d'une animatrice.",
+      "D": "Le travail d'un directeur."
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -20471,10 +20471,10 @@
     "audio": null,
     "image": "images/CE_T33_Q32.jpg",
     "propositions": {
-      "A": "Elle éprouve un sentiment d&#8217;invulnérabilité.",
-      "B": "Elle s&#8217;imagine vivre une vie meilleure.",
-      "C": "Elle savoure le bonheur d&#8217;avoir une famille.",
-      "D": "Elle s&#8217;abstrait un temps de ses soucis."
+      "A": "Elle éprouve un sentiment d'invulnérabilité.",
+      "B": "Elle s'imagine vivre une vie meilleure.",
+      "C": "Elle savoure le bonheur d'avoir une famille.",
+      "D": "Elle s'abstrait un temps de ses soucis."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -20487,7 +20487,7 @@
     "audio": null,
     "image": "images/CE_T33_Q33.jpg",
     "propositions": {
-      "A": "Pour bénéficier des aides financières de l&#8217;Union.",
+      "A": "Pour bénéficier des aides financières de l'Union.",
       "B": "Pour mieux contrôler ses établissements financiers.",
       "C": "Pour redonner de la valeur à la monnaie nationale.",
       "D": "Pour sortir de la crise que son économie subissait."
@@ -20503,9 +20503,9 @@
     "audio": null,
     "image": "images/CE_T33_Q34.jpg",
     "propositions": {
-      "A": "L&#8217;idée de démocratie est aujourd&#8217;hui plus controversée qu&#8217;avant.",
+      "A": "L'idée de démocratie est aujourd'hui plus controversée qu'avant.",
       "B": "La démocratie est affaiblie par la diversité de ses formes.",
-      "C": "La mise en place de la démocratie résulte d&#8217;un long processus.",
+      "C": "La mise en place de la démocratie résulte d'un long processus.",
       "D": "Les fondements théoriques de la démocratie sont utopiques."
     },
     "bonne_reponse": "C",
@@ -20519,10 +20519,10 @@
     "audio": null,
     "image": "images/CE_T33_Q35.jpg",
     "propositions": {
-      "A": "Il contesté la fiabilité des sources d&#8217;Internet.",
-      "B": "Il critique la surabondance de l&#8217;information.",
+      "A": "Il contesté la fiabilité des sources d'Internet.",
+      "B": "Il critique la surabondance de l'information.",
       "C": "Il dénonce la médiocrité de la presse écrite.",
-      "D": "II doute de l&#8217;intérêt des médias traditionnels."
+      "D": "II doute de l'intérêt des médias traditionnels."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -20535,10 +20535,10 @@
     "audio": null,
     "image": "images/CE_T33_Q36.jpg",
     "propositions": {
-      "A": "Il permet d&#8217;apprendre à lire et à écrire de façon ludique.",
-      "B": "Il raconte les aventures d&#8217;un professeur d&#8217;histoire.",
-      "C": "ll ravive l&#8217;intérêt des littéraires pour les matières scientifiques.",
-      "D": "Il retrace l&#8217;improbable parcours de vie d&#8217;un ancien cancre."
+      "A": "Il permet d'apprendre à lire et à écrire de façon ludique.",
+      "B": "Il raconte les aventures d'un professeur d'histoire.",
+      "C": "ll ravive l'intérêt des littéraires pour les matières scientifiques.",
+      "D": "Il retrace l'improbable parcours de vie d'un ancien cancre."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -20551,10 +20551,10 @@
     "audio": null,
     "image": "images/CE_T33_Q37.jpg",
     "propositions": {
-      "A": "À s&#8217;acquitter d&#8217;un engagement moral.",
-      "B": "À s&#8217;affranchir d&#8217;une histoire ancienne.",
-      "C": "À se défaire d&#8217;un sentiment de culpabilité.",
-      "D": "À se justifier d&#8217;une action peu glorieuse."
+      "A": "À s'acquitter d'un engagement moral.",
+      "B": "À s'affranchir d'une histoire ancienne.",
+      "C": "À se défaire d'un sentiment de culpabilité.",
+      "D": "À se justifier d'une action peu glorieuse."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -20567,8 +20567,8 @@
     "audio": null,
     "image": "images/CE_T33_Q38.jpg",
     "propositions": {
-      "A": "« Banquise » est un bon exemple d&#8217;une traduction fidèle.",
-      "B": "Il est facile d&#8217;attribuer une étymologie erronée à un mot.",
+      "A": "« Banquise » est un bon exemple d'une traduction fidèle.",
+      "B": "Il est facile d'attribuer une étymologie erronée à un mot.",
       "C": "Il y a des différences subtiles entre les dialectes nordiques.",
       "D": "Les linguistes déplorent les mutations du lexique scandinave."
     },
@@ -20586,7 +20586,7 @@
       "A": "Disposer de ressources multiples.",
       "B": "Employer les médias sociaux pour motiver les enfants.",
       "C": "Pallier les défaillances des méthodes traditionnelles.",
-      "D": "Simplifier l&#8217;enseignement."
+      "D": "Simplifier l'enseignement."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -20599,7 +20599,7 @@
     "audio": null,
     "image": "images/CE_T34_Q01.jpg",
     "propositions": {
-      "A": "D&#8217;apprendre une nouvelle langue.",
+      "A": "D'apprendre une nouvelle langue.",
       "B": "De participer à un concours.",
       "C": "De prendre des cours de cuisine.",
       "D": "De rencontrer des étrangers."
@@ -20663,10 +20663,10 @@
     "audio": null,
     "image": "images/CE_T34_Q05.jpg",
     "propositions": {
-      "A": "Les amis d&#8217;Adrien.",
-      "B": "La famille d&#8217;Adrien.",
-      "C": "Les médecins d&#8217;Adrien.",
-      "D": "Les voisins d&#8217;Adrien."
+      "A": "Les amis d'Adrien.",
+      "B": "La famille d'Adrien.",
+      "C": "Les médecins d'Adrien.",
+      "D": "Les voisins d'Adrien."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -20746,7 +20746,7 @@
       "A": "Des visites de musées.",
       "B": "Des voyages en Europe.",
       "C": "Un mois de vacances",
-      "D": "Un semestre d&#8217;études"
+      "D": "Un semestre d'études"
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -20807,7 +20807,7 @@
     "audio": null,
     "image": "images/CE_T34_Q14.jpg",
     "propositions": {
-      "A": "Ils doivent être réservés à l&#8217;avance.",
+      "A": "Ils doivent être réservés à l'avance.",
       "B": "Ils donnent accès au sauna.",
       "C": "Ils ont eu pendant les vacances.",
       "D": "Ils sont gratuits pour les enfants."
@@ -20855,10 +20855,10 @@
     "audio": null,
     "image": "images/CE_T34_Q17.jpg",
     "propositions": {
-      "A": "C&#8217;est une pratique courante.",
-      "B": "Les pharmaciens s&#8217;y opposent.",
+      "A": "C'est une pratique courante.",
+      "B": "Les pharmaciens s'y opposent.",
       "C": "C Leur paiement est sécurisé.",
-      "D": "On s&#8217;en méfie en France."
+      "D": "On s'en méfie en France."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -20871,8 +20871,8 @@
     "audio": null,
     "image": "images/CE_T34_Q18.jpg",
     "propositions": {
-      "A": "Les échanges en famille s&#8217;améliorent.",
-      "B": "L&#8217;attention en classe est en hausse.",
+      "A": "Les échanges en famille s'améliorent.",
+      "B": "L'attention en classe est en hausse.",
       "C": "Les adolescents sont plus en forme.",
       "D": "La réussite aux examens augmente."
     },
@@ -20887,9 +20887,9 @@
     "audio": null,
     "image": "images/CE_T34_Q19.jpg",
     "propositions": {
-      "A": "Participer à un concours international d&#8217;astronomie.",
-      "B": "Réaliser une étude d&#8217;observation des astres.",
-      "C": "Se joindre à une formation d&#8217;enseignants en sciences.",
+      "A": "Participer à un concours international d'astronomie.",
+      "B": "Réaliser une étude d'observation des astres.",
+      "C": "Se joindre à une formation d'enseignants en sciences.",
       "D": "Suivre un cours de rattrapage en sciences physiques."
     },
     "bonne_reponse": "B",
@@ -21047,8 +21047,8 @@
     "audio": null,
     "image": "images/CE_T34_Q29.jpg",
     "propositions": {
-      "A": "L&#8217;accès universel à des aliments bon marché.",
-      "B": "L&#8217;innovation des procédés de production.",
+      "A": "L'accès universel à des aliments bon marché.",
+      "B": "L'innovation des procédés de production.",
       "C": "Le développement du commerce équitable.",
       "D": "Le partage d’expériences traditionnelles."
     },
@@ -21079,10 +21079,10 @@
     "audio": null,
     "image": "images/CE_T34_Q31.jpg",
     "propositions": {
-      "A": "C&#8217;est la photographie qui est la forme d&#8217;art la moins valorisée.",
-      "B": "Il y a peu d&#8217;événements culturels consacrés à la photographie.",
+      "A": "C'est la photographie qui est la forme d'art la moins valorisée.",
+      "B": "Il y a peu d'événements culturels consacrés à la photographie.",
       "C": "Les photographies sont commercialisées à bas prix.",
-      "D": "N&#8217;importe qui peut s&#8217;improviser photographe."
+      "D": "N'importe qui peut s'improviser photographe."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -21146,7 +21146,7 @@
       "A": "Parce que des tests sur les réacteurs nucléaires sont en cours.",
       "B": "Parce que l’approvisionnement en électricité est compromis.",
       "C": "Parce que la production française couvre à peine les besoins nationaux.",
-      "D": "Parce que la régulation de la consommation d&#8217;énergie est inefficace."
+      "D": "Parce que la régulation de la consommation d'énergie est inefficace."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -21159,10 +21159,10 @@
     "audio": null,
     "image": "images/CE_T34_Q36.jpg",
     "propositions": {
-      "A": "L&#8217;écologie est avant tout une affaire d&#8217;État.",
-      "B": "La concertation est la clé d&#8217;une action réussie.",
+      "A": "L'écologie est avant tout une affaire d'État.",
+      "B": "La concertation est la clé d'une action réussie.",
       "C": "Les mesures protectionnistes sont dépassées.",
-      "D": "L&#8217;influence des lobbies est à prendre en compte."
+      "D": "L'influence des lobbies est à prendre en compte."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -21191,7 +21191,7 @@
     "audio": null,
     "image": "images/CE_T34_Q38.jpg",
     "propositions": {
-      "A": "Il faut accepter l’évolution d&#8217;une langue.",
+      "A": "Il faut accepter l’évolution d'une langue.",
       "B": "Il faut bannir les termes anglais.",
       "C": "Il faut plaire à l’ensemble des lecteurs.",
       "D": "Il faut utiliser des mots basiques."
@@ -21223,7 +21223,7 @@
     "audio": null,
     "image": "images/CE_T35_Q01.jpg",
     "propositions": {
-      "A": "Pour lui demander d&#8217;être sa femme",
+      "A": "Pour lui demander d'être sa femme",
       "B": "Pour lui donner du courage",
       "C": "Pour lui offrir un emploi",
       "D": "Pour lui proposer un voyage"
@@ -21240,7 +21240,7 @@
     "image": "images/CE_T35_Q02.jpg",
     "propositions": {
       "A": "À la maison",
-      "B": "À l&#8217;hôpital",
+      "B": "À l'hôpital",
       "C": "À l’hôtel",
       "D": "Au bureau"
     },
@@ -21255,7 +21255,7 @@
     "audio": null,
     "image": "images/CE_T35_Q03.jpg",
     "propositions": {
-      "A": "D&#8217;échanger des livres",
+      "A": "D'échanger des livres",
       "B": "De donner des cadeaux",
       "C": "De réparer des jouets",
       "D": "De vendre des vêtements"
@@ -21287,7 +21287,7 @@
     "audio": null,
     "image": "images/CE_T35_Q05.jpg",
     "propositions": {
-      "A": "L&#8217;Internet",
+      "A": "L'Internet",
       "B": "La presse",
       "C": "La radio",
       "D": "La télévision"
@@ -21321,7 +21321,7 @@
     "propositions": {
       "A": "De cuisiner tous ensemble",
       "B": "De faire un repas entre voisins",
-      "C": "De s&#8217;inscrire à des activités",
+      "C": "De s'inscrire à des activités",
       "D": "De visiter de nouveaux logements"
     },
     "bonne_reponse": "B",
@@ -21399,7 +21399,7 @@
     "audio": null,
     "image": "images/CE_T35_Q12.jpg",
     "propositions": {
-      "A": "D&#8217;assister à un concert à Rouen",
+      "A": "D'assister à un concert à Rouen",
       "B": "De devenir membre de l’orchestre municipal",
       "C": "De suivre des cours de musique à la rentrée",
       "D": "De visiter le conservatoire"
@@ -21415,8 +21415,8 @@
     "audio": null,
     "image": "images/CE_T35_Q13.jpg",
     "propositions": {
-      "A": "D&#8217;une banque pour les mineurs",
-      "B": "D&#8217;une idée nouvelle de recyclage",
+      "A": "D'une banque pour les mineurs",
+      "B": "D'une idée nouvelle de recyclage",
       "C": "Des enfants qui doivent travailler",
       "D": "Du problème créé par les déchets"
     },
@@ -21450,7 +21450,7 @@
       "A": "Acheter des produits bon marché",
       "B": "Admirer des collections rares",
       "C": "Obtenir des articles variés",
-      "D": "Rencontrer des artisans d&#8217;art"
+      "D": "Rencontrer des artisans d'art"
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -21465,7 +21465,7 @@
     "propositions": {
       "A": "De développer des projets collectifs pour la ville",
       "B": "De donner un avis sur les nouveaux bâtiments",
-      "C": "De participer à des débats sur l&#8217;environnement",
+      "C": "De participer à des débats sur l'environnement",
       "D": "De visiter des expositions dans des lieux insolites"
     },
     "bonne_reponse": "A",
@@ -21479,7 +21479,7 @@
     "audio": null,
     "image": "images/CE_T35_Q17.jpg",
     "propositions": {
-      "A": "De découvrir un parc d&#8217;animation",
+      "A": "De découvrir un parc d'animation",
       "B": "De gagner un séjour en famille",
       "C": "De se promener dans une ferme",
       "D": "De visiter une grande exposition"
@@ -21511,7 +21511,7 @@
     "audio": null,
     "image": "images/CE_T35_Q19.jpg",
     "propositions": {
-      "A": "Créer des lieux d&#8217;échanges culturels",
+      "A": "Créer des lieux d'échanges culturels",
       "B": "Développer la formation continue",
       "C": "Favoriser la mobilité professionnelle",
       "D": "Standardiser les programmes scolaires"
@@ -21527,10 +21527,10 @@
     "audio": null,
     "image": "images/CE_T35_Q20.jpg",
     "propositions": {
-      "A": "L&#8217;adaptation de l&#8217;offre culinaire à la mode actuelle",
+      "A": "L'adaptation de l'offre culinaire à la mode actuelle",
       "B": "La baisse de la qualité des établissements",
       "C": "La disparition graduelle de la cuisine traditionnelle",
-      "D": "L&#8217;hostilité des critiques spécialisés locaux"
+      "D": "L'hostilité des critiques spécialisés locaux"
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -21544,8 +21544,8 @@
     "image": "images/CE_T35_Q21.jpg",
     "propositions": {
       "A": "Le remboursement de son article",
-      "B": "L&#8217;échange de son téléphone",
-      "C": "L&#8217;envoi de son téléphone par la poste",
+      "B": "L'échange de son téléphone",
+      "C": "L'envoi de son téléphone par la poste",
       "D": "Une réclamation sur son achat"
     },
     "bonne_reponse": "A",
@@ -21559,10 +21559,10 @@
     "audio": null,
     "image": "images/CE_T35_Q22.jpg",
     "propositions": {
-      "A": "C&#8217;est un phénomène mondial",
+      "A": "C'est un phénomène mondial",
       "B": "Il influence la productivité des salariés",
       "C": "On peut facilement le repérer",
-      "D": "Ses effets sont néfastes pour l&#8217;emploi"
+      "D": "Ses effets sont néfastes pour l'emploi"
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -21578,7 +21578,7 @@
       "A": "La multiplication des éclairages publics",
       "B": "La prolifération des insectes nocturnes",
       "C": "La suppression des supports publicitaires",
-      "D": "Le montant élevé des frais d&#8217;électricité"
+      "D": "Le montant élevé des frais d'électricité"
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -21609,7 +21609,7 @@
     "propositions": {
       "A": "Ils allègent la tâche du personnel de cantine",
       "B": "Ils attendent le repas avec impatience",
-      "C": "Ils servent d&#8217;exemple aux élèves plus âgés",
+      "C": "Ils servent d'exemple aux élèves plus âgés",
       "D": "Ils incitent leur entourage à les imiter"
     },
     "bonne_reponse": "D",
@@ -21641,7 +21641,7 @@
     "propositions": {
       "A": "Des librairies menacent de fermer boutique",
       "B": "La qualité des livres publiés est catastrophique",
-      "C": "Le nombre d&#8217;ouvrages à paraître a diminué",
+      "C": "Le nombre d'ouvrages à paraître a diminué",
       "D": "Un éditeur refuse de participer à cette tradition"
     },
     "bonne_reponse": "C",
@@ -21655,7 +21655,7 @@
     "audio": null,
     "image": "images/CE_T35_Q28.jpg",
     "propositions": {
-      "A": "La mise en œuvre d&#8217;une action collective",
+      "A": "La mise en œuvre d'une action collective",
       "B": "La mission des organisations professionnelles",
       "C": "Le contenu des revendications présentées",
       "D": "Les orientations pédagogiques à soutenir"
@@ -21687,7 +21687,7 @@
     "audio": null,
     "image": "images/CE_T35_Q30.jpg",
     "propositions": {
-      "A": "Ils changent d&#8217;apparence en cas de danger",
+      "A": "Ils changent d'apparence en cas de danger",
       "B": "Ils produisent une substance chimique nocive",
       "C": "Ils se déplacent principalement en groupe",
       "D": "Ils sont capables de se reconnaître entre eux"
@@ -21703,10 +21703,10 @@
     "audio": null,
     "image": "images/CE_T35_Q31.jpg",
     "propositions": {
-      "A": "Ils bouleversent les rapports d&#8217;autorité",
+      "A": "Ils bouleversent les rapports d'autorité",
       "B": "Ils évitent les postes à responsabilité",
       "C": "Ils sont moins motivés que leurs ainés",
-      "D": "Ils tiennent à la stabilité de l&#8217;emploi"
+      "D": "Ils tiennent à la stabilité de l'emploi"
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -21722,7 +21722,7 @@
       "A": "Il favorise un enrichissement lexical",
       "B": "Il incite à entreprendre des voyages",
       "C": "Il met à jour un enfermement ignoré",
-      "D": "Il permet d&#8217;élargir son réseau social"
+      "D": "Il permet d'élargir son réseau social"
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -21735,9 +21735,9 @@
     "audio": null,
     "image": "images/CE_T35_Q33.jpg",
     "propositions": {
-      "A": "La difficulté d&#8217;accéder au sens",
+      "A": "La difficulté d'accéder au sens",
       "B": "La pression exercée par la famille",
-      "C": "Les méthodes d&#8217;enseignement",
+      "C": "Les méthodes d'enseignement",
       "D": "Les moqueries de leurs camarades"
     },
     "bonne_reponse": "A",
@@ -21752,9 +21752,9 @@
     "image": "images/CE_T35_Q34.jpg",
     "propositions": {
       "A": "La pénurie de logement liée à la présence des touristes",
-      "B": "L&#8217;avidité financière des acteurs du secteur touristique",
+      "B": "L'avidité financière des acteurs du secteur touristique",
       "C": "Le mépris des touristes pour les considérations écologiques",
-      "D": "L&#8217;exclusion des classes populaires des activités touristiques"
+      "D": "L'exclusion des classes populaires des activités touristiques"
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -21768,9 +21768,9 @@
     "image": "images/CE_T35_Q35.jpg",
     "propositions": {
       "A": "Elle a été adaptée pour la télévision",
-      "B": "Elle s&#8217;inspire de la vie des jeunes",
-      "C": "La clé de l&#8217;énigme sera éditée plus tard",
-      "D": "L&#8217;auteur a imaginé différents scénarios"
+      "B": "Elle s'inspire de la vie des jeunes",
+      "C": "La clé de l'énigme sera éditée plus tard",
+      "D": "L'auteur a imaginé différents scénarios"
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -21799,8 +21799,8 @@
     "audio": null,
     "image": "images/CE_T35_Q37.jpg",
     "propositions": {
-      "A": "Il analyse l&#8217;établissement d&#8217;une dynastie royale",
-      "B": "Il explique l’origine d&#8217;une légende médiévale",
+      "A": "Il analyse l'établissement d'une dynastie royale",
+      "B": "Il explique l’origine d'une légende médiévale",
       "C": "Il explore la construction identitaire des Français",
       "D": "Il renforce le mythe de la bataille de Bouvines"
     },
@@ -21815,7 +21815,7 @@
     "audio": null,
     "image": "images/CE_T35_Q38.jpg",
     "propositions": {
-      "A": "L&#8217;évolution des aptitudes mentales",
+      "A": "L'évolution des aptitudes mentales",
       "B": "La mondialisation de la recherche scientifique",
       "C": "La transformation des savoirs fondamentaux",
       "D": "Le maintien du patrimoine culturel"
@@ -21832,7 +21832,7 @@
     "image": "images/CE_T35_Q39.jpg",
     "propositions": {
       "A": "Elles diminuent dans toutes les organisations",
-      "B": "Elles résultent du fonctionnement d&#8217;une société",
+      "B": "Elles résultent du fonctionnement d'une société",
       "C": "Elles se combattent mieux avec de la sincénté",
       "D": "Elles se justifient par des arguments fallacieux"
     },
@@ -21911,7 +21911,7 @@
     "audio": null,
     "image": "images/CE_T36_Q05.jpg",
     "propositions": {
-      "A": "D&#8217;acheter du matériel en soldes.",
+      "A": "D'acheter du matériel en soldes.",
       "B": "De participer à un concours.",
       "C": "De rencontrer des professionnels.",
       "D": "De suivre des cours débutants"
@@ -21927,8 +21927,8 @@
     "audio": null,
     "image": "images/CE_T36_Q06.jpg",
     "propositions": {
-      "A": "D&#8217;écrire aux invités.",
-      "B": "D&#8217;organiser la fête.",
+      "A": "D'écrire aux invités.",
+      "B": "D'organiser la fête.",
       "C": "De garder des enfants.",
       "D": "De préparer des danses."
     },
@@ -21962,7 +21962,7 @@
       "A": "Des échanges de logements.",
       "B": "Des locations bon marché.",
       "C": "Des réservations sans frais.",
-      "D": "Des visites d&#8217;appartements."
+      "D": "Des visites d'appartements."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -22007,7 +22007,7 @@
     "audio": null,
     "image": "images/CE_T36_Q11.jpg",
     "propositions": {
-      "A": "Gagner de l&#8217;argent pour leur séjour.",
+      "A": "Gagner de l'argent pour leur séjour.",
       "B": "Participer à une compétition sportive.",
       "C": "Suivre un atelier de cuisine internationale.",
       "D": "Visiter un établissement scolaire étranger."
@@ -22023,7 +22023,7 @@
     "audio": null,
     "image": "images/CE_T36_Q12.jpg",
     "propositions": {
-      "A": "De l&#8217;aide pour une association.",
+      "A": "De l'aide pour une association.",
       "B": "De nouveaux rayons jouets.",
       "C": "Un concours de jeux vidéo.",
       "D": "Une remise de 2 euros par article."
@@ -22087,10 +22087,10 @@
     "audio": null,
     "image": "images/CE_T36_Q16.jpg",
     "propositions": {
-      "A": "C&#8217;est un appui pédagogique supplémentaire.",
-      "B": "C&#8217;est un réel facteur de cohésion de groupe.",
-      "C": "C&#8217;est un simple moyen de communication.",
-      "D": "C&#8217;est une source de distraction en classe."
+      "A": "C'est un appui pédagogique supplémentaire.",
+      "B": "C'est un réel facteur de cohésion de groupe.",
+      "C": "C'est un simple moyen de communication.",
+      "D": "C'est une source de distraction en classe."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -22122,7 +22122,7 @@
       "A": "La crainte de la dépendance.",
       "B": "Le désert affectif ambiant.",
       "C": "La quête du bonheur facile.",
-      "D": "La recherche de l&#8217;équilibre."
+      "D": "La recherche de l'équilibre."
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -22135,8 +22135,8 @@
     "audio": null,
     "image": "images/CE_T36_Q19.jpg",
     "propositions": {
-      "A": "Il cite un extrait d&#8217;une oeuvre de Modiano.",
-      "B": "Il explique l&#8217;idée de départ d&#8217;un livre de Modiano.",
+      "A": "Il cite un extrait d'une oeuvre de Modiano.",
+      "B": "Il explique l'idée de départ d'un livre de Modiano.",
       "C": "Il présente le métier de Modiano à ses débuts.",
       "D": "Il raconte la rencontre entre Modiano et sa femme."
     },
@@ -22154,7 +22154,7 @@
       "A": "Pour créer un lien entre générations.",
       "B": "Pour compléter leurs études.",
       "C": "Pour améliorer leurs revenus.",
-      "D": "Parce qu&#8217;ils ne veulent plus être seuls."
+      "D": "Parce qu'ils ne veulent plus être seuls."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -22183,7 +22183,7 @@
     "audio": null,
     "image": "images/CE_T36_Q22.jpg",
     "propositions": {
-      "A": "D&#8217;interdire les photos portant atteinte à leur dignité.",
+      "A": "D'interdire les photos portant atteinte à leur dignité.",
       "B": "De diversifier le type de femmes prises pour modèles.",
       "C": "De mentionner les références précises des produits.",
       "D": "De signaler sur les photos les modifications effectuées."
@@ -22199,10 +22199,10 @@
     "audio": null,
     "image": "images/CE_T36_Q23.jpg",
     "propositions": {
-      "A": "C&#8217;est un phénomène mondial.",
+      "A": "C'est un phénomène mondial.",
       "B": "Il influence la productivité des salariés.",
       "C": "On peut facilement le repérer.",
-      "D": "Ses effets sont néfastes pour l&#8217;emploi."
+      "D": "Ses effets sont néfastes pour l'emploi."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -22216,9 +22216,9 @@
     "image": "images/CE_T36_Q24.jpg",
     "propositions": {
       "A": "La faible qualité de la production française.",
-      "B": "Le manque d&#8217;innovation dans son entreprise.",
+      "B": "Le manque d'innovation dans son entreprise.",
       "C": "Les contraintes des contrôles financiers.",
-      "D": "L&#8217;expansion de la concurrence internationale."
+      "D": "L'expansion de la concurrence internationale."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -22234,7 +22234,7 @@
       "A": "Il est obligatoire sur les produits.",
       "B": "Il facilite la lecture des étiquettes.",
       "C": "Il répond à une décision des fabricants.",
-      "D": "Il transforme l&#8217;organisation des rayons."
+      "D": "Il transforme l'organisation des rayons."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -22248,7 +22248,7 @@
     "image": "images/CE_T36_Q26.jpg",
     "propositions": {
       "A": "la des effets encore inconnus.",
-      "B": "Il rallonge l&#8217;espérance de vie.",
+      "B": "Il rallonge l'espérance de vie.",
       "C": "Il se propage imperceptiblement.",
       "D": "Il suscite un fort engouement."
     },
@@ -22263,10 +22263,10 @@
     "audio": null,
     "image": "images/CE_T36_Q27.jpg",
     "propositions": {
-      "A": "Critiquer l&#8217;engagement des sportifs en politique internationale.",
+      "A": "Critiquer l'engagement des sportifs en politique internationale.",
       "B": "Décrire les rapports du sport et de la politique internationale.",
-      "C": "Dénoncer l&#8217;utilisation de l&#8217;image des sportifs en diplomatie.",
-      "D": "Montrer l&#8217;utilité du sport dans la résolution de conflits internationaux."
+      "C": "Dénoncer l'utilisation de l'image des sportifs en diplomatie.",
+      "D": "Montrer l'utilité du sport dans la résolution de conflits internationaux."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -22281,7 +22281,7 @@
     "propositions": {
       "A": "Commencer une thérapie.",
       "B": "Multiplier les passe-temps.",
-      "C": "Rechercher l&#8217;âme sœur.",
+      "C": "Rechercher l'âme sœur.",
       "D": "Travailler sur soi-même."
     },
     "bonne_reponse": "D",
@@ -22329,8 +22329,8 @@
     "propositions": {
       "A": "la protection de la biodiversité.",
       "B": "À la transmission de souvenirs.",
-      "C": "À l&#8217;abolition des frontières.",
-      "D": "À l&#8217;enrichissement du lexique."
+      "C": "À l'abolition des frontières.",
+      "D": "À l'enrichissement du lexique."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -22344,7 +22344,7 @@
     "image": "images/CE_T36_Q32.jpg",
     "propositions": {
       "A": "Aider les femmes à se battre pour améliorer leur situation familiale.",
-      "B": "Amener les spectateurs à s&#8217;émouvoir d&#8217;un quotidien douloureux.",
+      "B": "Amener les spectateurs à s'émouvoir d'un quotidien douloureux.",
       "C": "Démontrer que la condition de la femme dans les cités est désastreuse.",
       "D": "Informer des difficultés que peuvent rencontrer les enfants des cités."
     },
@@ -22375,10 +22375,10 @@
     "audio": null,
     "image": "images/CE_T36_Q34.jpg",
     "propositions": {
-      "A": "De laisser trop de temps à l&#8217;oisiveté.",
-      "B": "De s&#8217;écarter du modèle éducatif légal.",
+      "A": "De laisser trop de temps à l'oisiveté.",
+      "B": "De s'écarter du modèle éducatif légal.",
       "C": "De satisfaire avant tout les adultes.",
-      "D": "D&#8217;être à l&#8217;origine de l&#8217;échec scolaire."
+      "D": "D'être à l'origine de l'échec scolaire."
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -22392,9 +22392,9 @@
     "image": "images/CE_T36_Q35.jpg",
     "propositions": {
       "A": "En abandonnant les codes traditionnels du roman.",
-      "B": "En cherchant des sources d&#8217;inspiration inédites.",
+      "B": "En cherchant des sources d'inspiration inédites.",
       "C": "En proposant de nouveaux concepts universels.",
-      "D": "En se jouant des difficultés liées à l&#8217;écriture."
+      "D": "En se jouant des difficultés liées à l'écriture."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -22410,7 +22410,7 @@
       "A": "Elle a accru la compétitivité industrielle.",
       "B": "Elle a amélioré les conditions de travail.",
       "C": "Elle a enrayé la hausse du chômage.",
-      "D": "Elle a modifié l&#8217;organisation du travail."
+      "D": "Elle a modifié l'organisation du travail."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -22426,7 +22426,7 @@
       "A": "Le coût social élevé de prise en charge des maladies génétiques.",
       "B": "Le développement de traitements curatifs de pathologies génétiques.",
       "C": "Le mode de financement de la recherche génétique fondamentale.",
-      "D": "Les dérives induites par l&#8217;amélioration du patrimoine génétique."
+      "D": "Les dérives induites par l'amélioration du patrimoine génétique."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -22439,7 +22439,7 @@
     "audio": null,
     "image": "images/CE_T36_Q38.jpg",
     "propositions": {
-      "A": "Elle plagie la doctrine d&#8217;un célèbre linguiste.",
+      "A": "Elle plagie la doctrine d'un célèbre linguiste.",
       "B": "Elle remet en cause les théories habituelles.",
       "C": "Elle soutient des hypothèses indémontrables.",
       "D": "Elle utilise des outils scientifiques peu fiables"
@@ -22457,8 +22457,8 @@
     "propositions": {
       "A": "Il reconnaît ses aspects pratiques.",
       "B": "Il remet en cause ses bienfaits.",
-      "C": "Il s&#8217;inquiète de son usage abusif.",
-      "D": "Il s&#8217;émerveille de sa technologie."
+      "C": "Il s'inquiète de son usage abusif.",
+      "D": "Il s'émerveille de sa technologie."
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -22471,8 +22471,8 @@
     "audio": null,
     "image": "images/CE_T37_Q01.jpg",
     "propositions": {
-      "A": "D&#8217;acheter un appartement.",
-      "B": "D&#8217;habiter avec quelqu&#8217;un.",
+      "A": "D'acheter un appartement.",
+      "B": "D'habiter avec quelqu'un.",
       "C": "De rencontrer ses voisins.",
       "D": "De visiter son quartier."
     },
@@ -22505,8 +22505,8 @@
     "propositions": {
       "A": "Aller à une réunion.",
       "B": "Déjeuner avec Claudia.",
-      "C": "S&#8217;occuper des enfants.",
-      "D": "Téléphoner à l&#8217;école."
+      "C": "S'occuper des enfants.",
+      "D": "Téléphoner à l'école."
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -22519,9 +22519,9 @@
     "audio": null,
     "image": "images/CE_T37_Q04.jpg",
     "propositions": {
-      "A": "Aux clients de l&#8217;hôtel.",
+      "A": "Aux clients de l'hôtel.",
       "B": "Au service de nettoyage.",
-      "C": "Au directeur de l&#8217;hôtel.",
+      "C": "Au directeur de l'hôtel.",
       "D": "Aux serveurs du bar."
     },
     "bonne_reponse": "A",
@@ -22551,8 +22551,8 @@
     "audio": null,
     "image": "images/CE_T37_Q06.jpg",
     "propositions": {
-      "A": "D&#8217;écrire aux invités.",
-      "B": "D&#8217;organiser la fête.",
+      "A": "D'écrire aux invités.",
+      "B": "D'organiser la fête.",
       "C": "De garder des enfants.",
       "D": "De préparer des danses."
     },
@@ -22615,10 +22615,10 @@
     "audio": null,
     "image": "images/CE_T37_Q10.jpg",
     "propositions": {
-      "A": "La confirmation d&#8217;un rendez-vous.",
+      "A": "La confirmation d'un rendez-vous.",
       "B": "La date des évaluations en français.",
       "C": "Les résultats scolaires de son élève.",
-      "D": "L&#8217;explication d&#8217;une punition donnée."
+      "D": "L'explication d'une punition donnée."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -22647,7 +22647,7 @@
     "audio": null,
     "image": "images/CE_T37_Q12.jpg",
     "propositions": {
-      "A": "D&#8217;utiliser des crèmes solaires à base de chocolat.",
+      "A": "D'utiliser des crèmes solaires à base de chocolat.",
       "B": "De diminuer sa consommation de chocolat.",
       "C": "De manger quotidiennement du chocolat.",
       "D": "De suivre un traitement de pilules au chocolat."
@@ -22682,7 +22682,7 @@
       "A": "le grand nombre de vendeurs ambulants",
       "B": "les dangers des aliments mal conservés.",
       "C": "les méfaits des collations après le bain.",
-      "D": "l&#8217;inconscience des enfants imprudents."
+      "D": "l'inconscience des enfants imprudents."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -22695,8 +22695,8 @@
     "audio": null,
     "image": "images/CE_T37_Q15.jpg",
     "propositions": {
-      "A": "Pour diminuer l&#8217;empreinte carbone.",
-      "B": "Pour donner une image moderne de l&#8217;Assemblée",
+      "A": "Pour diminuer l'empreinte carbone.",
+      "B": "Pour donner une image moderne de l'Assemblée",
       "C": "Pour étudier plus rapidement les amendements",
       "D": "Pour faire des économies de papier"
     },
@@ -22711,9 +22711,9 @@
     "audio": null,
     "image": "images/CE_T37_Q16.jpg",
     "propositions": {
-      "A": "Améliorer l&#8217;environnement professionnel.",
+      "A": "Améliorer l'environnement professionnel.",
       "B": "Éviter des licenciements abusifs.",
-      "C": "Modifier les termes d&#8217;accords obsolètes.",
+      "C": "Modifier les termes d'accords obsolètes.",
       "D": "Obtenir des créations de postes."
     },
     "bonne_reponse": "A",
@@ -22728,7 +22728,7 @@
     "image": "images/CE_T37_Q17.jpg",
     "propositions": {
       "A": "Les produits sont toujours plus chers.",
-      "B": "Les frais d&#8217;envoi peuvent en augmenter le coût.",
+      "B": "Les frais d'envoi peuvent en augmenter le coût.",
       "C": "Les laboratoires offrent souvent des cadeaux sans valeur.",
       "D": "Les produits ne sont pas toujours de très bonne qualité."
     },
@@ -22759,10 +22759,10 @@
     "audio": null,
     "image": "images/CE_T37_Q19.jpg",
     "propositions": {
-      "A": "Elle a des conséquences négatives sur l&#8217;apprentissage.",
+      "A": "Elle a des conséquences négatives sur l'apprentissage.",
       "B": "Elle doit être sévèrement sanctionnée durant la formation.",
       "C": "Elle est moins bien tolérée dans le domaine scientifique.",
-      "D": "Elle est sous-estimée en tant que moyen d&#8217;amélioration."
+      "D": "Elle est sous-estimée en tant que moyen d'amélioration."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -22777,7 +22777,7 @@
     "propositions": {
       "A": "Créer un site collaboratif de données.",
       "B": "Mener une enquête sur les plantes.",
-      "C": "Organiser des visites de l&#8217;herbier.",
+      "C": "Organiser des visites de l'herbier.",
       "D": "Proposer des cours de botanique."
     },
     "bonne_reponse": "A",
@@ -22791,8 +22791,8 @@
     "audio": null,
     "image": "images/CE_T37_Q21.jpg",
     "propositions": {
-      "A": "Il convient aux enfants d&#8217;âge scolaire.",
-      "B": "Il dérègle l&#8217;organisation des élèves.",
+      "A": "Il convient aux enfants d'âge scolaire.",
+      "B": "Il dérègle l'organisation des élèves.",
       "C": "Il est adapté au rythme biologique.",
       "D": "Il modifie le moment du coucher."
     },
@@ -22810,7 +22810,7 @@
       "A": "De limiter le gaspillage alimentaire.",
       "B": "De livrer des plats dans les entreprises.",
       "C": "De soutenir les magasins de proximité.",
-      "D": "D&#8217;organiser des ventes groupées."
+      "D": "D'organiser des ventes groupées."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -22823,9 +22823,9 @@
     "audio": null,
     "image": "images/CE_T37_Q23.jpg",
     "propositions": {
-      "A": "L&#8217;attirance pour les études.",
-      "B": "L&#8217;appel des pays chauds.",
-      "C": "Le besoin d&#8217;interaction sociale.",
+      "A": "L'attirance pour les études.",
+      "B": "L'appel des pays chauds.",
+      "C": "Le besoin d'interaction sociale.",
       "D": "Le désir de reconnaissance."
     },
     "bonne_reponse": "C",
@@ -22839,9 +22839,9 @@
     "audio": null,
     "image": "images/CE_T37_Q24.jpg",
     "propositions": {
-      "A": "Aux équipes d&#8217;universitaires qui travaillent sur la lumière.",
+      "A": "Aux équipes d'universitaires qui travaillent sur la lumière.",
       "B": "Aux étincelles produites par des perturbations orageuses.",
-      "C": "Aux scientifiques qui guettent des signaux dans l&#8217;espace.",
+      "C": "Aux scientifiques qui guettent des signaux dans l'espace.",
       "D": "Aux vibrations transmises par des corps extra-terrestres."
     },
     "bonne_reponse": "B",
@@ -22857,7 +22857,7 @@
     "propositions": {
       "A": "Malheureux de vivre en province.",
       "B": "Persévérant dans ses études.",
-      "C": "Rebelle à toute forme d&#8217;autorité.",
+      "C": "Rebelle à toute forme d'autorité.",
       "D": "Respectueux des valeurs de sa famille."
     },
     "bonne_reponse": "C",
@@ -22871,8 +22871,8 @@
     "audio": null,
     "image": "images/CE_T37_Q26.jpg",
     "propositions": {
-      "A": "L&#8217;afflux des fans de Brassens dans un espace intime.",
-      "B": "L&#8217;intérêt exclusif des visiteurs du cimetière pour Brassens.",
+      "A": "L'afflux des fans de Brassens dans un espace intime.",
+      "B": "L'intérêt exclusif des visiteurs du cimetière pour Brassens.",
       "C": "La situation peu accessible de la tombe de Brassens.",
       "D": "Le malentendu sur le lieu où est enterré Brassens."
     },
@@ -22887,9 +22887,9 @@
     "audio": null,
     "image": "images/CE_T37_Q27.jpg",
     "propositions": {
-      "A": "Les conséquences d&#8217;un régime végétarien.",
+      "A": "Les conséquences d'un régime végétarien.",
       "B": "Les doutes sur les méthodes de production.",
-      "C": "Les effets de l&#8217;usage de produits chimiques.",
+      "C": "Les effets de l'usage de produits chimiques.",
       "D": "Les problèmes causés par la surpopulation."
     },
     "bonne_reponse": "B",
@@ -22906,7 +22906,7 @@
       "A": "Elles gagnent en visibilité dans ce milieu.",
       "B": "Elles remportent des compétitions mixtes.",
       "C": "Elles sont rabaissées par les hommes.",
-      "D": "Elles sont victimes d&#8217;accidents fréquents."
+      "D": "Elles sont victimes d'accidents fréquents."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -22935,7 +22935,7 @@
     "audio": null,
     "image": "images/CE_T37_Q30.jpg",
     "propositions": {
-      "A": "Ils finissent par maîtriser l&#8217;ensemble des matières",
+      "A": "Ils finissent par maîtriser l'ensemble des matières",
       "B": "Ils font des efforts dans les autres matières étudiées.",
       "C": "Ils négligent les matières trop faciles pour eux",
       "D": "Ils se fixent des objectifs élevés dans ces matières."
@@ -22951,8 +22951,8 @@
     "audio": null,
     "image": "images/CE_T37_Q31.jpg",
     "propositions": {
-      "A": "D&#8217;attirer l&#8217;attention de l&#8217;interlocuteur.",
-      "B": "D&#8217;imaginer des solutions originales.",
+      "A": "D'attirer l'attention de l'interlocuteur.",
+      "B": "D'imaginer des solutions originales.",
       "C": "De solliciter davantage la raison.",
       "D": "De trouver des réponses rapides."
     },
@@ -22967,7 +22967,7 @@
     "audio": null,
     "image": "images/CE_T37_Q32.jpg",
     "propositions": {
-      "A": "De participer à l&#8217;exploration du monde numérique.",
+      "A": "De participer à l'exploration du monde numérique.",
       "B": "De restreindre le temps consacré aux jeux vidéo.",
       "C": "De sélectionner des contenus adaptés aux enfants.",
       "D": "De surveiller la navigation des jeunes sur la toile."
@@ -22983,8 +22983,8 @@
     "audio": null,
     "image": "images/CE_T37_Q33.jpg",
     "propositions": {
-      "A": "Leur donner le goût de l&#8217;observation.",
-      "B": "Leur permettre d&#8217;inventer des activités.",
+      "A": "Leur donner le goût de l'observation.",
+      "B": "Leur permettre d'inventer des activités.",
       "C": "Leur procurer des jeux éducatifs.",
       "D": "Leur proposer des énigmes à résoudre."
     },
@@ -23002,7 +23002,7 @@
       "A": "Convaincre la clientèle cible.",
       "B": "Former les spécialistes du secteur.",
       "C": "Rentabiliser les projets à venir.",
-      "D": "Restaurer d&#8217;anciens bâtiments."
+      "D": "Restaurer d'anciens bâtiments."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -23031,10 +23031,10 @@
     "audio": null,
     "image": "images/CE_T37_Q36.jpg",
     "propositions": {
-      "A": "La quasi-absence d&#8217;héroïnes.",
-      "B": "L&#8217;appel constant à la violence.",
-      "C": "L&#8217;atténuation des clichés.",
-      "D": "L&#8217;uniformité des scénarios."
+      "A": "La quasi-absence d'héroïnes.",
+      "B": "L'appel constant à la violence.",
+      "C": "L'atténuation des clichés.",
+      "D": "L'uniformité des scénarios."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -23047,7 +23047,7 @@
     "audio": null,
     "image": "images/CE_T37_Q37.jpg",
     "propositions": {
-      "A": "Attirer davantage d&#8217;étudiants brillants.",
+      "A": "Attirer davantage d'étudiants brillants.",
       "B": "Être à la pointe de la technologie.",
       "C": "Ouvrir ses cours à un public élargi.",
       "D": "Proposer des disciplines inédites."
@@ -23063,10 +23063,10 @@
     "audio": null,
     "image": "images/CE_T37_Q38.jpg",
     "propositions": {
-      "A": "C&#8217;est un accessoire d&#8217;élégance masculine.",
-      "B": "C&#8217;est un signe de reconnaissance entre pairs.",
-      "C": "C&#8217;est une coutume en réunion.",
-      "D": "C&#8217;est une marque de courtoisie."
+      "A": "C'est un accessoire d'élégance masculine.",
+      "B": "C'est un signe de reconnaissance entre pairs.",
+      "C": "C'est une coutume en réunion.",
+      "D": "C'est une marque de courtoisie."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -23081,8 +23081,8 @@
     "propositions": {
       "A": "Il reconnaît ses aspects pratiques.",
       "B": "Il remet en cause ses bienfaits.",
-      "C": "Il s&#8217;inquiète de son usage abusif.",
-      "D": "Il s&#8217;émerveille de sa technologie."
+      "C": "Il s'inquiète de son usage abusif.",
+      "D": "Il s'émerveille de sa technologie."
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -23144,7 +23144,7 @@
     "image": "images/CE_T38_Q04.jpg",
     "propositions": {
       "A": "Ils apprennent la géographie.",
-      "B": "Ils invitent des amis à l&#8217;école.",
+      "B": "Ils invitent des amis à l'école.",
       "C": "Ils pratiquent des langues étrangères.",
       "D": "Ils préparent un voyage de classe."
     },
@@ -23224,7 +23224,7 @@
     "image": "images/CE_T38_Q09.jpg",
     "propositions": {
       "A": "De participer à un concours.",
-      "B": "De s&#8217;inscrire à un stage.",
+      "B": "De s'inscrire à un stage.",
       "C": "De tester des activités",
       "D": "Voir un spectacle."
     },
@@ -23242,7 +23242,7 @@
       "A": "Des visites de musées.",
       "B": "Des voyages en Europe.",
       "C": "Un mois de vacances.",
-      "D": "Un semestre d&#8217;études."
+      "D": "Un semestre d'études."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -23273,7 +23273,7 @@
     "propositions": {
       "A": "Pour éviter de tomber malade.",
       "B": "Pour profiter de tarifs avantageux.",
-      "C": "Pour protéger l&#8217;environnement.",
+      "C": "Pour protéger l'environnement.",
       "D": "Pour soutenir les paysans locaux."
     },
     "bonne_reponse": "A",
@@ -23287,8 +23287,8 @@
     "audio": null,
     "image": "images/CE_T38_Q13.jpg",
     "propositions": {
-      "A": "D&#8217;assister à un concert à Rouen.",
-      "B": "De devenir membre de l&#8217;orchestre municipal.",
+      "A": "D'assister à un concert à Rouen.",
+      "B": "De devenir membre de l'orchestre municipal.",
       "C": "De suivre des cours de musique à la rentrée.",
       "D": "De visiter le conservatoire."
     },
@@ -23354,7 +23354,7 @@
       "A": "Ils évitent de rayer les appareils à écran tactile.",
       "B": "Ils permettent un contact direct avec un écran tactile.",
       "C": "Ils sont équipés de capteurs reliés à un écran tactile.",
-      "D": "Ils sont offerts lors de l&#8217;achat d&#8217;un écran tactile"
+      "D": "Ils sont offerts lors de l'achat d'un écran tactile"
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -23368,7 +23368,7 @@
     "image": "images/CE_T38_Q18.jpg",
     "propositions": {
       "A": "Des idées de stages en entreprise.",
-      "B": "Un guide des démarches d&#8217;inscription.",
+      "B": "Un guide des démarches d'inscription.",
       "C": "Une méthode pour choisir une formation.",
       "D": "Une sélection des meilleures universités."
     },
@@ -23383,8 +23383,8 @@
     "audio": null,
     "image": "images/CE_T38_Q19.jpg",
     "propositions": {
-      "A": "L&#8217;origine historique de la recette",
-      "B": "Le secret d&#8217;une bonne préparation.",
+      "A": "L'origine historique de la recette",
+      "B": "Le secret d'une bonne préparation.",
       "C": "Les adresses où les consommer.",
       "D": "Les raisons de leur popularité."
     },
@@ -23415,9 +23415,9 @@
     "audio": null,
     "image": "images/CE_T38_Q21.jpg",
     "propositions": {
-      "A": "La priorité donnée à l&#8217;aspect écologique.",
-      "B": "La prise en compte de l&#8217;opinion publique.",
-      "C": "Le caractère provisoire de l&#8217;installation.",
+      "A": "La priorité donnée à l'aspect écologique.",
+      "B": "La prise en compte de l'opinion publique.",
+      "C": "Le caractère provisoire de l'installation.",
       "D": "Le choix des matériaux de fabrication."
     },
     "bonne_reponse": "B",
@@ -23431,10 +23431,10 @@
     "audio": null,
     "image": "images/CE_T38_Q22.jpg",
     "propositions": {
-      "A": "C&#8217;est possible à la campagne.",
-      "B": "C&#8217;est possible avec du temps.",
-      "C": "C&#8217;est possible mais pénible.",
-      "D": "C&#8217;est possible pour tous."
+      "A": "C'est possible à la campagne.",
+      "B": "C'est possible avec du temps.",
+      "C": "C'est possible mais pénible.",
+      "D": "C'est possible pour tous."
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -23448,7 +23448,7 @@
     "image": "images/CE_T38_Q23.jpg",
     "propositions": {
       "A": "Pour améliorer leur situation financière.",
-      "B": "Pour donner une bonne image d&#8217;eux.",
+      "B": "Pour donner une bonne image d'eux.",
       "C": "Pour exécuter les ordres de la direction.",
       "D": "Pour quitter leur entreprise plus tôt."
     },
@@ -23465,7 +23465,7 @@
     "propositions": {
       "A": "Découvrir le travail de recherche en laboratoire",
       "B": "Faire découvrir les formations pour devenir ingénieur",
-      "C": "Inaugurer l&#8217;ouverture d&#8217;un campus universitaire",
+      "C": "Inaugurer l'ouverture d'un campus universitaire",
       "D": "Obtenir des conseils afin de créer une association"
     },
     "bonne_reponse": "B",
@@ -23480,7 +23480,7 @@
     "image": "images/CE_T38_Q25.jpg",
     "propositions": {
       "A": "Il demande une prise charge médicale.",
-      "B": "Il peut s&#8217;étendre au domaine personnel.",
+      "B": "Il peut s'étendre au domaine personnel.",
       "C": "Il suscite un consensus parmi les spécialistes.",
       "D": "Il touche surtout les aides-soignants."
     },
@@ -23495,9 +23495,9 @@
     "audio": null,
     "image": "images/CE_T38_Q26.jpg",
     "propositions": {
-      "A": "De l&#8217;éducation des plus jeunes.",
-      "B": "De la transmission d&#8217;un savoir-faire.",
-      "C": "De la volonté d&#8217;émancipation.",
+      "A": "De l'éducation des plus jeunes.",
+      "B": "De la transmission d'un savoir-faire.",
+      "C": "De la volonté d'émancipation.",
       "D": "Du rapport entre les générations."
     },
     "bonne_reponse": "C",
@@ -23511,10 +23511,10 @@
     "audio": null,
     "image": "images/CE_T38_Q27.jpg",
     "propositions": {
-      "A": "Le coût des dispositifs pose un problème d&#8217;éthique.",
+      "A": "Le coût des dispositifs pose un problème d'éthique.",
       "B": "Le respect de la déontologie médicale est primordial.",
-      "C": "Les fabricants d&#8217;implants doivent signer une charte",
-      "D": "Les patients ont le devoir de s&#8217;informer davantage."
+      "C": "Les fabricants d'implants doivent signer une charte",
+      "D": "Les patients ont le devoir de s'informer davantage."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -23527,10 +23527,10 @@
     "audio": null,
     "image": "images/CE_T38_Q28.jpg",
     "propositions": {
-      "A": "C&#8217;est un état difficile à évaluer chez une personne.",
-      "B": "Des outils ont été élaborés pour en estimer l&#8217;intensité.",
-      "C": "Les enquêtes dont c&#8217;est le sujet sont innombrables.",
-      "D": "Malgré des études sérieuses, l&#8217;analyse est impossible."
+      "A": "C'est un état difficile à évaluer chez une personne.",
+      "B": "Des outils ont été élaborés pour en estimer l'intensité.",
+      "C": "Les enquêtes dont c'est le sujet sont innombrables.",
+      "D": "Malgré des études sérieuses, l'analyse est impossible."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -23560,8 +23560,8 @@
     "image": "images/CE_T38_Q30.jpg",
     "propositions": {
       "A": "Mémoriser des concepts sans les comprendre.",
-      "B": "Multiplier les méthodes d&#8217;apprentissage.",
-      "C": "S&#8217;autoriser des pauses fréquemment.",
+      "B": "Multiplier les méthodes d'apprentissage.",
+      "C": "S'autoriser des pauses fréquemment.",
       "D": "Se disperser dans de nombreuses activités"
     },
     "bonne_reponse": "A",
@@ -23575,10 +23575,10 @@
     "audio": null,
     "image": "images/CE_T38_Q31.jpg",
     "propositions": {
-      "A": "Ils bouleversent les rapports d&#8217;autorité.",
+      "A": "Ils bouleversent les rapports d'autorité.",
       "B": "Ils évitent les postes à responsabilité.",
       "C": "Ils sont moins motivés que leurs aînés.",
-      "D": "Ils tiennent à la stabilité de l&#8217;emploi."
+      "D": "Ils tiennent à la stabilité de l'emploi."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -23607,7 +23607,7 @@
     "audio": null,
     "image": "images/CE_T38_Q33.jpg",
     "propositions": {
-      "A": "L&#8217;absence de modèle comparatif de mobilité.",
+      "A": "L'absence de modèle comparatif de mobilité.",
       "B": "La déresponsabilisation des usagers.",
       "C": "Le déficit provoqué par son financement.",
       "D": "Le risque de saturation des réseaux."
@@ -23626,7 +23626,7 @@
       "A": "Convaincre la clientèle cible.",
       "B": "Former les spécialistes du secteur.",
       "C": "Rentabiliser les projets à venir.",
-      "D": "Restaurer d&#8217;anciens bâtiments."
+      "D": "Restaurer d'anciens bâtiments."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -23655,10 +23655,10 @@
     "audio": null,
     "image": "images/CE_T38_Q36.jpg",
     "propositions": {
-      "A": "La primauté de l&#8217;apparence sur les compétences.",
+      "A": "La primauté de l'apparence sur les compétences.",
       "B": "Le corporatisme poussé de certaines sociétés.",
       "C": "Le manque de formation aux nouvelles technologies.",
-      "D": "Les principes actuels d&#8217;organisation du travail."
+      "D": "Les principes actuels d'organisation du travail."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -23674,7 +23674,7 @@
       "A": "Elle a accru la compétitivité industrielle.",
       "B": "Elle a amélioré les conditions de travail.",
       "C": "Elle a enrayé la hausse du chômage.",
-      "D": "Elle a modifié l&#8217;organisation du travail."
+      "D": "Elle a modifié l'organisation du travail."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -23703,8 +23703,8 @@
     "audio": null,
     "image": "images/CE_T38_Q39.jpg",
     "propositions": {
-      "A": "L&#8217;importance de la gestion des ressources humaines.",
-      "B": "L&#8217;intérêt d&#8217;éviter les inconvénients liés à l&#8217;isolement.",
+      "A": "L'importance de la gestion des ressources humaines.",
+      "B": "L'intérêt d'éviter les inconvénients liés à l'isolement.",
       "C": "La facilité de réaliser des projets communs à distance.",
       "D": "La nécessité de souder les équipes dans une entreprise."
     },
@@ -23721,7 +23721,7 @@
     "propositions": {
       "A": "À un cours de pâtisserie.",
       "B": "À un déjeuner chez un ami.",
-      "C": "À une fête d&#8217;anniversaire.",
+      "C": "À une fête d'anniversaire.",
       "D": "À une sortie en discothèque."
     },
     "bonne_reponse": "C",
@@ -23767,7 +23767,7 @@
     "audio": null,
     "image": "images/CE_T39_Q04.jpg",
     "propositions": {
-      "A": "D&#8217;acheter du matériel en soldes.",
+      "A": "D'acheter du matériel en soldes.",
       "B": "De participer à un concours.",
       "C": "De rencontre des professionnels.",
       "D": "De suivre des cours débutants."
@@ -23783,8 +23783,8 @@
     "audio": null,
     "image": "images/CE_T39_Q05.jpg",
     "propositions": {
-      "A": "D&#8217;aider à organiser une fête.",
-      "B": "De devenir membre d&#8217;une association.",
+      "A": "D'aider à organiser une fête.",
+      "B": "De devenir membre d'une association.",
       "C": "De distribuer des repas gratuits.",
       "D": "De participer à un événement sportif."
     },
@@ -23799,8 +23799,8 @@
     "audio": null,
     "image": "images/CE_T39_Q06.jpg",
     "propositions": {
-      "A": "D&#8217;écrire aux invités.",
-      "B": "D&#8217;organiser la fête.",
+      "A": "D'écrire aux invités.",
+      "B": "D'organiser la fête.",
       "C": "De garder des enfants.",
       "D": "De préparer des danses."
     },
@@ -23832,9 +23832,9 @@
     "image": "images/CE_T39_Q08.jpg",
     "propositions": {
       "A": "Ecrire un message.",
-      "B": "Prendre un billet d&#8217;avion.",
+      "B": "Prendre un billet d'avion.",
       "C": "Réserver un hôtel.",
-      "D": "S&#8217;inscrire à un jeu."
+      "D": "S'inscrire à un jeu."
     },
     "bonne_reponse": "A",
     "explication": ""
@@ -23879,8 +23879,8 @@
     "audio": null,
     "image": "images/CE_T39_Q11.jpg",
     "propositions": {
-      "A": "C&#8217;est la destination préférée des touristes français.",
-      "B": "De plus en plus de jeunes souhaitent s&#8217;y installer.",
+      "A": "C'est la destination préférée des touristes français.",
+      "B": "De plus en plus de jeunes souhaitent s'y installer.",
       "C": "Elle réunit les caractéristiques de deux continents.",
       "D": "On y entend des langues du monde entier."
     },
@@ -23895,10 +23895,10 @@
     "audio": null,
     "image": "images/CE_T39_Q12.jpg",
     "propositions": {
-      "A": "D&#8217;aider des malades.",
+      "A": "D'aider des malades.",
       "B": "De faire un don.",
-      "C": "De s&#8217;informer à la mairie.",
-      "D": "De travailler l&#8217;été."
+      "C": "De s'informer à la mairie.",
+      "D": "De travailler l'été."
     },
     "bonne_reponse": "B",
     "explication": ""
@@ -24023,8 +24023,8 @@
     "audio": null,
     "image": "images/CE_T39_Q20.jpg",
     "propositions": {
-      "A": "L&#8217;origine historique de la recette.",
-      "B": "Le secret d&#8217;une bonne préparation.",
+      "A": "L'origine historique de la recette.",
+      "B": "Le secret d'une bonne préparation.",
       "C": "Les adresses où les consommer.",
       "D": "Les raisons de leur popularité."
     },
@@ -24057,8 +24057,8 @@
     "propositions": {
       "A": "C’est possible à la campagne.",
       "B": "C’est possible avec du temps.",
-      "C": "C&#8217;est possible mais pénible.",
-      "D": "C&#8217;est possible pour tous."
+      "C": "C'est possible mais pénible.",
+      "D": "C'est possible pour tous."
     },
     "bonne_reponse": "C",
     "explication": ""
@@ -24090,7 +24090,7 @@
       "A": "Parce que la majorité des pays invités en a fait la demande.",
       "B": "Parce que la manifestation s’est centrée sur la région de Saint-Malo.",
       "C": "Parce que les partenaires ont réduit leurs subventions.",
-      "D": "Parce que l&#8217;événement s&#8217;inscrit dans un principe d&#8217;universalité."
+      "D": "Parce que l'événement s'inscrit dans un principe d'universalité."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -24298,7 +24298,7 @@
       "A": "Elle a accru la compétitivité industrielle.",
       "B": "Elle a amélioré les conditions de travail.",
       "C": "Elle a enrayé la hausse du chômage.",
-      "D": "Elle a modifié l&#8217;organisation du travail."
+      "D": "Elle a modifié l'organisation du travail."
     },
     "bonne_reponse": "D",
     "explication": ""
@@ -24408,7 +24408,7 @@
     "image": "images/CE_T40_Q05.jpg",
     "propositions": {
       "A": "Un repas au restaurant.",
-      "B": "Un séjour à l&#8217;hôtel.",
+      "B": "Un séjour à l'hôtel.",
       "C": "Une commande de matériel.",
       "D": "Une location de voiture."
     },
@@ -24472,7 +24472,7 @@
     "image": "images/CE_T40_Q09.jpg",
     "propositions": {
       "A": "De participer à un concours.",
-      "B": "De s&#8217;inscrire à un stage.",
+      "B": "De s'inscrire à un stage.",
       "C": "De tester des activités",
       "D": "Voir un spectacle."
     },
@@ -24858,7 +24858,7 @@
       "A": "Il critique la méthodologie utilisée.",
       "B": "Il discute la pertinence des exemples.",
       "C": "Il nuance les prévisions alarmistes.",
-      "D": "Il confirme les résultats de l&#8217;étude."
+      "D": "Il confirme les résultats de l'étude."
     },
     "bonne_reponse": "C",
     "explication": ""
