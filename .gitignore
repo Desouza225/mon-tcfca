@@ -37,3 +37,6 @@ dist-ssr
 scratch/
 tmp/
 .cache/
+package-lock.json
+package/
+pkg.tgz

@@ -1,5 +1,4 @@
 import { defineConfig, loadEnv, type Plugin } from "vite";
-import { miaodaDevPlugin } from "miaoda-sc-plugin";
 import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 import path from "path";
@@ -309,7 +308,6 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       react(),
-      miaodaDevPlugin(),
       cinetpayLocalProxyPlugin(env),
       svgr({
         svgrOptions: {
