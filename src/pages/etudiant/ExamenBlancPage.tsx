@@ -4,6 +4,7 @@ import { supabase, fetchAllQuestions, deduplicateQuestions, isQuestionDuplicate,
 import { useAuth } from '@/contexts/AuthContext';
 import { getAudioClaritySetting, attachAudioClarityProcessor } from '@/lib/audioProcessing';
 import { requestAICorrection, blobToBase64, type CorrectionResponse } from '@/services/aiCorrection';
+import AICorrectionLoadingView from '@/components/ai/AICorrectionLoadingView';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -535,6 +536,7 @@ export default function ExamenBlancPage() {
   // Résultats des corrections IA
   const [aiEvaluating, setAiEvaluating] = useState(false);
   const [aiStep, setAiStep] = useState<string>('');
+  const [aiProgressTarget, setAiProgressTarget] = useState<number>(10);
   const [eeCorrections, setEeCorrections] = useState<Record<number, CorrectionResponse>>({});
   const [eoCorrections, setEoCorrections] = useState<Record<number, CorrectionResponse>>({});
 
@@ -610,6 +612,7 @@ export default function ExamenBlancPage() {
     currentEOTachesList?: Tache[]
   ) => {
     setAiEvaluating(true);
+    setAiProgressTarget(12);
     setAiStep("Initialisation de l'évaluation complète par notre IA certifiée...");
 
     try {
@@ -639,6 +642,32 @@ export default function ExamenBlancPage() {
         }
       }
 
+      const activeEOTaches = (currentEOTachesList && currentEOTachesList.length > 0)
+        ? currentEOTachesList
+        : eoTaches;
+      let effectiveEOTaches = [...activeEOTaches];
+      if (effectiveEOTaches.length === 0 && dbProds) {
+        const eoProds = dbProds.filter(p => p.epreuve === 'expression_orale');
+        for (const p of eoProds) {
+          const { data: tData } = await supabase
+            .from('taches')
+            .select('*')
+            .eq('epreuve', 'expression_orale')
+            .eq('numero_tache', p.numero_tache)
+            .maybeSingle();
+          if (tData) effectiveEOTaches.push(tData);
+        }
+      }
+
+      const totalAiTasks = Math.max(1, effectiveEETaches.length + effectiveEOTaches.length);
+      let completedAiTasks = 0;
+      const bumpTaskProgress = () => {
+        completedAiTasks += 1;
+        setAiProgressTarget(Math.min(92, Math.round(15 + (completedAiTasks / totalAiTasks) * 77)));
+      };
+
+      setAiProgressTarget(18);
+
       for (const tache of effectiveEETaches) {
         const prod = dbProds?.find(p => p.epreuve === 'expression_ecrite' && p.numero_tache === tache.numero_tache);
         const text = (texteReponses[tache.numero_tache] || prod?.contenu_texte || '').trim();
@@ -665,26 +694,10 @@ export default function ExamenBlancPage() {
             console.error(`Erreur correction IA EE Tâche ${tache.numero_tache}:`, errEE);
           }
         }
+        bumpTaskProgress();
       }
 
       // 3. Correction IA pour l'Expression Orale (Tâches 1, 3)
-      const activeEOTaches = (currentEOTachesList && currentEOTachesList.length > 0)
-        ? currentEOTachesList
-        : eoTaches;
-      let effectiveEOTaches = [...activeEOTaches];
-      if (effectiveEOTaches.length === 0 && dbProds) {
-        const eoProds = dbProds.filter(p => p.epreuve === 'expression_orale');
-        for (const p of eoProds) {
-          const { data: tData } = await supabase
-            .from('taches')
-            .select('*')
-            .eq('epreuve', 'expression_orale')
-            .eq('numero_tache', p.numero_tache)
-            .maybeSingle();
-          if (tData) effectiveEOTaches.push(tData);
-        }
-      }
-
       for (const tache of effectiveEOTaches) {
         const prod = dbProds?.find(p => p.epreuve === 'expression_orale' && p.numero_tache === tache.numero_tache);
         const blob = audioBlobs[tache.numero_tache];
@@ -718,8 +731,10 @@ export default function ExamenBlancPage() {
             console.error(`Erreur correction IA EO Tâche ${tache.numero_tache}:`, errEO);
           }
         }
+        bumpTaskProgress();
       }
 
+      setAiProgressTarget(95);
       setEeCorrections(eeResultsMap);
       setEoCorrections(eoResultsMap);
 
@@ -827,6 +842,7 @@ export default function ExamenBlancPage() {
     } finally {
       setAiEvaluating(false);
       setAiStep('');
+      setAiProgressTarget(10);
     }
   };
 
@@ -1181,40 +1197,12 @@ export default function ExamenBlancPage() {
   // ─── Évaluation IA en direct (Overlay de finalisation) ──────────────────────
   if (aiEvaluating) {
     return (
-      <div className="max-w-xl mx-auto my-12 p-8 bg-white border border-[#e2e8f0] rounded-3xl shadow-xl text-center space-y-6 fade-in">
-        <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#0d233a] to-[#1a365d] text-amber-300 flex items-center justify-center mx-auto shadow-lg relative">
-          <Sparkles className="w-10 h-10 animate-spin" />
-        </div>
-        <div className="space-y-2">
-          <Badge className="bg-amber-100 text-amber-900 border border-amber-200 text-xs font-bold px-3 py-1">
-            Évaluation automatisée en cours
-          </Badge>
-          <h2 className="text-2xl font-heading font-extrabold text-[#0d233a]">
-            Correction de vos expressions par notre IA
-          </h2>
-          <p className="text-sm text-[#475569] max-w-md mx-auto leading-relaxed">
-            {aiStep || "Analyse de vos rédactions écrites et transcription de vos enregistrements oraux selon la grille officielle TCF Canada..."}
-          </p>
-        </div>
-
-        <div className="space-y-2 pt-2">
-          <Progress value={80} className="h-2.5 w-full bg-slate-100 [&>div]:bg-gradient-to-r [&>div]:from-[#cf7100] [&>div]:to-amber-400" />
-          <div className="flex justify-between text-[11px] text-[#475569] font-medium">
-            <span>Transcription & analyse des critères</span>
-            <span>Notes sur 20 & conversion 699 pts</span>
-          </div>
-        </div>
-
-        <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-left text-xs space-y-1.5 text-[#475569]">
-          <p className="font-semibold text-[#0d233a] flex items-center gap-1.5">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-            Critères officiels évalués :
-          </p>
-          <p>• Compétence linguistique (lexique riche, grammaire, morphosyntaxe)</p>
-          <p>• Compétence pragmatique (respect de la consigne, organisation textuelle, cohérence)</p>
-          <p>• Compétence sociolinguistique (adaptation au contexte et registre approprié)</p>
-        </div>
-      </div>
+      <AICorrectionLoadingView
+        step={aiStep}
+        isOral={true}
+        mode="examen_blanc"
+        externalProgress={aiProgressTarget}
+      />
     );
   }
 

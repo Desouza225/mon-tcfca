@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/db/supabase';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,14 +8,69 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Loader2, User, Lock, Eye, EyeOff, Globe, Phone } from 'lucide-react';
+import { Loader2, User, Lock, Eye, EyeOff, Globe, Phone, Camera } from 'lucide-react';
 import { toast } from 'sonner';
 import { ROLE_LABELS } from '@/types/index';
 import { COUNTRIES, findCountryByName } from '@/data/countries';
 import { CountryFlag } from '@/components/ui/CountryFlag';
 
+const AVATAR_ACCEPTED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+const AVATAR_MAX_BYTES = 5 * 1024 * 1024; // 5 Mo
+
+function compressImageToSquare(
+  file: File,
+  maxSize = 256
+): Promise<{ blob: Blob; dataUrl: string }> {
+  return new Promise((resolve, reject) => {
+    const objectUrl = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      try {
+        const minSide = Math.min(img.naturalWidth || img.width, img.naturalHeight || img.height);
+        const sx = Math.max(0, Math.floor(((img.naturalWidth || img.width) - minSide) / 2));
+        const sy = Math.max(0, Math.floor(((img.naturalHeight || img.height) - minSide) / 2));
+
+        const canvas = document.createElement('canvas');
+        canvas.width = maxSize;
+        canvas.height = maxSize;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          URL.revokeObjectURL(objectUrl);
+          reject(new Error('Impossible d’initialiser le contexte canvas.'));
+          return;
+        }
+
+        ctx.drawImage(img, sx, sy, minSide, minSide, 0, 0, maxSize, maxSize);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+        canvas.toBlob(
+          blob => {
+            URL.revokeObjectURL(objectUrl);
+            if (!blob) {
+              reject(new Error("Erreur lors de la compression de l'image."));
+              return;
+            }
+            resolve({ blob, dataUrl });
+          },
+          'image/jpeg',
+          0.85
+        );
+      } catch (err) {
+        URL.revokeObjectURL(objectUrl);
+        reject(err);
+      }
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      reject(new Error("Impossible de lire le fichier image sélectionné."));
+    };
+    img.src = objectUrl;
+  });
+}
+
 export default function ProfilPage() {
   const { profile, user, refreshProfile } = useAuth();
+  const avatarInputRef = useRef<HTMLInputElement>(null);
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
 
   // Infos personnelles
   const [form, setForm] = useState({
@@ -45,6 +100,60 @@ export default function ProfilPage() {
   const [showCurrent, setShowCurrent] = useState(false);
   const [showNext, setShowNext] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+
+  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file || !profile) return;
+
+    if (!AVATAR_ACCEPTED_TYPES.includes(file.type)) {
+      toast.error('Format non supporté. Utilisez une image JPEG, PNG, WebP ou GIF.');
+      return;
+    }
+    if (file.size > AVATAR_MAX_BYTES) {
+      toast.error('Image trop volumineuse. Taille maximale : 5 Mo.');
+      return;
+    }
+
+    setUploadingAvatar(true);
+    setErrorProfile('');
+    try {
+      const { blob, dataUrl } = await compressImageToSquare(file, 256);
+
+      let finalAvatarUrl = dataUrl;
+      const filePath = `${profile.id}/avatar_${Date.now()}.jpg`;
+      const { error: uploadErr } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, blob, { contentType: 'image/jpeg', upsert: true });
+
+      if (!uploadErr) {
+        const { data: urlData } = supabase.storage.from('avatars').getPublicUrl(filePath);
+        if (urlData?.publicUrl) {
+          finalAvatarUrl = urlData.publicUrl;
+        }
+      } else {
+        console.warn('Upload Storage avatars indisponible, repli base64:', uploadErr.message);
+      }
+
+      const { error: updateErr } = await supabase
+        .from('profiles')
+        .update({ avatar_url: finalAvatarUrl })
+        .eq('id', profile.id);
+
+      if (updateErr) {
+        setErrorProfile('Erreur lors de la mise à jour de la photo de profil.');
+        return;
+      }
+
+      await refreshProfile();
+      toast.success('Photo de profil mise à jour avec succès !');
+    } catch (err: any) {
+      console.error('Erreur chargement photo de profil:', err);
+      toast.error(err?.message || 'Impossible de charger la photo de profil.');
+    } finally {
+      setUploadingAvatar(false);
+    }
+  };
 
   const handleSaveProfile = async () => {
     if (!profile) return;
@@ -121,8 +230,52 @@ export default function ProfilPage() {
       <Card className="h-full">
         <CardHeader>
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-full bg-primary/15 flex items-center justify-center shrink-0">
-              <User className="w-8 h-8 text-primary" />
+            <div className="relative shrink-0">
+              <button
+                type="button"
+                onClick={() => avatarInputRef.current?.click()}
+                disabled={uploadingAvatar}
+                title="Cliquez pour charger une photo de profil"
+                aria-label="Charger une photo de profil"
+                className="group relative w-16 h-16 rounded-full bg-primary/15 flex items-center justify-center overflow-hidden border-2 border-primary/20 hover:border-primary/60 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/50"
+              >
+                {profile?.avatar_url ? (
+                  <img
+                    src={profile.avatar_url}
+                    alt={`${profile.prenom || ''} ${profile.nom || 'Profil'}`.trim()}
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                ) : (
+                  <User className="w-8 h-8 text-primary" />
+                )}
+
+                <span
+                  className={`absolute inset-0 rounded-full bg-black/50 flex items-center justify-center transition-opacity ${
+                    uploadingAvatar ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                  }`}
+                >
+                  {uploadingAvatar ? (
+                    <Loader2 className="w-5 h-5 text-white animate-spin" />
+                  ) : (
+                    <Camera className="w-5 h-5 text-white" />
+                  )}
+                </span>
+              </button>
+
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute -bottom-0.5 -right-0.5 w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-sm border-2 border-background"
+              >
+                <Camera className="w-3 h-3" />
+              </span>
+
+              <input
+                ref={avatarInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                className="hidden"
+                onChange={handleAvatarChange}
+              />
             </div>
             <div>
               <p className="font-semibold text-foreground">{profile?.prenom} {profile?.nom}</p>

@@ -225,6 +225,16 @@
     animation: record-pulse 1.2s ease-in-out infinite;
   }
 
+  /* Logo floating & breathing animation during AI evaluation */
+  @keyframes logo-float {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-4px) scale(1.05); }
+  }
+
+  .animate-logo-float {
+    animation: logo-float 2.4s ease-in-out infinite;
+  }
+
   /* Fade transition for exam sections */
   @keyframes fade-in {
     from { opacity: 0; transform: translateY(6px); }

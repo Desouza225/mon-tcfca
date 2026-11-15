@@ -100,9 +100,17 @@ function SidebarContent({ collapsed, onClose }: { collapsed?: boolean; onClose?:
         <div className="px-4 py-3 border-b border-[#1a365d]/40 bg-[#091b2e]/30">
           <div className="flex items-center gap-3">
             <div className="relative shrink-0">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#1a365d] to-[#2a4d7d] flex items-center justify-center font-heading font-bold text-sm text-white shadow-sm border border-white/10">
-                {profile.prenom?.charAt(0) || 'U'}{profile.nom?.charAt(0) || ''}
-              </div>
+              {profile.avatar_url ? (
+                <img
+                  src={profile.avatar_url}
+                  alt={`${profile.prenom || ''} ${profile.nom || 'Profil'}`.trim()}
+                  className="w-9 h-9 rounded-xl object-cover shadow-sm border border-white/10"
+                />
+              ) : (
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#1a365d] to-[#2a4d7d] flex items-center justify-center font-heading font-bold text-sm text-white shadow-sm border border-white/10">
+                  {profile.prenom?.charAt(0) || 'U'}{profile.nom?.charAt(0) || ''}
+                </div>
+              )}
               <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full ring-2 ring-[#0d233a]" />
             </div>
             <div className="min-w-0 flex-1">

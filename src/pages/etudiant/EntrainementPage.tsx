@@ -23,6 +23,7 @@ import { toast } from 'sonner';
 import type { Question, Tache, EpreuveType, NiveauCECRL } from '@/types/index';
 import { EPREUVE_LABELS, CECRL_COLORS, CECRL_DESCRIPTIONS, pctToCECRL } from '@/types/index';
 import AICorrectionResultView from '@/components/ai/AICorrectionResultView';
+import AICorrectionLoadingView from '@/components/ai/AICorrectionLoadingView';
 import QuotaExhaustedModal from '@/components/ai/QuotaExhaustedModal';
 import {
   checkUserQuota,
@@ -1051,41 +1052,11 @@ export default function EntrainementPage() {
   // ─── Vue de Chargement IA en cours ─────────────────────────────────────────
   if (aiLoading) {
     return (
-      <div className="max-w-xl mx-auto py-12 px-4 space-y-6 fade-in text-center">
-        <Card className="rounded-2xl border border-[#d3e4fe] shadow-sm p-8 space-y-5 bg-white">
-          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary/10 to-primary/20 text-primary flex items-center justify-center mx-auto animate-pulse">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
-          </div>
-          <div className="space-y-2">
-            <Badge className="bg-[#eff4ff] text-[#0d233a] border-[#d3e4fe] text-xs font-semibold px-3 py-1">
-              <Sparkles className="w-3.5 h-3.5 text-[#d97706] mr-1.5" />
-              IA Évaluateur Expert TCF Canada
-            </Badge>
-            <h2 className="text-xl sm:text-2xl font-heading font-extrabold text-[#0d233a]">
-              Correction en cours...
-            </h2>
-            <p className="text-sm text-slate-600 leading-relaxed font-medium">
-              {aiStep || "Analyse de votre production en cours selon les critères officiels..."}
-            </p>
-          </div>
-          <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200/80 text-xs text-slate-600 text-left space-y-1.5">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span>Notation rigoureuse sur 20 points par <strong>notre IA</strong></span>
-            </div>
-            {selectedEpreuve === 'expression_orale' && (
-              <div className="flex items-center gap-2">
-                <Mic className="w-4 h-4 text-[#e53e3e] shrink-0" />
-                <span>Transcription audio haute précision par <strong>notre IA</strong></span>
-              </div>
-            )}
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span>Grille officielle CECRL (critères linguistiques, pragmatiques et sociolinguistiques)</span>
-            </div>
-          </div>
-        </Card>
-      </div>
+      <AICorrectionLoadingView
+        step={aiStep}
+        isOral={selectedEpreuve === 'expression_orale'}
+        mode="entrainement"
+      />
     );
   }
 
