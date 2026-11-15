@@ -52,3 +52,48 @@ CREATE POLICY "Utilisateur peut supprimer son avatar"
     bucket_id = 'avatars'
     AND (storage.foldername(name))[1] = auth.uid()::text
   );
+
+-- Garantir que l'utilisateur authentifié peut mettre à jour son propre profil (dont avatar_url)
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_policies
+    WHERE schemaname = 'public'
+      AND tablename = 'profiles'
+      AND policyname = 'Users update own profile'
+  ) THEN
+    CREATE POLICY "Users update own profile"
+      ON public.profiles
+      FOR UPDATE
+      TO authenticated
+      USING (auth.uid() = id)
+      WITH CHECK (auth.uid() = id);
+  END IF;
+END $$;
+
+-- RPC sécurisée permettant à tout utilisateur authentifié de mettre à jour sa propre photo de profil
+CREATE OR REPLACE FUNCTION public.update_own_avatar(p_avatar_url text)
+RETURNS text
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+DECLARE
+  v_uid uuid := auth.uid();
+BEGIN
+  IF v_uid IS NULL THEN
+    RAISE EXCEPTION 'Non authentifié.';
+  END IF;
+
+  UPDATE public.profiles
+  SET avatar_url = p_avatar_url,
+      updated_at = now()
+  WHERE id = v_uid;
+
+  RETURN p_avatar_url;
+END;
+$$;
+
+REVOKE ALL ON FUNCTION public.update_own_avatar(text) FROM anon, public;
+GRANT EXECUTE ON FUNCTION public.update_own_avatar(text) TO authenticated;

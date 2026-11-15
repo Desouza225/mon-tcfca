@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/db/supabase';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth, setCachedAvatar } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,7 +19,7 @@ const AVATAR_MAX_BYTES = 5 * 1024 * 1024; // 5 Mo
 
 function compressImageToSquare(
   file: File,
-  maxSize = 256
+  maxSize = 200
 ): Promise<{ blob: Blob; dataUrl: string }> {
   return new Promise((resolve, reject) => {
     const objectUrl = URL.createObjectURL(file);
@@ -41,7 +41,7 @@ function compressImageToSquare(
         }
 
         ctx.drawImage(img, sx, sy, minSide, minSide, 0, 0, maxSize, maxSize);
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
         canvas.toBlob(
           blob => {
             URL.revokeObjectURL(objectUrl);
@@ -52,7 +52,7 @@ function compressImageToSquare(
             resolve({ blob, dataUrl });
           },
           'image/jpeg',
-          0.85
+          0.82
         );
       } catch (err) {
         URL.revokeObjectURL(objectUrl);
@@ -101,16 +101,54 @@ export default function ProfilPage() {
   const [showNext, setShowNext] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
+  const clearAvatarPickerFlag = () => {
+    try {
+      sessionStorage.removeItem('avatar_picker_open');
+    } catch {
+      // Ignorer
+    }
+  };
+
+  useEffect(() => {
+    const handleWindowFocus = () => {
+      // Si l'utilisateur annule le sélecteur de fichier, nettoyer le flag après un court délai
+      setTimeout(() => {
+        if (!uploadingAvatar) {
+          clearAvatarPickerFlag();
+        }
+      }, 1500);
+    };
+    window.addEventListener('focus', handleWindowFocus);
+    return () => {
+      window.removeEventListener('focus', handleWindowFocus);
+      clearAvatarPickerFlag();
+    };
+  }, [uploadingAvatar]);
+
+  const openAvatarPicker = () => {
+    try {
+      sessionStorage.setItem('avatar_picker_open', 'true');
+    } catch {
+      // Ignorer
+    }
+    avatarInputRef.current?.click();
+  };
+
   const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     e.target.value = '';
-    if (!file || !profile) return;
+    if (!file || !profile) {
+      clearAvatarPickerFlag();
+      return;
+    }
 
     if (!AVATAR_ACCEPTED_TYPES.includes(file.type)) {
+      clearAvatarPickerFlag();
       toast.error('Format non supporté. Utilisez une image JPEG, PNG, WebP ou GIF.');
       return;
     }
     if (file.size > AVATAR_MAX_BYTES) {
+      clearAvatarPickerFlag();
       toast.error('Image trop volumineuse. Taille maximale : 5 Mo.');
       return;
     }
@@ -118,9 +156,12 @@ export default function ProfilPage() {
     setUploadingAvatar(true);
     setErrorProfile('');
     try {
-      const { blob, dataUrl } = await compressImageToSquare(file, 256);
+      const { blob, dataUrl } = await compressImageToSquare(file, 200);
 
       let finalAvatarUrl = dataUrl;
+      // Enregistrer immédiatement en cache local pour garantir la persistance côté client
+      setCachedAvatar(profile.id, dataUrl);
+
       const filePath = `${profile.id}/avatar_${Date.now()}.jpg`;
       const { error: uploadErr } = await supabase.storage
         .from('avatars')
@@ -130,19 +171,34 @@ export default function ProfilPage() {
         const { data: urlData } = supabase.storage.from('avatars').getPublicUrl(filePath);
         if (urlData?.publicUrl) {
           finalAvatarUrl = urlData.publicUrl;
+          setCachedAvatar(profile.id, finalAvatarUrl);
         }
       } else {
         console.warn('Upload Storage avatars indisponible, repli base64:', uploadErr.message);
       }
 
-      const { error: updateErr } = await supabase
+      const { data: updatedRow, error: updateErr } = await supabase
         .from('profiles')
         .update({ avatar_url: finalAvatarUrl })
-        .eq('id', profile.id);
+        .eq('id', profile.id)
+        .select('id, avatar_url')
+        .maybeSingle();
 
-      if (updateErr) {
-        setErrorProfile('Erreur lors de la mise à jour de la photo de profil.');
-        return;
+      if (updateErr || !updatedRow) {
+        console.warn(
+          'Mise à jour directe profiles.avatar_url non confirmée, tentative via RPC:',
+          updateErr?.message || '0 ligne affectée'
+        );
+        try {
+          const { error: rpcErr } = await supabase.rpc('update_own_avatar', {
+            p_avatar_url: finalAvatarUrl,
+          });
+          if (rpcErr) {
+            console.warn('RPC update_own_avatar indisponible:', rpcErr.message);
+          }
+        } catch (rpcCatchErr) {
+          console.warn('Exception RPC update_own_avatar:', rpcCatchErr);
+        }
       }
 
       await refreshProfile();
@@ -151,6 +207,7 @@ export default function ProfilPage() {
       console.error('Erreur chargement photo de profil:', err);
       toast.error(err?.message || 'Impossible de charger la photo de profil.');
     } finally {
+      clearAvatarPickerFlag();
       setUploadingAvatar(false);
     }
   };
@@ -233,7 +290,7 @@ export default function ProfilPage() {
             <div className="relative shrink-0">
               <button
                 type="button"
-                onClick={() => avatarInputRef.current?.click()}
+                onClick={openAvatarPicker}
                 disabled={uploadingAvatar}
                 title="Cliquez pour charger une photo de profil"
                 aria-label="Charger une photo de profil"

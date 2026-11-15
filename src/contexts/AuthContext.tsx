@@ -5,6 +5,28 @@ import type { Profile, UserRole } from '@/types/index';
 
 // Clé localStorage pour le token de session unique
 const SESSION_TOKEN_KEY = 'tcf_session_token';
+const AVATAR_CACHE_PREFIX = 'tcf_profile_avatar_';
+
+export function getCachedAvatar(userId: string): string | null {
+  try {
+    return localStorage.getItem(`${AVATAR_CACHE_PREFIX}${userId}`);
+  } catch {
+    return null;
+  }
+}
+
+export function setCachedAvatar(userId: string, avatarUrl: string | null): void {
+  try {
+    const key = `${AVATAR_CACHE_PREFIX}${userId}`;
+    if (avatarUrl) {
+      localStorage.setItem(key, avatarUrl);
+    } else {
+      localStorage.removeItem(key);
+    }
+  } catch {
+    // Ignorer les erreurs de quota localStorage ou navigation privée
+  }
+}
 
 export async function getProfile(userId: string): Promise<Profile | null> {
   const { data, error } = await supabase
@@ -16,6 +38,18 @@ export async function getProfile(userId: string): Promise<Profile | null> {
     console.error('Erreur chargement profil:', error);
     return null;
   }
+  if (!data) return null;
+
+  if (data.avatar_url) {
+    setCachedAvatar(userId, data.avatar_url);
+    return data;
+  }
+
+  const cachedAvatar = getCachedAvatar(userId);
+  if (cachedAvatar) {
+    return { ...data, avatar_url: cachedAvatar };
+  }
+
   return data;
 }
 
@@ -49,25 +83,42 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const refreshProfile = async () => {
-    if (!user) { setProfile(null); return; }
-    const p = await getProfile(user.id);
-    setProfile(p);
-  };
+  const refreshProfile = useCallback(async () => {
+    let targetId = user?.id;
+    if (!targetId) {
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+      targetId = authUser?.id;
+    }
+    if (!targetId) return;
+
+    const cachedAvatar = getCachedAvatar(targetId);
+    const p = await getProfile(targetId);
+    if (p) {
+      setProfile(prev => ({
+        ...p,
+        avatar_url: p.avatar_url || cachedAvatar || prev?.avatar_url || null,
+      }));
+    } else if (cachedAvatar) {
+      setProfile(prev => (prev ? { ...prev, avatar_url: cachedAvatar } : prev));
+    }
+  }, [user?.id]);
 
   // Vérification de session unique : si un autre appareil s'est connecté,
   // le token local diffère du token en base → déconnexion automatique
   const validateSessionToken = useCallback(async (userId: string) => {
+    if (sessionStorage.getItem('avatar_picker_open') === 'true') return;
     const localToken = localStorage.getItem(SESSION_TOKEN_KEY);
     if (!localToken) return; // pas de token local → rien à vérifier
 
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('profiles')
       .select('current_session_token')
       .eq('id', userId)
       .maybeSingle();
 
-    if (data && data.current_session_token !== localToken) {
+    if (error || !data || !data.current_session_token) return;
+
+    if (data.current_session_token !== localToken) {
       // Un autre appareil a pris la session → déconnecter
       localStorage.removeItem(SESSION_TOKEN_KEY);
       await supabase.auth.signOut();
@@ -128,25 +179,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .finally(() => { if (mounted) setLoading(false); });
 
     // onAuthStateChange : gère les changements d'état (SIGNED_IN, SIGNED_OUT, TOKEN_REFRESHED…)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (!mounted) return;
-      if (session?.user) {
-        loadValidProfile(session.user.id).then(p => {
-          if (!mounted) return;
-          if (p) {
-            setUser(session.user);
-            setProfile(p);
-          } else {
-            setUser(null);
-            setProfile(null);
-          }
-          setLoading(false);
-        });
-      } else {
+      if (event === 'SIGNED_OUT' || !session?.user) {
         setUser(null);
         setProfile(null);
         setLoading(false);
+        return;
       }
+
+      if (event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') {
+        setUser(session.user);
+        setLoading(false);
+        return;
+      }
+
+      const sessionUser = session.user;
+      // Différer hors du verrou synchrone de supabase-js pour éviter tout deadlock au retour sur l'onglet
+      setTimeout(() => {
+        if (!mounted) return;
+        loadValidProfile(sessionUser.id).then(p => {
+          if (!mounted) return;
+          if (p) {
+            setUser(sessionUser);
+            setProfile(p);
+          }
+          setLoading(false);
+        });
+      }, 0);
     });
 
     return () => {
@@ -158,7 +218,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Vérifier la session unique à la reprise de visibilité de la page
   // - Seulement si l'onglet a été masqué plus de 30 secondes (évite faux positifs mobile)
   // - Délai de grâce : si token différent, revérifier après 5s avant de déconnecter
-  // - Pendant un examen en cours, la vérification est totalement désactivée
+  // - Pendant un examen en cours ou l'ouverture du sélecteur de photo, la vérification est désactivée
   useEffect(() => {
     let hiddenAt: number | null = null;
     const ABSENCE_THRESHOLD_MS = 30_000; // 30 secondes
@@ -169,7 +229,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return sessionStorage.getItem('exam_en_cours') === 'true';
     };
 
+    const isAvatarPickerOpen = (): boolean => {
+      return sessionStorage.getItem('avatar_picker_open') === 'true';
+    };
+
     const checkToken = async () => {
+      if (isAvatarPickerOpen()) return;
       const { data: { user: u } } = await supabase.auth.getUser();
       if (!u) return;
       await validateSessionToken(u.id);
@@ -184,23 +249,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const absentMs = Date.now() - hiddenAt;
         hiddenAt = null;
 
-        // Pas de vérification si absence < seuil ou si un examen est en cours
-        if (absentMs < ABSENCE_THRESHOLD_MS || isExamEnCours()) return;
+        // Pas de vérification si absence < seuil, examen en cours ou sélecteur de photo ouvert
+        if (absentMs < ABSENCE_THRESHOLD_MS || isExamEnCours() || isAvatarPickerOpen()) return;
 
         // 1ère vérification
         supabase.auth.getUser().then(({ data: { user: u } }) => {
-          if (!u) return;
+          if (!u || isAvatarPickerOpen()) return;
+          const localAtCheck = localStorage.getItem(SESSION_TOKEN_KEY);
+          if (!localAtCheck) return;
           supabase.from('profiles')
             .select('current_session_token')
             .eq('id', u.id)
             .maybeSingle()
             .then(({ data }) => {
               const local = localStorage.getItem(SESSION_TOKEN_KEY);
-              if (!data || data.current_session_token === local) return;
+              if (!local || !data || !data.current_session_token || data.current_session_token === local) return;
 
               // Token différent : délai de grâce avant confirmation
               setTimeout(() => {
-                if (isExamEnCours()) return; // examen démarré entre-temps
+                if (isExamEnCours() || isAvatarPickerOpen()) return; // examen ou sélecteur actif
                 checkToken();
               }, GRACE_DELAY_MS);
             });
@@ -247,15 +314,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
             ? crypto.randomUUID()
             : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-        localStorage.setItem(SESSION_TOKEN_KEY, newToken);
 
-        await supabase
+        const { data: updatedTokenRow, error: tokenUpdateError } = await supabase
           .from('profiles')
           .update({
             current_session_token: newToken,
             last_active_at: new Date().toISOString(),
           })
-          .eq('id', data.user.id);
+          .eq('id', data.user.id)
+          .select('current_session_token')
+          .maybeSingle();
+
+        if (!tokenUpdateError && updatedTokenRow?.current_session_token === newToken) {
+          localStorage.setItem(SESSION_TOKEN_KEY, newToken);
+        } else if (p?.current_session_token) {
+          localStorage.setItem(SESSION_TOKEN_KEY, p.current_session_token);
+        } else {
+          localStorage.removeItem(SESSION_TOKEN_KEY);
+        }
 
         profile = p;
         setProfile(p);
