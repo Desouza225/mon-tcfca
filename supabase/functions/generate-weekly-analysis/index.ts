@@ -25,6 +25,12 @@ function cleanAndParseJSON(rawText: string): any {
   if (cleaned.startsWith('```')) {
     cleaned = cleaned.replace(/^```(?:json)?\s*/i, '').replace(/```\s*$/, '').trim();
   }
+  // Extraire le bloc JSON principal { ... } si du texte parasite l'entoure
+  const firstBrace = cleaned.indexOf('{');
+  const lastBrace = cleaned.lastIndexOf('}');
+  if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+    cleaned = cleaned.slice(firstBrace, lastBrace + 1);
+  }
   return JSON.parse(cleaned);
 }
 
@@ -630,7 +636,7 @@ Rédige maintenant l'analyse comparative détaillée et le retour individualisé
     },
     body: JSON.stringify({
       model: CLAUDE_MODEL,
-      max_tokens: 2048,
+      max_tokens: 4096,
       system: systemPrompt,
       messages: [{ role: 'user', content: userMessage }],
     }),
@@ -643,6 +649,10 @@ Rédige maintenant l'analyse comparative détaillée et le retour individualisé
   }
 
   const result = await response.json();
+  if (result.stop_reason === 'max_tokens') {
+    console.warn('Réponse Claude tronquée par max_tokens (weekly-analysis)');
+    throw new Error('Réponse tronquée lors de la rédaction du bilan, nouvelle tentative nécessaire.');
+  }
   let textContent = '';
   if (Array.isArray(result.content)) {
     for (const block of result.content) {
