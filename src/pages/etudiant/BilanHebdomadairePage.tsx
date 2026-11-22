@@ -1,7 +1,8 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSubscription } from '@/hooks/useSubscription';
+import { PLANS_CONFIG } from '@/types/index';
 import {
   fetchWeeklyAnalyses,
   markAnalysisAsRead,
@@ -35,7 +36,6 @@ import {
   ShieldCheck,
   Loader2,
   RefreshCw,
-  ClipboardCheck,
   BarChart3,
 } from 'lucide-react';
 import { toast } from 'sonner';
@@ -136,9 +136,18 @@ export default function BilanHebdomadairePage() {
   const [selectedReportId, setSelectedReportId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState(false);
+  const autoTriggeredRef = useRef(false);
 
   const hasIntensifAccess =
     isAdmin || (hasActiveSubscription && abonnement?.plan_id === 'intensif');
+
+  const subscriptionStartIso =
+    abonnement?.current_period_start || abonnement?.date_debut || abonnement?.created_at || null;
+
+  const currentPlanName =
+    hasActiveSubscription && abonnement?.plan_id && PLANS_CONFIG[abonnement.plan_id]
+      ? PLANS_CONFIG[abonnement.plan_id].nom
+      : null;
 
   const loadReports = useCallback(async () => {
     if (!user) return;
@@ -173,7 +182,42 @@ export default function BilanHebdomadairePage() {
     [reports, selectedReportId, latestReport]
   );
 
-  const cooldown = useMemo(() => computeCooldownState(latestReport), [latestReport]);
+  const cooldown = useMemo(
+    () => computeCooldownState(latestReport, subscriptionStartIso),
+    [latestReport, subscriptionStartIso]
+  );
+
+  // Déclenchement automatique silencieux dès que l'échéance de 7 jours est atteinte
+  useEffect(() => {
+    if (
+      subLoading ||
+      loading ||
+      !hasIntensifAccess ||
+      !cooldown.canGenerate ||
+      generating ||
+      autoTriggeredRef.current
+    ) {
+      return;
+    }
+
+    autoTriggeredRef.current = true;
+    setGenerating(true);
+    requestWeeklyAnalysis({ force: false })
+      .then((report) => {
+        setReports((prev) => [report, ...prev.filter((r) => r.id !== report.id)]);
+        setSelectedReportId(report.id);
+        toast.success('Votre nouveau bilan hebdomadaire est disponible !');
+      })
+      .catch((err: any) => {
+        // Si le serveur indique que le délai de 7j n'est pas encore écoulé, ignorer silencieusement
+        if (err?.code !== 'COOLDOWN_ACTIVE' && err?.code !== 'INTENSIF_REQUIRED') {
+          console.error('Erreur génération automatique bilan:', err);
+        }
+      })
+      .finally(() => {
+        setGenerating(false);
+      });
+  }, [subLoading, loading, hasIntensifAccess, cooldown.canGenerate, generating]);
 
   const handleSelectReport = (report: WeeklyAnalysisReport) => {
     setSelectedReportId(report.id);
@@ -185,21 +229,15 @@ export default function BilanHebdomadairePage() {
     }
   };
 
-  const handleRequestReport = async (force = false) => {
+  const handleAdminGenerate = async () => {
     try {
       setGenerating(true);
-      const report = await requestWeeklyAnalysis({ force });
+      const report = await requestWeeklyAnalysis({ force: true });
       setReports((prev) => [report, ...prev.filter((r) => r.id !== report.id)]);
       setSelectedReportId(report.id);
-      toast.success('Votre bilan pédagogique hebdomadaire est prêt !');
+      toast.success('Nouveau bilan pédagogique généré (Mode Admin).');
     } catch (err: any) {
-      if (err?.code === 'COOLDOWN_ACTIVE') {
-        toast.info(err.message || 'Un nouveau bilan est disponible tous les 7 jours.');
-      } else if (err?.code === 'INTENSIF_REQUIRED') {
-        toast.error('Cette fonctionnalité est réservée à la Formule Intensif.');
-      } else {
-        toast.error(err?.message || 'Impossible de préparer votre bilan pour le moment.');
-      }
+      toast.error(err?.message || 'Impossible de préparer le bilan pour le moment.');
     } finally {
       setGenerating(false);
     }
@@ -232,13 +270,18 @@ export default function BilanHebdomadairePage() {
             </div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/30 text-xs font-heading font-semibold mb-3">
               <Lock className="w-3.5 h-3.5" />
-              <span>Exclusivité Formule Intensif</span>
+              <span>Réservé uniquement aux abonnements Intensif</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-white tracking-tight">
-              Analyse comparative détaillée &amp; retour individualisé
+              Bilan hebdomadaire réservé à la Formule Intensif
             </h1>
-            <p className="text-xs sm:text-sm text-white/80 mt-3 max-w-2xl mx-auto leading-relaxed">
-              Tous les 7 jours, un professeur certifié TCF Canada analyse vos résultats réels, compare votre progression d'une semaine à l'autre face aux seuils officiels NCLC 7+ / C1-C2 et vous remet un plan d'action sur mesure.
+            <p className="text-xs sm:text-sm text-white/85 mt-3 max-w-2xl mx-auto leading-relaxed">
+              {currentPlanName
+                ? `Votre abonnement actuel (Formule ${currentPlanName}) n'inclut pas cette fonctionnalité. Le bilan hebdomadaire d'analyse comparative détaillée & retour individualisé est réservé uniquement aux abonnements Intensif.`
+                : "Le bilan hebdomadaire d'analyse comparative détaillée & retour individualisé est réservé uniquement aux abonnements Intensif."}
+            </p>
+            <p className="text-xs text-white/70 mt-2 max-w-xl mx-auto leading-relaxed">
+              Avec la Formule Intensif, un professeur certifié analyse automatiquement vos résultats tous les 7 jours (dès 7 jours après votre souscription) et vous envoie un retour personnalisé.
             </p>
           </div>
 
@@ -345,49 +388,41 @@ export default function BilanHebdomadairePage() {
           </div>
 
           <div className="flex flex-col sm:flex-row lg:flex-col items-stretch sm:items-center lg:items-end gap-2.5 shrink-0">
-            {cooldown.canGenerate ? (
-              <Button
-                onClick={() => handleRequestReport(false)}
-                disabled={generating}
-                className="rounded-xl bg-[#e53e3e] hover:bg-[#c53030] text-white font-heading font-bold shadow-md shadow-[#e53e3e]/25 gap-2 px-5 h-11"
-              >
+            <div className="px-4 py-3 rounded-xl bg-white/10 border border-white/15 text-xs space-y-1 text-left lg:text-right">
+              <div className="flex items-center lg:justify-end gap-1.5 font-heading font-bold text-[#ffdcc3]">
                 {generating ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Préparation du bilan en cours...</span>
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    <span>Publication du bilan en cours...</span>
+                  </>
+                ) : cooldown.nextAvailableAt ? (
+                  <>
+                    <Clock className="w-3.5 h-3.5" />
+                    <span>
+                      {reports.length === 0
+                        ? `1er bilan automatique dans ${cooldown.daysRemaining} jour${cooldown.daysRemaining > 1 ? 's' : ''}`
+                        : `Prochain bilan dans ${cooldown.daysRemaining} jour${cooldown.daysRemaining > 1 ? 's' : ''}`}
+                    </span>
                   </>
                 ) : (
                   <>
-                    <ClipboardCheck className="w-4 h-4" />
-                    <span>
-                      {reports.length === 0
-                        ? 'Recevoir mon 1er bilan professeur'
-                        : 'Recevoir mon nouveau bilan (7j)'}
-                    </span>
+                    <Calendar className="w-3.5 h-3.5" />
+                    <span>Bilan automatique tous les 7 jours</span>
                   </>
                 )}
-              </Button>
-            ) : (
-              <div className="px-4 py-3 rounded-xl bg-white/10 border border-white/15 text-xs space-y-1 text-left lg:text-right">
-                <div className="flex items-center lg:justify-end gap-1.5 font-heading font-bold text-[#ffdcc3]">
-                  <Clock className="w-3.5 h-3.5" />
-                  <span>
-                    Prochain bilan dans {cooldown.daysRemaining} jour{cooldown.daysRemaining > 1 ? 's' : ''}
-                  </span>
-                </div>
-                {cooldown.nextAvailableAt && (
-                  <p className="text-[11px] text-white/70">
-                    Disponible le {formatDateFr(cooldown.nextAvailableAt.toISOString())}
-                  </p>
-                )}
               </div>
-            )}
+              {cooldown.nextAvailableAt && (
+                <p className="text-[11px] text-white/70">
+                  Publication automatique le {formatDateFr(cooldown.nextAvailableAt.toISOString())}
+                </p>
+              )}
+            </div>
 
-            {isAdmin && !cooldown.canGenerate && (
+            {isAdmin && (
               <Button
                 size="sm"
                 variant="outline"
-                onClick={() => handleRequestReport(true)}
+                onClick={handleAdminGenerate}
                 disabled={generating}
                 className="rounded-xl bg-white/10 hover:bg-white/20 text-white border-white/25 text-xs gap-1.5"
               >
@@ -422,7 +457,7 @@ export default function BilanHebdomadairePage() {
         </Card>
       )}
 
-      {/* ═══ État vide (aucun bilan encore généré) ═══ */}
+      {/* ═══ État vide (1er bilan automatique programmé 7 jours après l'abonnement) ═══ */}
       {!generating && reports.length === 0 && (
         <Card className="rounded-2xl border border-slate-200 bg-white shadow-sm">
           <CardContent className="p-8 sm:p-10 text-center space-y-5">
@@ -431,19 +466,28 @@ export default function BilanHebdomadairePage() {
             </div>
             <div className="space-y-2 max-w-xl mx-auto">
               <h2 className="font-heading font-extrabold text-xl text-[#0d233a]">
-                Votre premier bilan personnalisé est prêt à être établi
+                Votre premier bilan hebdomadaire est programmé automatiquement
               </h2>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Prof. Claire Beaumont (Professeure &amp; Formatrice Certifiée TCF Canada) va analyser l'ensemble de votre activité réelle et de vos notes actuelles pour établir votre point de départ comparatif et votre feuille de route des 7 prochains jours.
+                Prof. Claire Beaumont (Professeure &amp; Formatrice Certifiée TCF Canada) publiera automatiquement votre premier retour personnalisé <strong>7 jours après le début de votre abonnement Intensif</strong>, puis tous les 7 jours. Aucune action n'est nécessaire de votre part.
               </p>
+              {cooldown.nextAvailableAt && (
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#eff4ff] border border-[#d3e4fe] text-xs font-heading font-bold text-[#0d233a] mt-2">
+                  <Clock className="w-4 h-4 text-[#e53e3e]" />
+                  <span>
+                    Publication prévue le {formatDateFr(cooldown.nextAvailableAt.toISOString())} (dans {cooldown.daysRemaining} jour{cooldown.daysRemaining > 1 ? 's' : ''})
+                  </span>
+                </div>
+              )}
             </div>
             <Button
-              onClick={() => handleRequestReport(false)}
-              disabled={generating}
+              asChild
               className="rounded-xl bg-[#0d233a] hover:bg-[#1a365d] text-white font-heading font-bold px-6 h-11 gap-2"
             >
-              <ClipboardCheck className="w-4 h-4" />
-              <span>Demander mon premier bilan hebdomadaire</span>
+              <Link to="/etudiant/entrainement">
+                <BookOpen className="w-4 h-4" />
+                <span>Poursuivre mon entraînement</span>
+              </Link>
             </Button>
           </CardContent>
         </Card>

@@ -30,6 +30,7 @@ import {
 import type { SessionExamen, NiveauCECRL } from '@/types/index';
 import { CECRL_COLORS, EPREUVE_LABELS, PLANS_CONFIG } from '@/types/index';
 import { useSubscription } from '@/hooks/useSubscription';
+import { fetchWeeklyAnalyses, computeCooldownState, requestWeeklyAnalysis } from '@/services/weeklyAnalysis';
 
 export default function EtudiantDashboard() {
   const { profile, user } = useAuth();
@@ -160,6 +161,27 @@ export default function EtudiantDashboard() {
 
     fetchData();
   }, [user]);
+
+  // Déclenchement automatique silencieux du bilan hebdomadaire pour les abonnés Intensif arrivés à échéance de 7 jours
+  useEffect(() => {
+    if (!user || !hasActiveSubscription || abonnement?.plan_id !== 'intensif') return;
+    const subStartIso = abonnement.current_period_start || abonnement.date_debut || abonnement.created_at || null;
+    let cancelled = false;
+
+    fetchWeeklyAnalyses(user.id)
+      .then((list) => {
+        if (cancelled) return;
+        const state = computeCooldownState(list[0] || null, subStartIso);
+        if (state.canGenerate) {
+          requestWeeklyAnalysis({ force: false }).catch(() => {});
+        }
+      })
+      .catch(() => {});
+
+    return () => {
+      cancelled = true;
+    };
+  }, [user, hasActiveSubscription, abonnement]);
 
   // Calcul des scores réels par épreuve et statistiques globales
   const stats = useMemo(() => {

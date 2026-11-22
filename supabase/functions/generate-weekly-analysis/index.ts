@@ -711,7 +711,7 @@ async function generateReportForUser(
     };
   }
 
-  // 2. Vérifier le délai strict de 7 jours depuis le dernier bilan
+  // 2. Vérifier le délai strict de 7 jours (soit depuis le dernier bilan, soit 7 jours après le début de l'abonnement pour le 1er bilan)
   const { data: latestReport } = await supabaseAdmin
     .from('analyses_comparatives')
     .select('*')
@@ -720,21 +720,42 @@ async function generateReportForUser(
     .limit(1)
     .maybeSingle();
 
-  if (latestReport && !options.force) {
-    const lastCreated = new Date(latestReport.created_at).getTime();
-    const nextAvailableMs = lastCreated + COOLDOWN_MS;
-    if (now.getTime() < nextAvailableMs) {
-      const daysRemaining = Math.ceil((nextAvailableMs - now.getTime()) / (1000 * 60 * 60 * 24));
-      return {
-        status: 429,
-        body: {
-          error: 'COOLDOWN_ACTIVE',
-          message: `Votre prochain bilan pédagogique sera disponible dans ${daysRemaining} jour${daysRemaining > 1 ? 's' : ''}.`,
-          next_available_at: new Date(nextAvailableMs).toISOString(),
-          days_remaining: daysRemaining,
-          last_report_id: latestReport.id,
-        },
-      };
+  if (!options.force) {
+    if (latestReport) {
+      const lastCreated = new Date(latestReport.created_at).getTime();
+      const nextAvailableMs = lastCreated + COOLDOWN_MS;
+      if (now.getTime() < nextAvailableMs) {
+        const daysRemaining = Math.ceil((nextAvailableMs - now.getTime()) / (1000 * 60 * 60 * 24));
+        return {
+          status: 429,
+          body: {
+            error: 'COOLDOWN_ACTIVE',
+            message: `Votre prochain bilan hebdomadaire sera publié automatiquement dans ${daysRemaining} jour${daysRemaining > 1 ? 's' : ''}.`,
+            next_available_at: new Date(nextAvailableMs).toISOString(),
+            days_remaining: daysRemaining,
+            last_report_id: latestReport.id,
+          },
+        };
+      }
+    } else if (abonnement) {
+      const subStartIso = abonnement.current_period_start || abonnement.date_debut || abonnement.created_at;
+      if (subStartIso) {
+        const subStartMs = new Date(subStartIso).getTime();
+        const firstReportMs = subStartMs + COOLDOWN_MS;
+        if (now.getTime() < firstReportMs) {
+          const daysRemaining = Math.ceil((firstReportMs - now.getTime()) / (1000 * 60 * 60 * 24));
+          return {
+            status: 429,
+            body: {
+              error: 'COOLDOWN_ACTIVE',
+              message: `Votre premier bilan hebdomadaire sera publié automatiquement dans ${daysRemaining} jour${daysRemaining > 1 ? 's' : ''} (7 jours après votre abonnement Intensif).`,
+              next_available_at: new Date(firstReportMs).toISOString(),
+              days_remaining: daysRemaining,
+              last_report_id: null,
+            },
+          };
+        }
+      }
     }
   }
 

@@ -127,13 +127,28 @@ export interface CooldownState {
 const COOLDOWN_DAYS = 7;
 const COOLDOWN_MS = COOLDOWN_DAYS * 24 * 60 * 60 * 1000;
 
-export function computeCooldownState(latestReport: WeeklyAnalysisReport | null): CooldownState {
+export function computeCooldownState(
+  latestReport: WeeklyAnalysisReport | null,
+  subscriptionStartIso?: string | null
+): CooldownState {
+  const now = Date.now();
+
   if (!latestReport) {
+    if (subscriptionStartIso) {
+      const firstAvailableMs = new Date(subscriptionStartIso).getTime() + COOLDOWN_MS;
+      if (now < firstAvailableMs) {
+        return {
+          canGenerate: false,
+          daysRemaining: Math.ceil((firstAvailableMs - now) / (1000 * 60 * 60 * 24)),
+          nextAvailableAt: new Date(firstAvailableMs),
+        };
+      }
+    }
     return { canGenerate: true, daysRemaining: 0, nextAvailableAt: null };
   }
+
   const lastCreated = new Date(latestReport.created_at).getTime();
   const nextAvailableMs = lastCreated + COOLDOWN_MS;
-  const now = Date.now();
 
   if (now >= nextAvailableMs) {
     return { canGenerate: true, daysRemaining: 0, nextAvailableAt: null };
