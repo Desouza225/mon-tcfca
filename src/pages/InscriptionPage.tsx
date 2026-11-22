@@ -90,15 +90,17 @@ export default function InscriptionPage() {
     }
   };
 
-  // Saisie du numéro de téléphone avec nettoyage si l'indicatif est collé par inadvertance
+  // Saisie du numéro de téléphone : uniquement des chiffres (avec nettoyage si l'indicatif est collé)
   const handleTelephoneChange = (value: string) => {
-    let clean = value;
+    let clean = value.trim();
+    const dialDigits = indicatif.replace(/\D/g, '');
     if (indicatif && clean.startsWith(indicatif)) {
-      clean = clean.slice(indicatif.length).trim();
-    } else if (indicatif && clean.startsWith('00' + indicatif.replace('+', ''))) {
-      clean = clean.slice(('00' + indicatif.replace('+', '')).length).trim();
+      clean = clean.slice(indicatif.length);
+    } else if (dialDigits && clean.startsWith('00' + dialDigits)) {
+      clean = clean.slice(('00' + dialDigits).length);
     }
-    setTelephone(clean);
+    // Ne conserver strictement que les chiffres (0-9)
+    setTelephone(clean.replace(/\D/g, ''));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -307,11 +309,11 @@ export default function InscriptionPage() {
                 <div className="relative w-28 shrink-0">
                   <Input
                     type="text"
+                    inputMode="numeric"
                     value={indicatif}
                     onChange={(e) => {
-                      let val = e.target.value;
-                      if (val && !val.startsWith('+')) val = '+' + val;
-                      setIndicatif(val);
+                      const digits = e.target.value.replace(/\D/g, '').slice(0, 4);
+                      setIndicatif(digits ? `+${digits}` : '+');
                     }}
                     placeholder="+225"
                     className="h-11 rounded-xl border-[#e2e8f0] focus-visible:ring-[#0d233a] text-sm text-center font-bold text-[#0d233a] bg-slate-50"
@@ -319,12 +321,15 @@ export default function InscriptionPage() {
                   />
                 </div>
 
-                {/* Numéro de téléphone local */}
+                {/* Numéro de téléphone local (chiffres uniquement) */}
                 <div className="relative flex-1">
                   <Input
                     id="telephone"
                     type="tel"
-                    placeholder={selectedCountry.placeholder || '07 01 23 45 67'}
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    maxLength={15}
+                    placeholder={(selectedCountry.placeholder || '0701234567').replace(/\D/g, '')}
                     value={telephone}
                     onChange={(e) => handleTelephoneChange(e.target.value)}
                     required
