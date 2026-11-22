@@ -9840,22 +9840,6 @@
     "explication": ""
   },
   {
-    "id": "CE_T16_Q31",
-    "theme": "CE",
-    "niveau": "C1",
-    "consigne": "Lisez le document et choisissez la bonne réponse.",
-    "audio": null,
-    "image": "images/CE_T16_Q31.jpg",
-    "propositions": {
-      "A": "les problèmes liés à l’hygiène sont insolubles.",
-      "B": "tout le monde doit dénoncer les tricheries.",
-      "C": "la sagesse doit l’emporter sur la tentation.",
-      "D": "l’honnêteté des vendeurs est indéniable."
-    },
-    "bonne_reponse": "C",
-    "explication": ""
-  },
-  {
     "id": "CE_T16_Q32",
     "theme": "CE",
     "niveau": "C1",

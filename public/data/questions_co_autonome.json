@@ -613,7 +613,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse",
     "audio": "audios/CO_T01_Q39.mp3",
-    "image": "images/CO_T01_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Elle est régie par des normes internationales strictes.",
       "B": "Elle est réputée sans danger pour le milieu naturel.",
@@ -1237,7 +1237,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse",
     "audio": "audios/CO_T02_Q39.mp3",
-    "image": "images/CO_T02_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "L’absence de temps morts.",
       "B": "L’ennui des distractions.",
@@ -1861,7 +1861,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question Choisissez la bonne réponse",
     "audio": "audios/CO_T03_Q39.mp3",
-    "image": "images/CO_T03_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Acheter des livres sur le bonheur rend heureux.",
       "B": "Chacun de nous est prédisposé au bonheur.",
@@ -2485,7 +2485,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question Choisissez la bonne réponse",
     "audio": "audios/CO_T04_Q39.mp3",
-    "image": "images/CO_T04_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Elle tend à devenir une forme d’expression spécifique.",
       "B": "Elle reste cantonnée aux frontières du continent africain.",
@@ -3109,7 +3109,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T05_Q39.mp3",
-    "image": "images/CO_T05_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Elle est trop éloignée des orientations politiques actuelles.",
       "B": "Elle fait référence à des événements historiques douloureux.",
@@ -3733,7 +3733,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T06_Q39.mp3",
-    "image": "images/CO_T06_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "La fragilité de l’engagement.",
       "B": "La multiplicité des contacts.",
@@ -4357,7 +4357,7 @@
     "niveau": "C2",
     "consigne": "Écoutez l’extrait sonore et les 4 propositions. Choisissez la bonne réponse.",
     "audio": "audios/CO_T07_Q39.mp3",
-    "image": "images/CO_T07_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "En regroupant les œuvres selon un ordre chronologique.",
       "B": "En regroupant les tableaux dans une même salle.",
@@ -4981,7 +4981,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T08_Q39.mp3",
-    "image": "images/CO_T08_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "La réalisation est trop extravagante.",
       "B": "L’actrice principale est omniprésente.",
@@ -5605,7 +5605,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T09_Q39.mp3",
-    "image": "images/CO_T09_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Un désir d’enfance satisfait spontanément.",
       "B": "Un moyen de devenir rapidement célèbre.",
@@ -6229,7 +6229,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T10_Q39.mp3",
-    "image": "images/CO_T10_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Le nombre de médiateurs est insuffisant pour répondre à la demande.",
       "B": "Les banques influencent les décisions prises par les médiateurs.",
@@ -6853,7 +6853,7 @@
     "niveau": "C2",
     "consigne": "Écouter le document sonore et la question. Choisissez la bonne réponse :",
     "audio": "audios/CO_T11_Q39.mp3",
-    "image": "images/CO_T11_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Le processus d’attractivité des cellules femelles.",
       "B": "Les différences avec la reproduction des plantes terrestres.",
@@ -7477,7 +7477,7 @@
     "niveau": "C2",
     "consigne": "Écouter le document sonore et la question. Choisissez la bonne réponse :",
     "audio": "audios/CO_T12_Q39.mp3",
-    "image": "images/CO_T12_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "L’absence de temps morts.",
       "B": "L’ennui des distractions.",
@@ -8101,7 +8101,7 @@
     "niveau": "C2",
     "consigne": "Écouter le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T13_Q39.mp3",
-    "image": "images/CO_T13_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Elles entrainent des dépendances maladives.",
       "B": "Elles nuisent aux capacités d’apprentissage.",
@@ -8725,7 +8725,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T14_Q39.mp3",
-    "image": "images/CO_T14_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "L'absence de temps morts.",
       "B": "L'ennui des distractions.",
@@ -9349,7 +9349,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T15_Q39.mp3",
-    "image": "images/CO_T15_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Le processus d’attractivité des cellules femelles.",
       "B": "Les différences avec la reproduction des plantes terrestres.",
@@ -9973,7 +9973,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T16_Q39.mp3",
-    "image": "images/CO_T16_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Il concevait des histoires originales.",
       "B": "Il participait au journal de l’école.",
@@ -10597,7 +10597,7 @@
     "niveau": "C2",
     "consigne": "Écoutez les 4 propositions. Choisissez celle qui correspond à l’image.",
     "audio": "audios/CO_T17_Q39.mp3",
-    "image": "images/CO_T17_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Le nombre de médiateurs est insuffisant pour répondre à la demande.",
       "B": "Les banques influencent les décisions prises par les médiateurs.",
@@ -11221,7 +11221,7 @@
     "niveau": "C2",
     "consigne": "Écouter le document sonore et la question. Choisissez la bonne réponse :",
     "audio": "audios/CO_T18_Q39.mp3",
-    "image": "images/CO_T18_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Pratiquer des exercices mentaux.",
       "B": "Exprimer ses sentiments.",
@@ -11845,7 +11845,7 @@
     "niveau": "C2",
     "consigne": "Écouter le document sonore et la question. Choisissez la bonne réponse :",
     "audio": "audios/CO_T19_Q39.mp3",
-    "image": "images/CO_T19_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Elles entraînent des dépendances maladives.",
       "B": "Elles nuisent aux capacités d’apprentissage.",
@@ -12469,7 +12469,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T20_Q39.mp3",
-    "image": "images/CO_T20_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Expliquer l'intérêt de renseigner un document.",
       "B": "Motiver les employés ayant un mauvais bilan.",
@@ -13093,7 +13093,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T21_Q39.mp3",
-    "image": "images/CO_T21_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Les bâtiments restaurés sont en nombre insuffisant.",
       "B": "Les cités réaménagées sont surtout résidentielles.",
@@ -13717,7 +13717,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T22_Q39.mp3",
-    "image": "images/CO_T22_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Elle déplore le manque de structures pour accueillir et réunir les jeunes.",
       "B": "Elle désapprouve la disparition d'endroits consacrés aux pratiques culturelles.",
@@ -14341,7 +14341,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T23_Q39.mp3",
-    "image": "images/CO_T23_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "En regroupant les œuvres selon un ordre chronologique.",
       "B": "En regroupant les tableaux dans une même salle.",
@@ -14965,7 +14965,7 @@
     "niveau": "C2",
     "consigne": "Écouter le document sonore et la question. Choisissez la bonne réponse :",
     "audio": "audios/CO_T24_Q39.mp3",
-    "image": "images/CO_T24_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Acheter des livres sur le bonheur rend heureux.",
       "B": "Chacun de nous est prédisposé au bonheur.",
@@ -15589,7 +15589,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T25_Q39.mp3",
-    "image": "images/CO_T25_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "En regroupant les œuvres selon un ordre chronologique.",
       "B": "En regroupant les tableaux dans une même salle.",
@@ -16213,7 +16213,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T26_Q39.mp3",
-    "image": "images/CO_T26_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Les bâtiments restaurés sont en nombre insuffisant",
       "B": "Les cités réaménagées sont surtout résidentielles",
@@ -16837,7 +16837,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T27_Q39.mp3",
-    "image": "images/CO_T27_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Elle déplore le manque de structures pour accueillir et réunir les jeunes.",
       "B": "Elle désapprouve la disparition d'endroits consacrés aux pratiques culturelles.",
@@ -17461,7 +17461,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T28_Q39.mp3",
-    "image": "images/CO_T28_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "L’absence d’éthique de certains produits.",
       "B": "La qualité relative des aliments labellisés bio.",
@@ -18085,7 +18085,7 @@
     "niveau": "C2",
     "consigne": "É coutez le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T29_Q39.mp3",
-    "image": "images/CO_T29_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Elles demandent un nouveau statut juridique",
       "B": "Elles exigent des garanties réelles et tangibles",
@@ -18709,7 +18709,7 @@
     "niveau": "C2",
     "consigne": "Écoutez l'extrait sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T30_Q39.mp3",
-    "image": "images/CO_T30_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Pratiquer des exercices mentaux.",
       "B": "Exprimer ses sentiments.",
@@ -19333,7 +19333,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T31_Q39.mp3",
-    "image": "images/CO_T31_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Un désir de changement face à l'immobilisme des élus.",
       "B": "Un questionnement des pratiques du secteur industriel.",
@@ -19957,7 +19957,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T32_Q39.mp3",
-    "image": "images/CO_T32_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Le processus d'attractivité des cellules femelles.",
       "B": "Les différences avec la reproduction des plantes terrestres.",
@@ -20581,7 +20581,7 @@
     "niveau": "C2",
     "consigne": "Écoutez l’extrait sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T33_Q39.mp3",
-    "image": "images/CO_T33_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "À l’occasion d’une entrevue.",
       "B": "En côtoyant des auteurs connus.",
@@ -21205,7 +21205,7 @@
     "niveau": "C2",
     "consigne": "Écoutez l’extrait sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T34_Q39.mp3",
-    "image": "images/CO_T34_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Acheter des livres sur le bonheur rend heureux.",
       "B": "Chacun de nous est prédisposé au bonheur.",
@@ -21829,7 +21829,7 @@
     "niveau": "C2",
     "consigne": "Écoutez l’extrait sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T35_Q39.mp3",
-    "image": "images/CO_T35_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Améliorer la présentation des produits.",
       "B": "Augmenter le nombre de clients.",
@@ -22453,7 +22453,7 @@
     "niveau": "C2",
     "consigne": "Écoutez l’extrait sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T36_Q39.mp3",
-    "image": "images/CO_T36_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "En regroupant les œuvres selon un ordre chronologique.",
       "B": "En regroupant les tableaux dans une même salle.",
@@ -23077,7 +23077,7 @@
     "niveau": "C2",
     "consigne": "Écoutez l’extrait sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T37_Q39.mp3",
-    "image": "images/CO_T37_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "La collaboration des futurs occupants des logements.",
       "B": "La conception de logements dans un bâtiment préexistant.",
@@ -23701,7 +23701,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T38_Q39.mp3",
-    "image": "images/CO_T38_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Le nombre de médiateurs est insuffisant pour répondre à la demande.",
       "B": "Les banques influencent les décisions prises par les médiateurs.",
@@ -24325,7 +24325,7 @@
     "niveau": "C2",
     "consigne": "Écoutez l’extrait sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T39_Q39.mp3",
-    "image": "images/CO_T39_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Expliquer l’intérêt de renseigner un document.",
       "B": "Motiver les employés ayant un mauvais bilan.",
@@ -24949,7 +24949,7 @@
     "niveau": "C2",
     "consigne": "Écoutez le document sonore et la question. Choisissez la bonne réponse.",
     "audio": "audios/CO_T40_Q39.mp3",
-    "image": "images/CO_T40_Q39.jpg",
+    "image": null,
     "propositions": {
       "A": "Le processus d’attractivité des cellules femelles.",
       "B": "Les différences avec la reproduction des plantes terrestres.",
