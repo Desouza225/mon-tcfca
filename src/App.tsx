@@ -25,6 +25,7 @@ import ExamenBlancPage from '@/pages/etudiant/ExamenBlancPage';
 import AbonnementPage from '@/pages/etudiant/AbonnementPage';
 import AbonnementSuccessPage from '@/pages/etudiant/AbonnementSuccessPage';
 import HistoriquePage from '@/pages/etudiant/HistoriquePage';
+import BilanHebdomadairePage from '@/pages/etudiant/BilanHebdomadairePage';
 import DetailCorrectionPage from '@/pages/etudiant/DetailCorrectionPage';
 import NotificationsPage from '@/pages/etudiant/NotificationsPage';
 import ProfilPage from '@/pages/etudiant/ProfilPage';
@@ -98,6 +99,7 @@ const App: React.FC = () => {
               }
             />
             <Route path="/etudiant/examen-blanc" element={<Protected roles={['etudiant', 'admin', 'super_admin']}><ExamenBlancPage /></Protected>} />
+            <Route path="/etudiant/bilan-hebdomadaire" element={<Protected roles={['etudiant', 'admin', 'super_admin']}><BilanHebdomadairePage /></Protected>} />
             <Route path="/etudiant/abonnement" element={<Protected roles={['etudiant', 'admin', 'super_admin']}><AbonnementPage /></Protected>} />
             <Route path="/etudiant/abonnement/succes" element={<Protected roles={['etudiant', 'admin', 'super_admin']}><AbonnementSuccessPage /></Protected>} />
             <Route path="/abonnement/succes" element={<Protected roles={['etudiant', 'admin', 'super_admin']}><AbonnementSuccessPage /></Protected>} />
