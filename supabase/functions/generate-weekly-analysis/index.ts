@@ -968,9 +968,24 @@ Deno.serve(async (req) => {
       body = {};
     }
 
-    const isServiceCaller =
+    let isServiceCaller =
       (SERVICE_ROLE_KEY && bearerToken === SERVICE_ROLE_KEY) ||
       (cronSecret && bearerToken === cronSecret);
+
+    // Fallback sécurisé : vérifier auprès de Supabase Auth Admin si le token est une clé service_role valide (ex: clé JWT legacy)
+    if (!isServiceCaller && bearerToken.startsWith('eyJ')) {
+      try {
+        const testAdmin = createClient(SUPABASE_URL, bearerToken, {
+          auth: { autoRefreshToken: false, persistSession: false },
+        });
+        const { error: adminCheckErr } = await testAdmin.auth.admin.listUsers({ page: 1, perPage: 1 });
+        if (!adminCheckErr) {
+          isServiceCaller = true;
+        }
+      } catch {
+        // Ignorer : ce n'est pas une clé service_role
+      }
+    }
 
     // Mode cron (appelé par cron-daily-emails ou planificateur externe)
     if (isServiceCaller && body.mode === 'cron') {
