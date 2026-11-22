@@ -15,6 +15,7 @@ import AbonnementPage from './pages/etudiant/AbonnementPage';
 import AbonnementSuccessPage from './pages/etudiant/AbonnementSuccessPage';
 import HistoriquePage from './pages/etudiant/HistoriquePage';
 import DetailCorrectionPage from './pages/etudiant/DetailCorrectionPage';
+import BilanHebdomadairePage from './pages/etudiant/BilanHebdomadairePage';
 import NotificationsPage from './pages/etudiant/NotificationsPage';
 import ProfilPage from './pages/etudiant/ProfilPage';
 
@@ -56,6 +57,7 @@ export const routes: RouteConfig[] = [
   { name: 'Succès Paiement', path: '/etudiant/abonnement/succes', element: <AbonnementSuccessPage /> },
   { name: 'Succès Paiement', path: '/abonnement/succes', element: <AbonnementSuccessPage /> },
   { name: 'Historique', path: '/etudiant/historique', element: <HistoriquePage /> },
+  { name: 'Bilan Hebdomadaire', path: '/etudiant/bilan-hebdomadaire', element: <BilanHebdomadairePage /> },
   { name: 'Détail correction', path: '/etudiant/historique/:id', element: <DetailCorrectionPage /> },
   { name: 'Détail correction', path: '/etudiant/corrections/:id', element: <DetailCorrectionPage /> },
   { name: 'Notifications', path: '/etudiant/notifications', element: <NotificationsPage /> },

@@ -31,6 +31,13 @@ export interface EmailTemplateData {
   // Données spécifiques
   joursInactivite?: number;
   tachesEnAttente?: number;
+  // Bilan hebdomadaire professeur certifié (Intensif)
+  professeurNom?: string;
+  professeurTitre?: string;
+  numeroBilan?: number;
+  objetBilan?: string;
+  resumeChiffre?: string;
+  niveauEstime?: string;
   // Données auth
   confirmationUrl?: string;
   dateChangement?: string;
@@ -601,6 +608,60 @@ export const EMAIL_TEMPLATES: Record<string, (d: EmailTemplateData) => { subject
         Votre objectif d'immigration est à portée de main. Reprenez dès aujourd'hui :
       </p>
       ${renderButton('Faire une session rapide', 'https://mon-tcfca.com/etudiant/dashboard', 'primary')}
+    `;
+    return { subject, html: wrapWithLayout(subject, body, true, d.email || '') };
+  },
+
+  // BILAN HEBDOMADAIRE PROFESSEUR CERTIFIÉ (FORMULE INTENSIF)
+  weekly_professor_report: (d) => {
+    const prenom = escapeHtml(d.prenom || 'Cher(e) candidat(e)');
+    const profNom = escapeHtml(d.professeurNom || 'Prof. Claire Beaumont');
+    const profTitre = escapeHtml(d.professeurTitre || 'Examinatrice & Formatrice Certifiée TCF Canada');
+    const num = d.numeroBilan ?? 1;
+    const objetBilan = escapeHtml(d.objetBilan || `Votre analyse comparative de la semaine n°${num}`);
+    const resume = escapeHtml(d.resumeChiffre || 'Votre professeur certifié a analysé vos derniers résultats et établi votre plan de progression sur 7 jours.');
+    const niveau = escapeHtml(d.niveauEstime || 'En cours d’évaluation');
+    const subject = `Bilan hebdomadaire n°${num} de ${profNom} — Mon TCF Canada`;
+
+    const body = `
+      <div style="text-align: center; margin-bottom: 24px;">
+        <span style="display: inline-block; padding: 6px 14px; background: #EFF4FF; color: #0D233A; font-weight: 700; font-size: 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px;">
+          Formule Intensif • Retour Professeur Certifié
+        </span>
+      </div>
+      <h1 style="margin: 0 0 12px 0; font-size: 22px; font-weight: 800; color: #0D233A; line-height: 30px; text-align: center;">
+        ${objetBilan}
+      </h1>
+      <p style="margin: 0 0 20px 0; font-size: 13px; color: #64748B; text-align: center;">
+        Rédigé par <strong>${profNom}</strong> — ${profTitre}
+      </p>
+
+      <p style="margin: 0 0 16px 0; font-size: 15px; line-height: 24px; color: #334155;">
+        Bonjour <strong>${prenom}</strong>,
+      </p>
+      <p style="margin: 0 0 20px 0; font-size: 15px; line-height: 24px; color: #334155;">
+        Votre <strong>analyse comparative détaillée &amp; retour individualisé n°${num}</strong> est désormais disponible dans votre espace candidat.
+      </p>
+
+      <table role="presentation" style="width: 100%; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 14px; margin: 20px 0;">
+        <tr>
+          <td style="padding: 16px; border-bottom: 1px solid #E2E8F0;">
+            <strong style="color: #0D233A; font-size: 13px;">📊 Niveau NCLC estimé :</strong>
+            <span style="float: right; font-weight: 700; color: #0D233A; font-size: 13px;">${niveau}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 16px;">
+            <div style="font-weight: 700; color: #0D233A; font-size: 13px; margin-bottom: 6px;">📝 Synthèse de votre professeur :</div>
+            <div style="font-size: 13px; color: #475569; line-height: 20px;">${resume}</div>
+          </td>
+        </tr>
+      </table>
+
+      <p style="margin: 20px 0; font-size: 15px; line-height: 24px; color: #334155;">
+        Consultez dès maintenant votre bilan complet, le détail par épreuve (CE, CO, EE, EO) ainsi que votre feuille de route personnalisée pour les 7 prochains jours :
+      </p>
+      ${renderButton('Consulter mon bilan professeur', 'https://mon-tcfca.com/etudiant/bilan-hebdomadaire', 'primary')}
     `;
     return { subject, html: wrapWithLayout(subject, body, true, d.email || '') };
   },

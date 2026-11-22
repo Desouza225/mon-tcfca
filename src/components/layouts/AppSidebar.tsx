@@ -8,7 +8,7 @@ import BrandLogo from '@/components/common/BrandLogo';
 import {
   LayoutDashboard, BookOpen, ClipboardList, BookMarked,
   Users, LogOut, ChevronLeft, ChevronRight, Bell,
-  BarChart3, Settings, Database, Menu, X, LineChart, Shield, CreditCard, Mail
+  BarChart3, Settings, Database, Menu, X, LineChart, Shield, CreditCard, Mail, GraduationCap
 } from 'lucide-react';
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useNotifications } from '@/hooks/useNotifications';
@@ -30,6 +30,7 @@ function useNavItems() {
     { label: 'Cours & Fiches', href: '/etudiant/cours', icon: BookMarked },
     { label: 'Entraînement Ciblé', href: '/etudiant/entrainement', icon: BookOpen },
     { label: 'Examen blanc', href: '/etudiant/examen-blanc', icon: ClipboardList },
+    { label: 'Bilan Professeur', href: '/etudiant/bilan-hebdomadaire', icon: GraduationCap },
     { label: 'Mon abonnement', href: '/etudiant/abonnement', icon: CreditCard },
     { label: 'Historique', href: '/etudiant/historique', icon: BarChart3 },
     { label: 'Notifications', href: '/etudiant/notifications', icon: Bell, badge: unreadCount },

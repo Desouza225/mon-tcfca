@@ -23,7 +23,9 @@ import {
   RefreshCw,
   Clock,
   Compass,
-  ChevronRight
+  ChevronRight,
+  GraduationCap,
+  ShieldCheck
 } from 'lucide-react';
 import type { SessionExamen, NiveauCECRL } from '@/types/index';
 import { CECRL_COLORS, EPREUVE_LABELS, PLANS_CONFIG } from '@/types/index';
@@ -31,7 +33,8 @@ import { useSubscription } from '@/hooks/useSubscription';
 
 export default function EtudiantDashboard() {
   const { profile, user } = useAuth();
-  const { abonnement, daysRemaining, isExpiringSoon, isExpired, isMobileMoney } = useSubscription();
+  const { abonnement, hasActiveSubscription, isAdmin, daysRemaining, isExpiringSoon, isExpired, isMobileMoney } = useSubscription();
+  const isIntensif = isAdmin || (hasActiveSubscription && abonnement?.plan_id === 'intensif');
   const [sessions, setSessions] = useState<SessionExamen[]>([]);
   const [corrections, setCorrections] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -704,6 +707,41 @@ export default function EtudiantDashboard() {
           </CardContent>
         </Card>
       </div>
+
+      {/* 3b. Bilan Hebdomadaire Professeur Certifié (Exclusivité Intensif) */}
+      <section className="rounded-2xl p-5 sm:p-6 bg-gradient-to-r from-[#0d233a] via-[#142f4d] to-[#1a365d] text-white shadow-sm border border-[#1a365d] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-start gap-3.5">
+          <div className="w-11 h-11 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0">
+            <GraduationCap className="w-6 h-6 text-[#ffdcc3]" />
+          </div>
+          <div className="space-y-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge className="bg-amber-400/20 text-amber-200 border border-amber-400/30 text-[10px] font-heading font-bold">
+                Formule Intensif
+              </Badge>
+              <span className="inline-flex items-center gap-1 text-[11px] text-emerald-300 font-medium">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                Professeur certifié · Tous les 7 jours
+              </span>
+            </div>
+            <h3 className="font-heading font-extrabold text-base sm:text-lg text-white">
+              Analyse comparative détaillée &amp; retour individualisé
+            </h3>
+            <p className="text-xs text-white/75 max-w-xl leading-relaxed">
+              {isIntensif
+                ? 'Consultez votre bilan hebdomadaire rédigé par votre professeur certifié à partir de vos scores réels et de votre activité des 7 derniers jours.'
+                : 'Bénéficiez chaque semaine d’un retour personnalisé d’un professeur certifié basé sur vos résultats réels avec la Formule Intensif.'}
+            </p>
+          </div>
+        </div>
+        <Button
+          onClick={() => navigate('/etudiant/bilan-hebdomadaire')}
+          className="shrink-0 rounded-xl bg-[#e53e3e] hover:bg-[#c53030] text-white font-heading font-bold text-xs px-5 h-10 gap-1.5 shadow-md shadow-[#e53e3e]/25"
+        >
+          <span>{isIntensif ? 'Voir mon bilan professeur' : 'Découvrir ce suivi'}</span>
+          <ArrowRight className="w-4 h-4" />
+        </Button>
+      </section>
 
       {/* 4. Sessions Récentes */}
       <section className="bg-white rounded-2xl p-5 sm:p-6 border border-[#e2e8f0] shadow-sm space-y-4">

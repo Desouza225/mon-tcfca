@@ -14,13 +14,20 @@ async function executeDailyEmails(): Promise<{
   remindersJ1: number;
   expirations: number;
   inactivities: number;
+  weeklyAnalysesGenerated: number;
 }> {
   const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
     auth: { autoRefreshToken: false, persistSession: false },
   });
 
   const now = new Date();
-  const summary = { remindersJ7: 0, remindersJ1: 0, expirations: 0, inactivities: 0 };
+  const summary = {
+    remindersJ7: 0,
+    remindersJ1: 0,
+    expirations: 0,
+    inactivities: 0,
+    weeklyAnalysesGenerated: 0,
+  };
 
   // Helper pour appeler send-email en interne
   const triggerEmail = async (payload: any) => {
@@ -181,6 +188,26 @@ async function executeDailyEmails(): Promise<{
         .update({ last_activity_reminder_at: now.toISOString() })
         .eq('id', prof.id);
     }
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // 5. BILANS HEBDOMADAIRES FORMULE INTENSIF (TOUS LES 7 JOURS)
+  // ══════════════════════════════════════════════════════════════════════════
+  try {
+    const resWeekly = await fetch(`${SUPABASE_URL}/functions/v1/generate-weekly-analysis`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${SERVICE_ROLE_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ mode: 'cron' }),
+    });
+    const weeklyData = await resWeekly.json();
+    if (weeklyData?.summary?.generated) {
+      summary.weeklyAnalysesGenerated = weeklyData.summary.generated;
+    }
+  } catch (weeklyErr) {
+    console.error('Erreur déclenchement bilans hebdomadaires Intensif:', weeklyErr);
   }
 
   console.log('📊 Résumé cron quotidien emails :', summary);
