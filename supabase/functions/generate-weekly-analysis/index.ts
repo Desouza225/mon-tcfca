@@ -904,14 +904,20 @@ async function runWeeklyCronBatch(supabaseAdmin: any): Promise<{
   return summary;
 }
 
-// Exécution quotidienne automatique à 08h00 UTC pour générer les bilans arrivés à échéance de 7 jours
-Deno.cron('weekly-intensif-analyses', '0 8 * * *', async () => {
-  console.log('⏰ Exécution planifiée Deno.cron : weekly-intensif-analyses');
-  const supabaseAdmin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
-    auth: { autoRefreshToken: false, persistSession: false },
-  });
-  await runWeeklyCronBatch(supabaseAdmin);
-});
+// Exécution quotidienne automatique à 08h00 UTC (si supporté par le runtime)
+if (typeof (Deno as unknown as { cron?: unknown }).cron === 'function') {
+  (Deno as unknown as { cron: (name: string, schedule: string, fn: () => Promise<void>) => void }).cron(
+    'weekly-intensif-analyses',
+    '0 8 * * *',
+    async () => {
+      console.log('⏰ Exécution planifiée Deno.cron : weekly-intensif-analyses');
+      const supabaseAdmin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
+        auth: { autoRefreshToken: false, persistSession: false },
+      });
+      await runWeeklyCronBatch(supabaseAdmin);
+    }
+  );
+}
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {

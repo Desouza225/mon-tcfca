@@ -3,11 +3,17 @@ import { createClient } from 'npm:@supabase/supabase-js@2';
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL') || '';
 const SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
 
-// Déclencheur Deno.cron natif tous les matins à 07h00 UTC
-Deno.cron('cron-daily-emails', '0 7 * * *', async () => {
-  console.log('⏰ Exécution planifiée Deno.cron : cron-daily-emails');
-  await executeDailyEmails();
-});
+// Déclencheur Deno.cron natif tous les matins à 07h00 UTC (si supporté par le runtime)
+if (typeof (Deno as unknown as { cron?: unknown }).cron === 'function') {
+  (Deno as unknown as { cron: (name: string, schedule: string, fn: () => Promise<void>) => void }).cron(
+    'cron-daily-emails',
+    '0 7 * * *',
+    async () => {
+      console.log('⏰ Exécution planifiée Deno.cron : cron-daily-emails');
+      await executeDailyEmails();
+    }
+  );
+}
 
 async function executeDailyEmails(): Promise<{
   remindersJ7: number;
