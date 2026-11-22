@@ -434,7 +434,7 @@ export default function BilanHebdomadairePage() {
                 Votre premier bilan personnalisé est prêt à être établi
               </h2>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Prof. Claire Beaumont (Examinatrice &amp; Formatrice Certifiée TCF Canada) va analyser l'ensemble de votre activité réelle et de vos notes actuelles pour établir votre point de départ comparatif et votre feuille de route des 7 prochains jours.
+                Prof. Claire Beaumont (Professeure &amp; Formatrice Certifiée TCF Canada) va analyser l'ensemble de votre activité réelle et de vos notes actuelles pour établir votre point de départ comparatif et votre feuille de route des 7 prochains jours.
               </p>
             </div>
             <Button

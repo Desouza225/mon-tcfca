@@ -11,7 +11,7 @@ const COOLDOWN_DAYS = 7;
 const COOLDOWN_MS = COOLDOWN_DAYS * 24 * 60 * 60 * 1000;
 
 const DEFAULT_PROF_NAME = 'Prof. Claire Beaumont';
-const DEFAULT_PROF_TITLE = 'Examinatrice & Formatrice Certifiée TCF Canada';
+const DEFAULT_PROF_TITLE = 'Professeure & Formatrice Certifiée TCF Canada';
 
 // Seuils officiels NCLC 7 (Entrée Express Canada) & C1/C2
 const OFFICIAL_BENCHMARKS = {

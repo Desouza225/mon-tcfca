@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS public.analyses_comparatives (
   periode_fin TIMESTAMPTZ NOT NULL DEFAULT now(),
   numero_bilan INTEGER NOT NULL DEFAULT 1,
   professeur_nom TEXT NOT NULL DEFAULT 'Prof. Claire Beaumont',
-  professeur_titre TEXT NOT NULL DEFAULT 'Examinatrice & Formatrice Certifiée TCF Canada',
+  professeur_titre TEXT NOT NULL DEFAULT 'Professeure & Formatrice Certifiée TCF Canada',
   statistiques_snapshot JSONB NOT NULL DEFAULT '{}'::jsonb,
   analyse_contenu JSONB NOT NULL DEFAULT '{}'::jsonb,
   ai_model_used TEXT NOT NULL DEFAULT 'claude-sonnet-5-5',
