@@ -521,13 +521,15 @@ RÈGLES ABSOLUES DE CONCISION ET DE CONTENU :
    - "plan_action_7_jours" : 2 à 3 actions réalistes et concises (pas plus de 3).
    - "mot_de_fin" : 2 phrases maximum d'encouragement ou de félicitation parfaitement adaptées aux notes obtenues.
 
-RÈGLES ABSOLUES DE RIGUEUR CHIFFRÉE :
+RÈGLES ABSOLUES DE RIGUEUR CHIFFRÉE ET DE CONNAISSANCE DE LA PLATEFORME :
 1. Tu dois t'appuyer EXCLUSIVEMENT sur les chiffres et activités réels fournis dans le dossier JSON de l'étudiant ci-dessous.
 2. N'INVENTE JAMAIS une note, un pourcentage, un nombre de sessions ou une erreur qui ne figure pas dans les données.
-3. Si une épreuve n'a pas encore été travaillée (null ou 0), dis-le simplement et recommande de la démarrer cette semaine.
-4. Si l'étudiant a eu peu ou pas d'activité sur les 7 derniers jours, constate-le avec bienveillance et propose une reprise réaliste.
-5. Compare brièvement les résultats actuels à la période précédente (si dispo) et aux seuils NCLC 7 (CE 453/699, CO 458/699, EE 14/20, EO 14/20).
-6. Si un bilan précédent est fourni, fais un bref suivi des objectifs de la semaine dernière.
+3. FONCTIONNEMENT RÉEL DES SESSIONS D'ENTRAÎNEMENT : sur la plateforme, une session d'entraînement en Compréhension Écrite (CE) ou en Compréhension Orale (CO) comporte toujours 20 questions. Ne conseille JAMAIS de faire « 10 questions » ou un fragment de session : recommande toujours 1, 2 ou plusieurs sessions complètes (20 questions chacune) selon le niveau et les besoins de l'étudiant.
+4. DATE D'EXAMEN INCONNUE : nous ne connaissons pas la date officielle de composition/passage du TCF Canada de l'étudiant. NE MENTIONNE JAMAIS un nombre de « jours restants » ou « jours devant vous » (ni la durée restante de l'abonnement comme délai avant l'examen).
+5. Si une épreuve n'a pas encore été travaillée (null ou 0), dis-le simplement et recommande de la démarrer cette semaine.
+6. Si l'étudiant a eu peu ou pas d'activité sur les 7 derniers jours, constate-le avec bienveillance et propose une reprise réaliste.
+7. Compare brièvement les résultats actuels à la période précédente (si dispo) et aux seuils NCLC 7 (CE 453/699, CO 458/699, EE 14/20, EO 14/20).
+8. Si un bilan précédent est fourni, fais un bref suivi des objectifs de la semaine dernière.
 
 FORMAT DE SORTIE STRICT (JSON UNIQUEMENT, SANS MARKDOWN NI TEXTE AUTOUR) :
 {
@@ -610,6 +612,15 @@ ${isRetry ? "\nATTENTION : La réponse précédente était incomplète ou invali
       }
     : null;
 
+  const promptSnapshot = {
+    ...snapshot,
+    quotas_intensif: {
+      ee_restant: snapshot.quotas_intensif.ee_restant,
+      eo_restant: snapshot.quotas_intensif.eo_restant,
+      examens_blancs_restant: snapshot.quotas_intensif.examens_blancs_restant,
+    },
+  };
+
   const userMessage = `
 DOSSIER PÉDAGOGIQUE RÉEL DE L'ÉTUDIANT :
 - Prénom : ${studentFirstName}
@@ -617,7 +628,7 @@ DOSSIER PÉDAGOGIQUE RÉEL DE L'ÉTUDIANT :
 - Formule : Intensif
 
 DONNÉES CHIFFRÉES VÉRIFIÉES (JSON) :
-${JSON.stringify(snapshot, null, 2)}
+${JSON.stringify(promptSnapshot, null, 2)}
 
 DÉTAILS DES CORRECTIONS RÉCENTES (7 DERNIERS JOURS) :
 ${JSON.stringify(recentCorrectionsDetails, null, 2)}
