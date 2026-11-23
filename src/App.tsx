@@ -7,6 +7,7 @@ import { RouteGuard } from '@/components/layouts/RouteGuard';
 import { AppLayout } from '@/components/layouts/AppLayout';
 import { ErrorBoundary, RouteErrorBoundary } from '@/components/layouts/ErrorBoundary';
 import { SubscriptionGate } from '@/components/common/SubscriptionGate';
+import { SupportFloatingButton } from '@/components/common/SupportFloatingButton';
 import { trackPageView } from '@/lib/analytics';
 
 // Public
@@ -128,6 +129,7 @@ const App: React.FC = () => {
             {/* ═══ Fallback ═══ */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
+          <SupportFloatingButton />
           <Toaster richColors position="top-right" />
         </AuthProvider>
       </Router>
