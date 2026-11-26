@@ -1,8 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/db/supabase';
 import { useAuth } from '@/contexts/AuthContext';
 import { getAudioClaritySetting, setAudioClaritySetting } from '@/lib/audioProcessing';
+import { PLANS_CONFIG } from '@/types/index';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
@@ -29,13 +30,72 @@ import {
   AdminSubscriptionQuotaModal,
   type AdminManagedUser,
 } from '@/components/admin/AdminSubscriptionQuotaModal';
+import {
+  AdminGrowthInsightsSection,
+  type AbandonedPaymentLead,
+  type CountryBreakdownItem,
+  type ExpiringOrLowQuotaSubscriber,
+  type GrowthInsightsData,
+  type HotLeadItem,
+  type TimeSlotItem,
+  type TopPageItem,
+  type TrafficSourceItem,
+} from '@/components/admin/AdminGrowthInsightsSection';
 
 interface SiteVisitRow {
   id: string;
   session_id: string;
   page_path: string | null;
+  referrer: string | null;
   device_type: string | null;
   user_id: string | null;
+  created_at: string;
+}
+
+interface StudentProfileRow {
+  id: string;
+  prenom: string | null;
+  nom: string | null;
+  email: string | null;
+  pays: string | null;
+  telephone: string | null;
+  created_at: string;
+  last_active_at: string | null;
+}
+
+interface AbonnementRawRow {
+  id: string;
+  user_id: string | null;
+  etudiant_id: string | null;
+  plan_id: string | null;
+  statut: string | null;
+  status: string | null;
+  provider: string | null;
+  methode: string | null;
+  quota_ee_restant: number | null;
+  quota_eo_restant: number | null;
+  quota_examen_blanc_restant: number | null;
+  current_period_start: string | null;
+  current_period_end: string | null;
+  date_debut: string | null;
+  date_fin: string | null;
+  created_at: string;
+}
+
+interface PaiementRawRow {
+  id: string;
+  user_id: string | null;
+  etudiant_id: string | null;
+  amount: number | null;
+  montant: number | null;
+  currency: string | null;
+  devise: string | null;
+  status: string | null;
+  statut: string | null;
+  provider: string | null;
+  methode: string | null;
+  plan_id: string | null;
+  metadata: Record<string, unknown> | null;
   created_at: string;
 }
 
@@ -53,7 +113,7 @@ async function fetchAllSiteVisits(): Promise<SiteVisitRow[]> {
   while (true) {
     const { data, error } = await supabase
       .from('site_visits')
-      .select('id, session_id, page_path, device_type, user_id, created_at')
+      .select('id, session_id, page_path, referrer, device_type, user_id, created_at')
       .order('created_at', { ascending: false })
       .range(offset, offset + BATCH_SIZE - 1);
 
@@ -65,6 +125,121 @@ async function fetchAllSiteVisits(): Promise<SiteVisitRow[]> {
   }
 
   return allRows;
+}
+
+async function fetchAllStudentProfiles(): Promise<StudentProfileRow[]> {
+  const allRows: StudentProfileRow[] = [];
+  const BATCH_SIZE = 1000;
+  let offset = 0;
+
+  while (true) {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('id, prenom, nom, email, pays, telephone, created_at, last_active_at')
+      .eq('role', 'etudiant')
+      .order('created_at', { ascending: false })
+      .range(offset, offset + BATCH_SIZE - 1);
+
+    if (error) throw error;
+    const rows = Array.isArray(data) ? (data as StudentProfileRow[]) : [];
+    allRows.push(...rows);
+    if (rows.length < BATCH_SIZE) break;
+    offset += BATCH_SIZE;
+  }
+
+  return allRows;
+}
+
+async function fetchAllAbonnements(): Promise<AbonnementRawRow[]> {
+  const allRows: AbonnementRawRow[] = [];
+  const BATCH_SIZE = 1000;
+  let offset = 0;
+
+  while (true) {
+    const { data, error } = await supabase
+      .from('abonnements')
+      .select(
+        'id, user_id, etudiant_id, plan_id, statut, status, provider, methode, quota_ee_restant, quota_eo_restant, quota_examen_blanc_restant, current_period_start, current_period_end, date_debut, date_fin, created_at'
+      )
+      .order('created_at', { ascending: false })
+      .range(offset, offset + BATCH_SIZE - 1);
+
+    if (error) throw error;
+    const rows = Array.isArray(data) ? (data as AbonnementRawRow[]) : [];
+    allRows.push(...rows);
+    if (rows.length < BATCH_SIZE) break;
+    offset += BATCH_SIZE;
+  }
+
+  return allRows;
+}
+
+function isAbonnementCurrentlyActive(a: AbonnementRawRow, nowMs: number): boolean {
+  const st = String(a.status || a.statut || '').toLowerCase();
+  const statut = String(a.statut || '').toLowerCase();
+  const hasActive = st === 'active' || st === 'actif' || statut === 'actif';
+  if (!hasActive) return false;
+  const endStr = a.current_period_end || a.date_fin;
+  if (!endStr) return true;
+  const endMs = new Date(endStr).getTime();
+  return Number.isNaN(endMs) || endMs > nowMs;
+}
+
+function normalizeTrafficSource(
+  rawReferrer: string | null | undefined
+): { key: string; label: string; category: TrafficSourceItem['category'] } {
+  const raw = String(rawReferrer || 'direct').trim().toLowerCase();
+  if (!raw || raw === 'direct') {
+    return { key: 'direct', label: 'Accès direct', category: 'direct' };
+  }
+  if (raw.startsWith('utm:')) {
+    const rest = raw.slice(4);
+    const [srcPart, campPart] = rest.split('|');
+    const srcLabel = srcPart ? srcPart.charAt(0).toUpperCase() + srcPart.slice(1) : 'Campagne';
+    const label = campPart ? `Campagne ${srcLabel} (${campPart})` : `Campagne ${srcLabel}`;
+    return { key: raw, label, category: 'utm' };
+  }
+  if (raw.includes('facebook') || raw.includes('fb.com')) {
+    return { key: 'facebook', label: 'Facebook', category: 'social' };
+  }
+  if (raw.includes('instagram')) {
+    return { key: 'instagram', label: 'Instagram', category: 'social' };
+  }
+  if (raw.includes('tiktok')) {
+    return { key: 'tiktok', label: 'TikTok', category: 'social' };
+  }
+  if (raw.includes('youtube') || raw.includes('youtu.be')) {
+    return { key: 'youtube', label: 'YouTube', category: 'social' };
+  }
+  if (raw.includes('whatsapp') || raw.includes('wa.me')) {
+    return { key: 'whatsapp', label: 'WhatsApp', category: 'social' };
+  }
+  if (raw.includes('linkedin')) {
+    return { key: 'linkedin', label: 'LinkedIn', category: 'social' };
+  }
+  if (raw.includes('google.')) {
+    return { key: 'google', label: 'Google', category: 'search' };
+  }
+  if (raw.includes('bing.') || raw.includes('yahoo.') || raw.includes('duckduckgo.')) {
+    return { key: 'search_other', label: raw, category: 'search' };
+  }
+  return { key: raw, label: raw, category: 'other' };
+}
+
+function formatFriendlyPageLabel(rawPath: string | null | undefined): { path: string; label: string } {
+  const path = String(rawPath || '/').split('?')[0] || '/';
+  if (path === '/') return { path, label: "Page d'accueil" };
+  if (path === '/inscription') return { path, label: 'Inscription' };
+  if (path === '/connexion') return { path, label: 'Connexion' };
+  if (path === '/promo-video') return { path, label: 'Vidéo Promo' };
+  if (path === '/etudiant') return { path, label: 'Tableau de bord étudiant' };
+  if (path.startsWith('/etudiant/abonnement')) return { path: '/etudiant/abonnement', label: 'Tarifs & Abonnement' };
+  if (path.startsWith('/etudiant/entrainement')) return { path: '/etudiant/entrainement', label: 'Entraînement Ciblé' };
+  if (path.startsWith('/etudiant/examen-blanc')) return { path: '/etudiant/examen-blanc', label: 'Examen Blanc' };
+  if (path.startsWith('/etudiant/cours')) return { path: '/etudiant/cours', label: 'Fiches de Cours' };
+  if (path.startsWith('/etudiant/bilan-hebdomadaire')) return { path: '/etudiant/bilan-hebdomadaire', label: 'Bilan Professeur' };
+  if (path.startsWith('/etudiant/historique')) return { path: '/etudiant/historique', label: 'Historique & Scores' };
+  return { path, label: path };
 }
 
 interface DashboardTelemetry {
@@ -206,6 +381,29 @@ export default function AdminDashboard() {
   const [walletModalOpen, setWalletModalOpen] = useState(false);
   const [walletFilter, setWalletFilter] = useState<'all' | 'pawapay' | 'cinetpay' | 'paystack'>('all');
   const [managedSubUser, setManagedSubUser] = useState<AdminManagedUser | null>(null);
+  const [rawDatasets, setRawDatasets] = useState<{
+    cleanVisits: SiteVisitRow[];
+    students: StudentProfileRow[];
+    abonnements: AbonnementRawRow[];
+    payments: PaiementRawRow[];
+    fichesLues: number;
+    totalFiches: number;
+    totalSessions: number;
+    examensBlancsTermines: number;
+    productionsTotal: number;
+    correctionsEnAttente: number;
+  }>({
+    cleanVisits: [],
+    students: [],
+    abonnements: [],
+    payments: [],
+    fichesLues: 0,
+    totalFiches: 0,
+    totalSessions: 0,
+    examensBlancsTermines: 0,
+    productionsTotal: 0,
+    correctionsEnAttente: 0,
+  });
 
   const fetchDashboardData = useCallback(async () => {
     try {
@@ -220,49 +418,51 @@ export default function AdminDashboard() {
 
       // Requêtes parallèles pour vitesse maximale
       const [
-        profilesRes,
+        allStudents,
         newProfiles24hRes,
         newProfiles48hRes,
         activeProfiles48hRes,
         fichesRes,
+        readsRes,
         sessionsRes,
         questionsRes,
         correctionsRes,
         productionsRes,
         claritySetting,
-        abonnementsRes,
+        recentAbonnementsRes,
+        allAbonnementsList,
         newAbonnements24hRes,
         newAbonnements48hRes,
         newAbonnements7dRes,
-        activeAbonnementsRes,
         paiementsRes,
         allSiteVisits,
         adminProfilesRes,
         paymentMethodsRes,
       ] = await Promise.all([
-        supabase.from('profiles').select('id, created_at', { count: 'exact' }).eq('role', 'etudiant'),
+        fetchAllStudentProfiles(),
         supabase.from('profiles').select('id', { count: 'exact' }).eq('role', 'etudiant').gte('created_at', date24hAgo),
         supabase.from('profiles').select('id', { count: 'exact' }).eq('role', 'etudiant').gte('created_at', date48hAgo),
         supabase.from('profiles').select('id', { count: 'exact' }).eq('role', 'etudiant').gte('last_active_at', date48hAgo),
         supabase.from('course_sheets').select('id', { count: 'exact' }),
+        supabase.from('course_sheet_reads').select('id', { count: 'exact', head: true }),
         supabase.from('sessions_examen').select('id, created_at, mode, statut', { count: 'exact' }),
         supabase.from('questions').select('id', { count: 'exact' }),
         supabase.from('productions').select('id', { count: 'exact' }).eq('statut_correction', 'en_attente'),
         supabase.from('productions').select('id', { count: 'exact' }),
         getAudioClaritySetting(),
-        // Abonnements
+        // Dernières souscriptions avec profil joint
         supabase.from('abonnements').select(`
           id, plan_id, statut, status, created_at, date_debut, date_fin, current_period_start, current_period_end,
           quota_ee_restant, quota_eo_restant, quota_examen_blanc_restant,
           user_id, etudiant_id,
           profiles:user_id (nom, prenom, email)
         `, { count: 'exact' }).order('created_at', { ascending: false }).limit(50),
+        fetchAllAbonnements(),
         supabase.from('abonnements').select('id', { count: 'exact' }).gte('created_at', date24hAgo),
         supabase.from('abonnements').select('id', { count: 'exact' }).gte('created_at', date48hAgo),
         supabase.from('abonnements').select('id', { count: 'exact' }).gte('created_at', date7dAgo),
-        supabase.from('abonnements').select('id, plan_id, statut, status', { count: 'exact' }).or('statut.eq.actif,status.eq.active'),
         // Paiements
-        supabase.from('paiements').select('id, amount, montant, currency, devise, status, statut, provider, methode, plan_id, created_at').order('created_at', { ascending: false }),
+        supabase.from('paiements').select('id, user_id, etudiant_id, amount, montant, currency, devise, status, statut, provider, methode, plan_id, metadata, created_at').order('created_at', { ascending: false }),
         // Visites complètes (hors administrateurs filtrées ci-dessous)
         fetchAllSiteVisits(),
         supabase.from('profiles').select('id').in('role', ['admin', 'super_admin']),
@@ -368,9 +568,16 @@ export default function AdminDashboard() {
       const totalDevices = (desktopCount + mobileCount + tabletCount) || 1;
 
       // Calcul des abonnements & revenus
-      const allAbonnements = abonnementsRes.data || [];
-      const totalAbonnementsCount = abonnementsRes.count ?? allAbonnements.length;
-      const activeAbonnesCount = activeAbonnementsRes.count ?? allAbonnements.filter(a => a.statut === 'actif' || a.status === 'active').length;
+      const recentAbonnementsRaw = recentAbonnementsRes.data || [];
+      const activeUserIdsSet = new Set<string>();
+      for (const a of allAbonnementsList) {
+        if (isAbonnementCurrentlyActive(a, nowMs)) {
+          const uid = a.user_id || a.etudiant_id;
+          if (uid) activeUserIdsSet.add(uid);
+        }
+      }
+      const totalAbonnementsCount = recentAbonnementsRes.count ?? allAbonnementsList.length;
+      const activeAbonnesCount = activeUserIdsSet.size;
 
       // Prix fixes des formules en USD
       const planPrices: Record<string, number> = {
@@ -446,7 +653,7 @@ export default function AdminDashboard() {
         });
       }
 
-      allAbonnements.forEach(a => {
+      allAbonnementsList.forEach(a => {
         const pId = a.plan_id || 'standard';
         if (planCounts[pId] !== undefined) {
           planCounts[pId]++;
@@ -467,7 +674,7 @@ export default function AdminDashboard() {
       ];
 
       // Formater les derniers abonnements
-      const recentAbonnementsFormatted = allAbonnements.slice(0, 8).map(a => {
+      const recentAbonnementsFormatted = recentAbonnementsRaw.slice(0, 8).map(a => {
         const rawProfiles = a.profiles as { nom?: string | null; prenom?: string | null; email?: string | null } | { nom?: string | null; prenom?: string | null; email?: string | null }[] | null;
         const prof = Array.isArray(rawProfiles) ? (rawProfiles[0] || {}) : (rawProfiles || {});
         const pId = a.plan_id || 'standard';
@@ -525,7 +732,7 @@ export default function AdminDashboard() {
       }
 
       // Remplir avec les inscrits
-      (profilesRes.data || []).forEach(p => {
+      allStudents.forEach(p => {
         const dayKey = toLocalDateKey(p.created_at);
         if (last7DaysMap[dayKey]) {
           last7DaysMap[dayKey].inscrits++;
@@ -533,7 +740,7 @@ export default function AdminDashboard() {
       });
 
       // Remplir avec les abonnements
-      allAbonnements.forEach(a => {
+      allAbonnementsList.forEach(a => {
         const dayKey = toLocalDateKey(a.created_at);
         if (last7DaysMap[dayKey]) {
           last7DaysMap[dayKey].abonnements++;
@@ -553,6 +760,19 @@ export default function AdminDashboard() {
       // Examens blancs terminés
       const sessionsData = sessionsRes.data || [];
       const examensTermines = sessionsData.filter(s => s.mode === 'examen_blanc' && s.statut === 'termine').length;
+
+      setRawDatasets({
+        cleanVisits,
+        students: allStudents,
+        abonnements: allAbonnementsList,
+        payments: paymentsList as PaiementRawRow[],
+        fichesLues: readsRes.count ?? 0,
+        totalFiches: fichesRes.count ?? 0,
+        totalSessions: sessionsRes.count ?? 0,
+        examensBlancsTermines: examensTermines,
+        productionsTotal: productionsRes.count ?? 0,
+        correctionsEnAttente: correctionsRes.count ?? 0,
+      });
 
       setTelemetry({
         totalVisits: totalVisitsCount,
@@ -582,7 +802,7 @@ export default function AdminDashboard() {
         confirmedPayments,
         plansBreakdown,
         recentAbonnements: recentAbonnementsFormatted,
-        totalEtudiants: profilesRes.count ?? 0,
+        totalEtudiants: allStudents.length,
         nouveauxEtudiants24h: newProfiles24hRes.count ?? 0,
         nouveauxEtudiants48h: newProfiles48hRes.count ?? 0,
         etudiantsActifs48h: activeProfiles48hRes.count ?? 0,
@@ -608,6 +828,388 @@ export default function AdminDashboard() {
   useEffect(() => {
     fetchDashboardData();
   }, [fetchDashboardData]);
+
+  const growthInsights = useMemo<GrowthInsightsData>(() => {
+    const nowMs = Date.now();
+    const cutoffMs =
+      timeframeFilter === '24h'
+        ? nowMs - 24 * 60 * 60 * 1000
+        : timeframeFilter === '48h'
+        ? nowMs - 48 * 60 * 60 * 1000
+        : timeframeFilter === '7d'
+        ? nowMs - 7 * 24 * 60 * 60 * 1000
+        : 0;
+
+    const timeframeLabel =
+      timeframeFilter === '24h'
+        ? '24 dernières heures'
+        : timeframeFilter === '48h'
+        ? '48 dernières heures'
+        : timeframeFilter === '7d'
+        ? '7 derniers jours'
+        : 'Depuis le lancement';
+
+    const { cleanVisits, students, abonnements, payments } = rawDatasets;
+
+    // 1. Canonical visitor keys & first-seen map across all cleanVisits
+    const sessionToUser = new Map<string, string>();
+    for (const v of cleanVisits) {
+      if (v.user_id && v.session_id && !sessionToUser.has(v.session_id)) {
+        sessionToUser.set(v.session_id, v.user_id);
+      }
+    }
+    const getVisitorKey = (v: SiteVisitRow): string => {
+      if (v.user_id) return `u:${v.user_id}`;
+      if (v.session_id && sessionToUser.has(v.session_id)) {
+        return `u:${sessionToUser.get(v.session_id)}`;
+      }
+      return `s:${v.session_id || v.id}`;
+    };
+
+    const firstSeenByVisitor = new Map<string, number>();
+    const pricingViewedUsers = new Set<string>();
+    for (const v of cleanVisits) {
+      const ms = new Date(v.created_at).getTime();
+      const key = getVisitorKey(v);
+      if (!Number.isNaN(ms)) {
+        const prev = firstSeenByVisitor.get(key);
+        if (prev === undefined || ms < prev) firstSeenByVisitor.set(key, ms);
+      }
+      if (String(v.page_path || '').startsWith('/etudiant/abonnement')) {
+        const uid = v.user_id || (v.session_id ? sessionToUser.get(v.session_id) : undefined);
+        if (uid) pricingViewedUsers.add(uid);
+      }
+    }
+
+    const periodVisits =
+      cutoffMs > 0
+        ? cleanVisits.filter(v => {
+            const ms = new Date(v.created_at).getTime();
+            return !Number.isNaN(ms) && ms >= cutoffMs;
+          })
+        : cleanVisits;
+
+    const periodVisitorsSet = new Set<string>();
+    const periodPricingVisitorsSet = new Set<string>();
+    const deviceVisitorSets = {
+      desktop: new Set<string>(),
+      mobile: new Set<string>(),
+      tablet: new Set<string>(),
+    };
+
+    const sourceAgg = new Map<
+      string,
+      { key: string; label: string; category: TrafficSourceItem['category']; visits: number; visitors: Set<string> }
+    >();
+    const pageAgg = new Map<string, { path: string; label: string; views: number; visitors: Set<string> }>();
+    const slotCounts = [0, 0, 0, 0]; // Matin, Après-midi, Soirée, Nuit
+
+    for (const v of periodVisits) {
+      const vKey = getVisitorKey(v);
+      periodVisitorsSet.add(vKey);
+
+      const dev = v.device_type === 'mobile' ? 'mobile' : v.device_type === 'tablet' ? 'tablet' : 'desktop';
+      deviceVisitorSets[dev].add(vKey);
+
+      const pInfo = formatFriendlyPageLabel(v.page_path);
+      if (pInfo.path === '/etudiant/abonnement') {
+        periodPricingVisitorsSet.add(vKey);
+      }
+
+      const existingPage = pageAgg.get(pInfo.path);
+      if (existingPage) {
+        existingPage.views++;
+        existingPage.visitors.add(vKey);
+      } else {
+        pageAgg.set(pInfo.path, { path: pInfo.path, label: pInfo.label, views: 1, visitors: new Set([vKey]) });
+      }
+
+      const srcInfo = normalizeTrafficSource(v.referrer);
+      const existingSrc = sourceAgg.get(srcInfo.key);
+      if (existingSrc) {
+        existingSrc.visits++;
+        existingSrc.visitors.add(vKey);
+      } else {
+        sourceAgg.set(srcInfo.key, {
+          ...srcInfo,
+          visits: 1,
+          visitors: new Set([vKey]),
+        });
+      }
+
+      const d = new Date(v.created_at);
+      if (!Number.isNaN(d.getTime())) {
+        const h = d.getHours();
+        if (h >= 6 && h < 12) slotCounts[0]++;
+        else if (h >= 12 && h < 18) slotCounts[1]++;
+        else if (h >= 18 && h < 24) slotCounts[2]++;
+        else slotCounts[3]++;
+      }
+    }
+
+    let newVisitorsCount = 0;
+    for (const vk of periodVisitorsSet) {
+      const firstMs = firstSeenByVisitor.get(vk);
+      if (firstMs !== undefined && (cutoffMs === 0 || firstMs >= cutoffMs)) {
+        newVisitorsCount++;
+      }
+    }
+    const totalPeriodVisitors = periodVisitorsSet.size;
+    const returningVisitors = Math.max(0, totalPeriodVisitors - newVisitorsCount);
+    const retentionRatePct = totalPeriodVisitors > 0 ? (returningVisitors / totalPeriodVisitors) * 100 : 0;
+    const pagesPerVisitor = totalPeriodVisitors > 0 ? periodVisits.length / totalPeriodVisitors : 0;
+
+    // 2. Period signups & payments
+    const periodStudents =
+      cutoffMs > 0
+        ? students.filter(s => {
+            const ms = new Date(s.created_at).getTime();
+            return !Number.isNaN(ms) && ms >= cutoffMs;
+          })
+        : students;
+
+    const periodPayments =
+      cutoffMs > 0
+        ? payments.filter(p => {
+            const ms = new Date(p.created_at).getTime();
+            return !Number.isNaN(ms) && ms >= cutoffMs;
+          })
+        : payments;
+
+    const isConfirmedStatus = (stRaw: string) =>
+      stRaw === 'confirme' || stRaw === 'success' || stRaw === 'paye' || stRaw === 'succeeded';
+
+    const confirmedPeriodPayments = periodPayments.filter(p =>
+      isConfirmedStatus(String(p.status || p.statut || '').toLowerCase())
+    );
+    const confirmedUsdSum = confirmedPeriodPayments.reduce((acc, p) => {
+      const rawAmount = Number(p.amount || p.montant || 0);
+      const curr = String(p.currency || p.devise || '').toUpperCase();
+      const usd = curr === 'XOF' || curr === 'FCFA' || rawAmount > 500 ? rawAmount / 605 : rawAmount;
+      return acc + usd;
+    }, 0);
+
+    // 3. Active subscribers & student index
+    const studentById = new Map<string, StudentProfileRow>(students.map(s => [s.id, s]));
+    const activeSubsByUser = new Map<string, AbonnementRawRow>();
+    for (const a of abonnements) {
+      if (isAbonnementCurrentlyActive(a, nowMs)) {
+        const uid = a.user_id || a.etudiant_id;
+        if (uid && !activeSubsByUser.has(uid)) {
+          activeSubsByUser.set(uid, a);
+        }
+      }
+    }
+    const activeSubscribersCount = activeSubsByUser.size;
+
+    const periodAbandonedCount = periodPayments.filter(
+      p => !isConfirmedStatus(String(p.status || p.statut || '').toLowerCase())
+    ).length;
+
+    const visitorToSignupPct = totalPeriodVisitors > 0 ? (periodStudents.length / totalPeriodVisitors) * 100 : 0;
+    const signupToSubPct = students.length > 0 ? (activeSubscribersCount / students.length) * 100 : 0;
+    const visitorToSubPct = totalPeriodVisitors > 0 ? (confirmedPeriodPayments.length / totalPeriodVisitors) * 100 : 0;
+    const paymentSuccessPct =
+      periodPayments.length > 0 ? (confirmedPeriodPayments.length / periodPayments.length) * 100 : 0;
+    const avgOrderValueUsd =
+      confirmedPeriodPayments.length > 0 ? confirmedUsdSum / confirmedPeriodPayments.length : 0;
+
+    // 4. Sources, Top pages, Time slots
+    const totalSrcVisits = periodVisits.length || 1;
+    const sources: TrafficSourceItem[] = Array.from(sourceAgg.values())
+      .map(s => ({
+        key: s.key,
+        label: s.label,
+        category: s.category,
+        visits: s.visits,
+        visitors: s.visitors.size,
+        sharePct: Math.round((s.visits / totalSrcVisits) * 100),
+      }))
+      .sort((a, b) => b.visits - a.visits)
+      .slice(0, 10);
+
+    const topPages: TopPageItem[] = Array.from(pageAgg.values())
+      .map(p => ({
+        path: p.path,
+        label: p.label,
+        views: p.views,
+        visitors: p.visitors.size,
+        sharePct: Math.round((p.views / totalSrcVisits) * 100),
+      }))
+      .sort((a, b) => b.views - a.views)
+      .slice(0, 10);
+
+    const slotMeta = [
+      { label: 'Matin', range: '06h – 12h' },
+      { label: 'Après-midi', range: '12h – 18h' },
+      { label: 'Soirée', range: '18h – 00h' },
+      { label: 'Nuit', range: '00h – 06h' },
+    ];
+    const timeSlots: TimeSlotItem[] = slotMeta.map((m, idx) => ({
+      label: m.label,
+      range: m.range,
+      visits: slotCounts[idx],
+      sharePct: periodVisits.length > 0 ? Math.round((slotCounts[idx] / periodVisits.length) * 100) : 0,
+    }));
+
+    // 5. Countries breakdown (all students)
+    const countryMap = new Map<string, { inscrits: number; abonnes: number }>();
+    for (const s of students) {
+      const pays = (s.pays || '').trim() || 'Non renseigné';
+      const entry = countryMap.get(pays) || { inscrits: 0, abonnes: 0 };
+      entry.inscrits++;
+      if (activeSubsByUser.has(s.id)) entry.abonnes++;
+      countryMap.set(pays, entry);
+    }
+    const totalStudentsForShare = students.length || 1;
+    const countries: CountryBreakdownItem[] = Array.from(countryMap.entries())
+      .map(([pays, c]) => ({
+        pays,
+        inscrits: c.inscrits,
+        abonnes: c.abonnes,
+        conversionPct: c.inscrits > 0 ? (c.abonnes / c.inscrits) * 100 : 0,
+        sharePct: Math.round((c.inscrits / totalStudentsForShare) * 100),
+      }))
+      .sort((a, b) => b.inscrits - a.inscrits);
+
+    // 6. Actionable lists
+    // 6a. Abandoned payments (pending/failed without active subscription)
+    const abandonedByUser = new Map<string, AbandonedPaymentLead>();
+    for (const p of payments) {
+      const st = String(p.status || p.statut || '').toLowerCase();
+      if (isConfirmedStatus(st)) continue;
+      const uid = p.user_id || p.etudiant_id;
+      if (!uid || activeSubsByUser.has(uid) || abandonedByUser.has(uid)) continue;
+      const stProfile = studentById.get(uid);
+      if (!stProfile) continue;
+      const rawAmt = Number(p.amount || p.montant || 0);
+      const curr = String(p.currency || p.devise || 'USD').toUpperCase();
+      const metaPlan =
+        p.metadata && typeof p.metadata === 'object' && 'planId' in p.metadata
+          ? String((p.metadata as { planId?: unknown }).planId || '')
+          : '';
+      abandonedByUser.set(uid, {
+        userId: uid,
+        prenom: stProfile.prenom,
+        nom: stProfile.nom,
+        email: stProfile.email,
+        telephone: stProfile.telephone,
+        pays: stProfile.pays,
+        provider: String(p.provider || p.methode || '—'),
+        planId: p.plan_id || metaPlan || 'standard',
+        amountLabel: rawAmt > 0 ? `${rawAmt} ${curr}` : '—',
+        createdAt: p.created_at,
+      });
+    }
+
+    // 6b. Expiring (<= 5d) or low quota (EE <= 1 or EO <= 1) active subscribers
+    const expiringOrLowQuota: ExpiringOrLowQuotaSubscriber[] = [];
+    for (const [uid, sub] of activeSubsByUser.entries()) {
+      const stProfile = studentById.get(uid);
+      if (!stProfile) continue;
+      const endAt = sub.current_period_end || sub.date_fin || null;
+      const daysRemaining = endAt
+        ? Math.ceil((new Date(endAt).getTime() - nowMs) / (1000 * 60 * 60 * 24))
+        : null;
+      const quotaEe = Number(sub.quota_ee_restant ?? 0);
+      const quotaEo = Number(sub.quota_eo_restant ?? 0);
+      const quotaEb = Number(sub.quota_examen_blanc_restant ?? 0);
+
+      const isExpiring = daysRemaining !== null && daysRemaining <= 5;
+      const isLowQuota = quotaEe <= 1 || quotaEo <= 1;
+      if (!isExpiring && !isLowQuota) continue;
+
+      const rawPlan = String(sub.plan_id || 'standard');
+      const normalizedPlan = rawPlan === 'pack_express' ? 'express' : rawPlan;
+      const planNom = PLANS_CONFIG[normalizedPlan]?.nom || rawPlan;
+
+      expiringOrLowQuota.push({
+        userId: uid,
+        prenom: stProfile.prenom,
+        nom: stProfile.nom,
+        email: stProfile.email,
+        telephone: stProfile.telephone,
+        pays: stProfile.pays,
+        planNom,
+        daysRemaining,
+        endAt,
+        quotaEe,
+        quotaEo,
+        quotaEb,
+        reason: isExpiring && isLowQuota ? 'both' : isExpiring ? 'expiring' : 'low_quota',
+      });
+    }
+    expiringOrLowQuota.sort((a, b) => (a.daysRemaining ?? 999) - (b.daysRemaining ?? 999));
+
+    // 6c. Hot leads (last 14 days signups without active subscription)
+    const fourteenDaysAgoMs = nowMs - 14 * 24 * 60 * 60 * 1000;
+    const hotLeads: HotLeadItem[] = students
+      .filter(s => {
+        if (activeSubsByUser.has(s.id)) return false;
+        const ms = new Date(s.created_at).getTime();
+        return !Number.isNaN(ms) && ms >= fourteenDaysAgoMs;
+      })
+      .map(s => ({
+        userId: s.id,
+        prenom: s.prenom,
+        nom: s.nom,
+        email: s.email,
+        telephone: s.telephone,
+        pays: s.pays,
+        createdAt: s.created_at,
+        viewedPricing: pricingViewedUsers.has(s.id),
+      }))
+      .sort((a, b) => {
+        if (a.viewedPricing !== b.viewedPricing) return a.viewedPricing ? -1 : 1;
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      });
+
+    const pedagogy: PedagogyHealthMetrics = {
+      fichesLues: rawDatasets.fichesLues,
+      totalFiches: rawDatasets.totalFiches,
+      totalSessions: rawDatasets.totalSessions,
+      examensBlancsTermines: rawDatasets.examensBlancsTermines,
+      productionsTotal: rawDatasets.productionsTotal,
+      correctionsEnAttente: rawDatasets.correctionsEnAttente,
+      avgSessionsPerActiveSub:
+        activeSubscribersCount > 0 ? rawDatasets.totalSessions / activeSubscribersCount : 0,
+    };
+
+    return {
+      timeframeLabel,
+      funnel: {
+        visitors: totalPeriodVisitors,
+        newVisitors: newVisitorsCount,
+        returningVisitors,
+        retentionRatePct,
+        pagesPerVisitor,
+        signups: periodStudents.length,
+        pricingViewers: periodPricingVisitorsSet.size,
+        paymentAttempts: periodPayments.length,
+        confirmedPayments: confirmedPeriodPayments.length,
+        abandonedPaymentsCount: periodAbandonedCount,
+        activeSubscribers: activeSubscribersCount,
+        visitorToSignupPct,
+        signupToSubPct,
+        visitorToSubPct,
+        paymentSuccessPct,
+        avgOrderValueUsd,
+      },
+      sources,
+      topPages,
+      timeSlots,
+      countries,
+      abandonedPayments: Array.from(abandonedByUser.values()),
+      expiringOrLowQuota,
+      hotLeads,
+      pedagogy,
+      deviceVisitors: {
+        desktop: deviceVisitorSets.desktop.size,
+        mobile: deviceVisitorSets.mobile.size,
+        tablet: deviceVisitorSets.tablet.size,
+      },
+    };
+  }, [rawDatasets, timeframeFilter]);
 
   const handleRefresh = () => {
     setRefreshing(true);
@@ -1046,6 +1648,13 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
       </div>
+
+      {/* SECTION 2B : PILOTAGE, ACQUISITION, CONVERSION & PROMOTION */}
+      <AdminGrowthInsightsSection
+        data={growthInsights}
+        loading={loading}
+        onManageUser={setManagedSubUser}
+      />
 
       {/* SECTION 3 : TABLEAU DES DERNIÈRES SOUSCRIPTIONS & NOUVEAUX ABONNÉS */}
       <Card className="rounded-2xl border border-[#e2e8f0] bg-white shadow-xs overflow-hidden">

@@ -2,6 +2,7 @@ import { supabase } from '@/db/supabase';
 
 const VISITOR_ID_KEY = 'mon_tcfca_visitor_id';
 const LEGACY_SESSION_KEY = 'mon_tcfca_session_id';
+const ATTRIBUTION_KEY = 'mon_tcfca_attribution';
 
 function getSessionId(): string {
   try {
@@ -33,6 +34,52 @@ function getDeviceType(): 'mobile' | 'tablet' | 'desktop' {
   return 'desktop';
 }
 
+function sanitizeUtmPart(value: string): string {
+  return value.trim().toLowerCase().replace(/[|<>]/g, '').slice(0, 60);
+}
+
+function getAttributionReferrer(): string {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const utmSource = params.get('utm_source');
+    const utmCampaign = params.get('utm_campaign');
+
+    if (utmSource && utmSource.trim().length > 0) {
+      const src = sanitizeUtmPart(utmSource);
+      const camp = utmCampaign && utmCampaign.trim().length > 0 ? sanitizeUtmPart(utmCampaign) : '';
+      const attr = camp ? `utm:${src}|${camp}` : `utm:${src}`;
+      sessionStorage.setItem(ATTRIBUTION_KEY, attr);
+      return attr;
+    }
+
+    if (params.get('fbclid')) {
+      sessionStorage.setItem(ATTRIBUTION_KEY, 'utm:facebook');
+      return 'utm:facebook';
+    }
+    if (params.get('gclid')) {
+      sessionStorage.setItem(ATTRIBUTION_KEY, 'utm:google_ads');
+      return 'utm:google_ads';
+    }
+    if (params.get('ttclid')) {
+      sessionStorage.setItem(ATTRIBUTION_KEY, 'utm:tiktok');
+      return 'utm:tiktok';
+    }
+
+    const stored = sessionStorage.getItem(ATTRIBUTION_KEY);
+    if (stored) return stored;
+
+    if (document.referrer) {
+      const refUrl = new URL(document.referrer);
+      if (refUrl.hostname && refUrl.hostname !== window.location.hostname) {
+        return refUrl.hostname.toLowerCase();
+      }
+    }
+  } catch {
+    // Fallback silencieux
+  }
+  return 'direct';
+}
+
 /**
  * Enregistre une visite de page de manière asynchrone et résiliente.
  * Exclut systématiquement les visites administrateurs et les routes /admin.
@@ -51,7 +98,7 @@ export async function trackPageView(
 
     const sessionId = getSessionId();
     const deviceType = getDeviceType();
-    const referrer = document.referrer ? new URL(document.referrer).hostname : 'direct';
+    const referrer = getAttributionReferrer();
 
     // Insertion asynchrone sans bloquer l'UI
     await supabase.from('site_visits').insert({
