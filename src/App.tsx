@@ -42,14 +42,19 @@ import EmailsTestPage from '@/pages/admin/EmailsTestPage';
 import CorrectionsPage from '@/pages/professeur/CorrectionsPage';
 import CorrectionInterface from '@/pages/professeur/CorrectionInterface';
 
-// Tracker automatique d'analytics de visites
+// Tracker automatique d'analytics de visites (exclut les administrateurs)
 function PageTracker() {
   const location = useLocation();
-  const { user } = useAuth();
+  const { user, profile, loading, isAdmin } = useAuth();
 
   useEffect(() => {
-    trackPageView(location.pathname, document.title, user?.id);
-  }, [location.pathname, user?.id]);
+    if (loading) return;
+    if (user && !profile) return;
+    if (isAdmin || profile?.role === 'admin' || profile?.role === 'super_admin') return;
+    if (location.pathname.startsWith('/admin')) return;
+
+    trackPageView(location.pathname, document.title, user?.id, { isAdmin: false });
+  }, [location.pathname, user?.id, profile?.role, loading, isAdmin]);
 
   return null;
 }

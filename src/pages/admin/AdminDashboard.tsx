@@ -30,12 +30,56 @@ import {
   type AdminManagedUser,
 } from '@/components/admin/AdminSubscriptionQuotaModal';
 
+interface SiteVisitRow {
+  id: string;
+  session_id: string;
+  page_path: string | null;
+  device_type: string | null;
+  user_id: string | null;
+  created_at: string;
+}
+
+function toLocalDateKey(dateInput: string | Date): string {
+  const d = typeof dateInput === 'string' ? new Date(dateInput) : dateInput;
+  if (Number.isNaN(d.getTime())) return '';
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+async function fetchAllSiteVisits(): Promise<SiteVisitRow[]> {
+  const allRows: SiteVisitRow[] = [];
+  const BATCH_SIZE = 1000;
+  let offset = 0;
+
+  while (true) {
+    const { data, error } = await supabase
+      .from('site_visits')
+      .select('id, session_id, page_path, device_type, user_id, created_at')
+      .order('created_at', { ascending: false })
+      .range(offset, offset + BATCH_SIZE - 1);
+
+    if (error) throw error;
+    const rows = Array.isArray(data) ? (data as SiteVisitRow[]) : [];
+    allRows.push(...rows);
+    if (rows.length < BATCH_SIZE) break;
+    offset += BATCH_SIZE;
+  }
+
+  return allRows;
+}
+
 interface DashboardTelemetry {
-  // Visites
+  // Visites (hors administrateurs)
   totalVisits: number;
   visits24h: number;
   visits48h: number;
   visits7d: number;
+  totalVisitors: number;
+  visitors24h: number;
+  visitors48h: number;
+  visitors7d: number;
+  newVisitors24h: number;
+  newVisitors48h: number;
+  newVisitors7d: number;
   uniqueVisitors: number;
   deviceBreakdown: { name: string; value: number; color: string }[];
   
@@ -102,6 +146,13 @@ export default function AdminDashboard() {
     visits24h: 0,
     visits48h: 0,
     visits7d: 0,
+    totalVisitors: 0,
+    visitors24h: 0,
+    visitors48h: 0,
+    visitors7d: 0,
+    newVisitors24h: 0,
+    newVisitors48h: 0,
+    newVisitors7d: 0,
     uniqueVisitors: 0,
     deviceBreakdown: [
       { name: 'Desktop', value: 0, color: '#0d233a' },
@@ -143,7 +194,7 @@ export default function AdminDashboard() {
   const [timeframeFilter, setTimeframeFilter] = useState<'24h' | '48h' | '7d' | 'all'>('48h');
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [trafficChartData, setTrafficChartData] = useState<{ date: string; visites: number; inscrits: number; abonnements: number }[]>([]);
+  const [trafficChartData, setTrafficChartData] = useState<{ date: string; visiteursTotaux: number; nouveauxVisiteurs: number; inscrits: number; abonnements: number }[]>([]);
   const [audioClarity, setAudioClarity] = useState(true);
   const [updatingAudio, setUpdatingAudio] = useState(false);
   const [paymentMethods, setPaymentMethods] = useState<{ pawapay: boolean; cinetpay: boolean; paystack: boolean }>({
@@ -159,9 +210,13 @@ export default function AdminDashboard() {
   const fetchDashboardData = useCallback(async () => {
     try {
       const now = new Date();
-      const date24hAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString();
-      const date48hAgo = new Date(now.getTime() - 48 * 60 * 60 * 1000).toISOString();
-      const date7dAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString();
+      const nowMs = now.getTime();
+      const date24hAgoMs = nowMs - 24 * 60 * 60 * 1000;
+      const date48hAgoMs = nowMs - 48 * 60 * 60 * 1000;
+      const date7dAgoMs = nowMs - 7 * 24 * 60 * 60 * 1000;
+      const date24hAgo = new Date(date24hAgoMs).toISOString();
+      const date48hAgo = new Date(date48hAgoMs).toISOString();
+      const date7dAgo = new Date(date7dAgoMs).toISOString();
 
       // Requêtes parallèles pour vitesse maximale
       const [
@@ -181,10 +236,8 @@ export default function AdminDashboard() {
         newAbonnements7dRes,
         activeAbonnementsRes,
         paiementsRes,
-        siteVisitsRes,
-        visits24hRes,
-        visits48hRes,
-        visits7dRes,
+        allSiteVisits,
+        adminProfilesRes,
         paymentMethodsRes,
       ] = await Promise.all([
         supabase.from('profiles').select('id, created_at', { count: 'exact' }).eq('role', 'etudiant'),
@@ -210,11 +263,9 @@ export default function AdminDashboard() {
         supabase.from('abonnements').select('id, plan_id, statut, status', { count: 'exact' }).or('statut.eq.actif,status.eq.active'),
         // Paiements
         supabase.from('paiements').select('id, amount, montant, currency, devise, status, statut, provider, methode, plan_id, created_at').order('created_at', { ascending: false }),
-        // Visites
-        supabase.from('site_visits').select('id, session_id, device_type, created_at', { count: 'exact' }).order('created_at', { ascending: false }).limit(500),
-        supabase.from('site_visits').select('id', { count: 'exact' }).gte('created_at', date24hAgo),
-        supabase.from('site_visits').select('id', { count: 'exact' }).gte('created_at', date48hAgo),
-        supabase.from('site_visits').select('id', { count: 'exact' }).gte('created_at', date7dAgo),
+        // Visites complètes (hors administrateurs filtrées ci-dessous)
+        fetchAllSiteVisits(),
+        supabase.from('profiles').select('id').in('role', ['admin', 'super_admin']),
         // Paramètres moyens de paiement
         supabase.from('parametres_globaux').select('valeur').eq('cle', 'payment_methods_enabled').maybeSingle(),
       ]);
@@ -228,20 +279,92 @@ export default function AdminDashboard() {
         });
       }
 
-      // Calcul des visites & appareils
-      const visitsList = siteVisitsRes.data || [];
-      const totalVisitsCount = visitsList.length > 0 ? (siteVisitsRes.count ?? visitsList.length) : 0;
-      const uniqueSessions = new Set(visitsList.map(v => v.session_id));
+      // Calcul des visites & appareils (exclusion stricte et rétroactive des visites administrateurs)
+      const adminUserIds = new Set<string>(
+        ((adminProfilesRes.data || []) as { id: string }[]).map(p => p.id)
+      );
+      const adminSessionIds = new Set<string>();
+      for (const v of allSiteVisits) {
+        const isAdminUser = Boolean(v.user_id && adminUserIds.has(v.user_id));
+        const isAdminRoute = String(v.page_path || '').startsWith('/admin');
+        if ((isAdminUser || isAdminRoute) && v.session_id) {
+          adminSessionIds.add(v.session_id);
+        }
+      }
 
+      const cleanVisits = allSiteVisits.filter(v => {
+        if (v.user_id && adminUserIds.has(v.user_id)) return false;
+        if (String(v.page_path || '').startsWith('/admin')) return false;
+        if (v.session_id && adminSessionIds.has(v.session_id)) return false;
+        return true;
+      });
+
+      const sessionToUser = new Map<string, string>();
+      for (const v of cleanVisits) {
+        if (v.user_id && v.session_id && !sessionToUser.has(v.session_id)) {
+          sessionToUser.set(v.session_id, v.user_id);
+        }
+      }
+
+      const getVisitorKey = (v: SiteVisitRow): string => {
+        if (v.user_id) return `u:${v.user_id}`;
+        if (v.session_id && sessionToUser.has(v.session_id)) {
+          return `u:${sessionToUser.get(v.session_id)}`;
+        }
+        return `s:${v.session_id || v.id}`;
+      };
+
+      const firstSeenByVisitor = new Map<string, number>();
+      const visitors24hSet = new Set<string>();
+      const visitors48hSet = new Set<string>();
+      const visitors7dSet = new Set<string>();
+
+      let visits24hCount = 0;
+      let visits48hCount = 0;
+      let visits7dCount = 0;
       let desktopCount = 0;
       let mobileCount = 0;
       let tabletCount = 0;
-      visitsList.forEach(v => {
+
+      for (const v of cleanVisits) {
+        const createdMs = new Date(v.created_at).getTime();
+        const visitorKey = getVisitorKey(v);
+
+        if (!Number.isNaN(createdMs)) {
+          const prevFirst = firstSeenByVisitor.get(visitorKey);
+          if (prevFirst === undefined || createdMs < prevFirst) {
+            firstSeenByVisitor.set(visitorKey, createdMs);
+          }
+          if (createdMs >= date24hAgoMs) {
+            visits24hCount++;
+            visitors24hSet.add(visitorKey);
+          }
+          if (createdMs >= date48hAgoMs) {
+            visits48hCount++;
+            visitors48hSet.add(visitorKey);
+          }
+          if (createdMs >= date7dAgoMs) {
+            visits7dCount++;
+            visitors7dSet.add(visitorKey);
+          }
+        }
+
         if (v.device_type === 'mobile') mobileCount++;
         else if (v.device_type === 'tablet') tabletCount++;
         else desktopCount++;
-      });
+      }
 
+      let newVisitors24hCount = 0;
+      let newVisitors48hCount = 0;
+      let newVisitors7dCount = 0;
+      for (const firstMs of firstSeenByVisitor.values()) {
+        if (firstMs >= date24hAgoMs) newVisitors24hCount++;
+        if (firstMs >= date48hAgoMs) newVisitors48hCount++;
+        if (firstMs >= date7dAgoMs) newVisitors7dCount++;
+      }
+
+      const totalVisitorsCount = firstSeenByVisitor.size;
+      const totalVisitsCount = cleanVisits.length;
       const totalDevices = (desktopCount + mobileCount + tabletCount) || 1;
 
       // Calcul des abonnements & revenus
@@ -367,41 +490,60 @@ export default function AdminDashboard() {
         };
       });
 
-      // Construction du graphique d'activité journalière (7 derniers jours)
-      const last7DaysMap: Record<string, { visites: number; inscrits: number; abonnements: number }> = {};
+      // Construction du graphique d'activité journalière (7 derniers jours, hors visites admin)
+      const last7DaysMap: Record<
+        string,
+        { label: string; visitorKeys: Set<string>; nouveauxVisiteurs: number; inscrits: number; abonnements: number }
+      > = {};
       for (let i = 6; i >= 0; i--) {
         const d = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
-        const key = d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
-        last7DaysMap[key] = { visites: 0, inscrits: 0, abonnements: 0 };
+        const dayKey = toLocalDateKey(d);
+        const label = d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
+        last7DaysMap[dayKey] = {
+          label,
+          visitorKeys: new Set<string>(),
+          nouveauxVisiteurs: 0,
+          inscrits: 0,
+          abonnements: 0,
+        };
       }
 
-      // Remplir avec les vraies visites
-      visitsList.forEach(v => {
-        const key = new Date(v.created_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
-        if (last7DaysMap[key]) {
-          last7DaysMap[key].visites++;
+      // Remplir les visiteurs uniques quotidiens (hors admin)
+      cleanVisits.forEach(v => {
+        const dayKey = toLocalDateKey(v.created_at);
+        if (last7DaysMap[dayKey]) {
+          last7DaysMap[dayKey].visitorKeys.add(getVisitorKey(v));
         }
       });
 
+      // Remplir les nouveaux visiteurs quotidiens (première visite enregistrée)
+      for (const firstMs of firstSeenByVisitor.values()) {
+        const dayKey = toLocalDateKey(new Date(firstMs));
+        if (last7DaysMap[dayKey]) {
+          last7DaysMap[dayKey].nouveauxVisiteurs++;
+        }
+      }
+
       // Remplir avec les inscrits
       (profilesRes.data || []).forEach(p => {
-        const key = new Date(p.created_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
-        if (last7DaysMap[key]) {
-          last7DaysMap[key].inscrits++;
+        const dayKey = toLocalDateKey(p.created_at);
+        if (last7DaysMap[dayKey]) {
+          last7DaysMap[dayKey].inscrits++;
         }
       });
 
       // Remplir avec les abonnements
       allAbonnements.forEach(a => {
-        const key = new Date(a.created_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' });
-        if (last7DaysMap[key]) {
-          last7DaysMap[key].abonnements++;
+        const dayKey = toLocalDateKey(a.created_at);
+        if (last7DaysMap[dayKey]) {
+          last7DaysMap[dayKey].abonnements++;
         }
       });
 
-      const trafficChart = Object.entries(last7DaysMap).map(([date, data]) => ({
-        date,
-        visites: data.visites,
+      const trafficChart = Object.values(last7DaysMap).map((data) => ({
+        date: data.label,
+        visiteursTotaux: data.visitorKeys.size,
+        nouveauxVisiteurs: data.nouveauxVisiteurs,
         inscrits: data.inscrits,
         abonnements: data.abonnements,
       }));
@@ -413,11 +555,18 @@ export default function AdminDashboard() {
       const examensTermines = sessionsData.filter(s => s.mode === 'examen_blanc' && s.statut === 'termine').length;
 
       setTelemetry({
-        totalVisits: totalVisitsCount || visitsList.length,
-        visits24h: visits24hRes.count ?? visitsList.filter(v => v.created_at >= date24hAgo).length,
-        visits48h: visits48hRes.count ?? visitsList.filter(v => v.created_at >= date48hAgo).length,
-        visits7d: visits7dRes.count ?? visitsList.filter(v => v.created_at >= date7dAgo).length,
-        uniqueVisitors: uniqueSessions.size || 0,
+        totalVisits: totalVisitsCount,
+        visits24h: visits24hCount,
+        visits48h: visits48hCount,
+        visits7d: visits7dCount,
+        totalVisitors: totalVisitorsCount,
+        visitors24h: visitors24hSet.size,
+        visitors48h: visitors48hSet.size,
+        visitors7d: visitors7dSet.size,
+        newVisitors24h: newVisitors24hCount,
+        newVisitors48h: newVisitors48hCount,
+        newVisitors7d: newVisitors7dCount,
+        uniqueVisitors: totalVisitorsCount,
         deviceBreakdown: [
           { name: 'Desktop', value: Math.round((desktopCount / totalDevices) * 100), color: '#0d233a' },
           { name: 'Mobile', value: Math.round((mobileCount / totalDevices) * 100), color: '#e53e3e' },
@@ -590,37 +739,78 @@ export default function AdminDashboard() {
 
       {/* SECTION 1 : CARTES DE TÉLÉMÉTRIE CLÉS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* KPI 1 : Visites du Site */}
+        {/* KPI 1 : Visites du Site (hors admin, Nouveaux vs Totaux) */}
         <Card className="rounded-2xl border border-[#e2e8f0] bg-white shadow-xs hover:border-[#0d233a]/30 transition-all">
           <CardContent className="p-5 flex flex-col justify-between h-full gap-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-[#475569] uppercase tracking-wider">Visites du Site</span>
-              <div className="w-9 h-9 rounded-xl bg-[#eff4ff] text-[#0d233a] flex items-center justify-center">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <span className="text-xs font-semibold text-[#475569] uppercase tracking-wider">Visites du Site</span>
+                <Badge variant="outline" className="text-[10px] px-1.5 py-0 border-[#d3e4fe] bg-[#eff4ff] text-[#0d233a] font-semibold">
+                  Hors admin
+                </Badge>
+              </div>
+              <div className="w-9 h-9 rounded-xl bg-[#eff4ff] text-[#0d233a] flex items-center justify-center shrink-0">
                 <Eye className="w-4 h-4 text-[#0d233a]" />
               </div>
             </div>
-            <div>
+            <div className="space-y-2">
               {loading ? (
-                <Skeleton className="h-8 w-20 bg-[#eff4ff] rounded-lg mb-1" />
+                <Skeleton className="h-16 w-full bg-[#eff4ff] rounded-xl" />
               ) : (
-                <div className="flex items-baseline gap-2">
-                  <p className="text-2xl sm:text-3xl font-heading font-extrabold text-[#0d233a]">
-                    {timeframeFilter === '24h'
-                      ? telemetry.visits24h
-                      : timeframeFilter === '48h'
-                      ? telemetry.visits48h
-                      : timeframeFilter === '7d'
-                      ? telemetry.visits7d
-                      : telemetry.totalVisits}
-                  </p>
-                  <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md flex items-center gap-0.5">
-                    <ArrowUpRight className="w-3 h-3" />
-                    +{telemetry.visits24h} (24h)
-                  </span>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="rounded-xl bg-emerald-50/70 border border-emerald-200/70 px-2.5 py-2">
+                    <span className="text-[10px] font-semibold text-emerald-800 block leading-tight">
+                      Nouveaux visiteurs
+                    </span>
+                    <p className="text-xl sm:text-2xl font-heading font-extrabold text-emerald-700 leading-tight mt-0.5">
+                      {timeframeFilter === '24h'
+                        ? telemetry.newVisitors24h
+                        : timeframeFilter === '48h'
+                        ? telemetry.newVisitors48h
+                        : telemetry.newVisitors7d}
+                    </p>
+                    <span className="text-[10px] text-emerald-700/80 block mt-0.5">
+                      {timeframeFilter === '24h'
+                        ? 'Sur 24h'
+                        : timeframeFilter === '48h'
+                        ? 'Sur 48h'
+                        : timeframeFilter === '7d'
+                        ? 'Sur 7 jours'
+                        : `+${telemetry.newVisitors24h} (24h)`}
+                    </span>
+                  </div>
+                  <div className="rounded-xl bg-[#eff4ff]/80 border border-[#d3e4fe] px-2.5 py-2">
+                    <span className="text-[10px] font-semibold text-[#0d233a] block leading-tight">
+                      Visiteurs totaux
+                    </span>
+                    <p className="text-xl sm:text-2xl font-heading font-extrabold text-[#0d233a] leading-tight mt-0.5">
+                      {telemetry.totalVisitors}
+                    </p>
+                    <span className="text-[10px] text-[#475569] block mt-0.5">
+                      {timeframeFilter === '24h'
+                        ? `${telemetry.visitors24h} actifs (24h)`
+                        : timeframeFilter === '48h'
+                        ? `${telemetry.visitors48h} actifs (48h)`
+                        : timeframeFilter === '7d'
+                        ? `${telemetry.visitors7d} actifs (7j)`
+                        : 'Depuis le début'}
+                    </span>
+                  </div>
                 </div>
               )}
-              <p className="text-xs text-[#64748b] mt-1">
-                Total cumulé : <strong className="text-[#0d233a]">{telemetry.totalVisits}</strong> visites ({telemetry.uniqueVisitors} visiteurs uniques)
+              <p className="text-[11px] text-[#64748b]">
+                Pages vues :{' '}
+                <strong className="text-[#0d233a]">
+                  {timeframeFilter === '24h'
+                    ? telemetry.visits24h
+                    : timeframeFilter === '48h'
+                    ? telemetry.visits48h
+                    : timeframeFilter === '7d'
+                    ? telemetry.visits7d
+                    : telemetry.totalVisits}
+                </strong>{' '}
+                ({timeframeFilter === '24h' ? '24h' : timeframeFilter === '48h' ? '48h' : timeframeFilter === '7d' ? '7j' : 'total'}) ·{' '}
+                <strong className="text-[#0d233a]">{telemetry.totalVisits}</strong> au total
               </p>
             </div>
           </CardContent>
@@ -732,7 +922,7 @@ export default function AdminDashboard() {
                   <span>Tendance du Trafic &amp; Nouvelles Inscriptions (7 derniers jours)</span>
                 </CardTitle>
                 <CardDescription className="text-xs text-[#64748b] mt-0.5">
-                  Suivi quotidien des visites uniques, créations de comptes et souscriptions d'abonnements.
+                  Suivi quotidien (hors visites admin) des visiteurs totaux, nouveaux visiteurs, créations de comptes et abonnements.
                 </CardDescription>
               </div>
             </div>
@@ -750,8 +940,12 @@ export default function AdminDashboard() {
                   <AreaChart data={trafficChartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                     <defs>
                       <linearGradient id="colorVisites" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#0d233a" stopOpacity={0.4} />
+                        <stop offset="5%" stopColor="#0d233a" stopOpacity={0.35} />
                         <stop offset="95%" stopColor="#0d233a" stopOpacity={0.0} />
+                      </linearGradient>
+                      <linearGradient id="colorNouveauxVisiteurs" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.4} />
+                        <stop offset="95%" stopColor="#10b981" stopOpacity={0.0} />
                       </linearGradient>
                       <linearGradient id="colorInscrits" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#e53e3e" stopOpacity={0.4} />
@@ -769,7 +963,8 @@ export default function AdminDashboard() {
                       contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)' }}
                     />
                     <Legend iconType="circle" wrapperStyle={{ fontSize: 12, paddingTop: 10 }} />
-                    <Area type="monotone" dataKey="visites" name="Visites du site" stroke="#0d233a" strokeWidth={2} fillOpacity={1} fill="url(#colorVisites)" />
+                    <Area type="monotone" dataKey="visiteursTotaux" name="Visiteurs totaux" stroke="#0d233a" strokeWidth={2} fillOpacity={1} fill="url(#colorVisites)" />
+                    <Area type="monotone" dataKey="nouveauxVisiteurs" name="Nouveaux visiteurs" stroke="#10b981" strokeWidth={2} fillOpacity={1} fill="url(#colorNouveauxVisiteurs)" />
                     <Area type="monotone" dataKey="inscrits" name="Nouveaux Inscrits" stroke="#e53e3e" strokeWidth={2} fillOpacity={1} fill="url(#colorInscrits)" />
                     <Area type="monotone" dataKey="abonnements" name="Abonnements" stroke="#d97706" strokeWidth={2} fillOpacity={1} fill="url(#colorAbonnements)" />
                   </AreaChart>
