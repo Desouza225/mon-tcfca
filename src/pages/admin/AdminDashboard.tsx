@@ -18,13 +18,17 @@ import {
 import {
   Users, BookOpen, SlidersHorizontal, Eye, CreditCard,
   RefreshCw, DollarSign, Activity, ShieldCheck,
-  Smartphone, Monitor, Tablet, ArrowUpRight, Wallet
+  Smartphone, Monitor, Tablet, ArrowUpRight, Wallet, Sliders, Search
 } from 'lucide-react';
 import {
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   AreaChart, Area, Legend
 } from 'recharts';
 import { toast } from 'sonner';
+import {
+  AdminSubscriptionQuotaModal,
+  type AdminManagedUser,
+} from '@/components/admin/AdminSubscriptionQuotaModal';
 
 interface DashboardTelemetry {
   // Visites
@@ -59,6 +63,9 @@ interface DashboardTelemetry {
   plansBreakdown: { plan_id: string; nom: string; count: number; revenus: number; color: string }[];
   recentAbonnements: {
     id: string;
+    user_id: string | null;
+    etudiant_prenom: string | null;
+    etudiant_nom_famille: string | null;
     etudiant_nom: string;
     etudiant_email: string;
     plan_nom: string;
@@ -66,6 +73,9 @@ interface DashboardTelemetry {
     statut: string;
     date_debut: string;
     date_fin: string | null;
+    quota_ee_restant: number | null;
+    quota_eo_restant: number | null;
+    quota_examen_blanc_restant: number | null;
   }[];
 
   // Candidats & Inscriptions
@@ -144,6 +154,7 @@ export default function AdminDashboard() {
   const [updatingPaymentMethod, setUpdatingPaymentMethod] = useState<string | null>(null);
   const [walletModalOpen, setWalletModalOpen] = useState(false);
   const [walletFilter, setWalletFilter] = useState<'all' | 'pawapay' | 'cinetpay' | 'paystack'>('all');
+  const [managedSubUser, setManagedSubUser] = useState<AdminManagedUser | null>(null);
 
   const fetchDashboardData = useCallback(async () => {
     try {
@@ -189,6 +200,7 @@ export default function AdminDashboard() {
         // Abonnements
         supabase.from('abonnements').select(`
           id, plan_id, statut, status, created_at, date_debut, date_fin, current_period_start, current_period_end,
+          quota_ee_restant, quota_eo_restant, quota_examen_blanc_restant,
           user_id, etudiant_id,
           profiles:user_id (nom, prenom, email)
         `, { count: 'exact' }).order('created_at', { ascending: false }).limit(50),
@@ -336,8 +348,12 @@ export default function AdminDashboard() {
         const rawProfiles = a.profiles as { nom?: string | null; prenom?: string | null; email?: string | null } | { nom?: string | null; prenom?: string | null; email?: string | null }[] | null;
         const prof = Array.isArray(rawProfiles) ? (rawProfiles[0] || {}) : (rawProfiles || {});
         const pId = a.plan_id || 'standard';
+        const uid = (a.user_id || a.etudiant_id || null) as string | null;
         return {
           id: a.id,
+          user_id: uid,
+          etudiant_prenom: prof.prenom || null,
+          etudiant_nom_famille: prof.nom || null,
           etudiant_nom: [prof.prenom, prof.nom].filter(Boolean).join(' ') || 'Candidat Mon TCFCA',
           etudiant_email: prof.email || '—',
           plan_nom: planNames[pId] || 'Standard',
@@ -345,6 +361,9 @@ export default function AdminDashboard() {
           statut: a.statut || a.status || 'actif',
           date_debut: a.date_debut || a.current_period_start || a.created_at,
           date_fin: a.date_fin || a.current_period_end || null,
+          quota_ee_restant: (a as { quota_ee_restant?: number | null }).quota_ee_restant ?? null,
+          quota_eo_restant: (a as { quota_eo_restant?: number | null }).quota_eo_restant ?? null,
+          quota_examen_blanc_restant: (a as { quota_examen_blanc_restant?: number | null }).quota_examen_blanc_restant ?? null,
         };
       });
 
@@ -846,14 +865,24 @@ export default function AdminDashboard() {
                 Historique en direct des candidats inscrits aux formules de préparation TCF Canada.
               </CardDescription>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => navigate('/admin/utilisateurs')}
-              className="rounded-xl border-[#d3e4fe] text-[#0d233a] text-xs font-semibold h-8 self-start sm:self-auto"
-            >
-              Voir tous les candidats
-            </Button>
+            <div className="flex items-center gap-2 self-start sm:self-auto">
+              <Button
+                size="sm"
+                onClick={() => navigate('/admin/utilisateurs')}
+                className="rounded-xl bg-[#0d233a] hover:bg-[#1a365d] text-white text-xs font-semibold h-8 gap-1.5"
+              >
+                <Search className="w-3.5 h-3.5" />
+                Rechercher &amp; Activer
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => navigate('/admin/utilisateurs')}
+                className="rounded-xl border-[#d3e4fe] text-[#0d233a] text-xs font-semibold h-8"
+              >
+                Voir tous les candidats
+              </Button>
+            </div>
           </div>
         </CardHeader>
         <CardContent className="p-0">
@@ -866,18 +895,19 @@ export default function AdminDashboard() {
                   <TableHead className="text-xs font-heading font-bold text-[#0d233a]">Montant</TableHead>
                   <TableHead className="text-xs font-heading font-bold text-[#0d233a]">Date de début</TableHead>
                   <TableHead className="text-xs font-heading font-bold text-[#0d233a]">Statut</TableHead>
+                  <TableHead className="text-xs font-heading font-bold text-[#0d233a] text-right">Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {loading ? (
                   ['sk-1', 'sk-2', 'sk-3', 'sk-4'].map((skKey) => (
                     <TableRow key={skKey}>
-                      <TableCell colSpan={5}><Skeleton className="h-8 w-full bg-[#eff4ff]" /></TableCell>
+                      <TableCell colSpan={6}><Skeleton className="h-8 w-full bg-[#eff4ff]" /></TableCell>
                     </TableRow>
                   ))
                 ) : telemetry.recentAbonnements.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center py-8 text-xs text-[#64748b]">
+                    <TableCell colSpan={6} className="text-center py-8 text-xs text-[#64748b]">
                       Aucun abonnement enregistré pour le moment. Les nouvelles souscriptions apparaîtront ici en temps réel.
                     </TableCell>
                   </TableRow>
@@ -889,7 +919,12 @@ export default function AdminDashboard() {
                         <div className="text-[11px] text-[#64748b]">{abo.etudiant_email}</div>
                       </TableCell>
                       <TableCell className="text-xs font-semibold text-[#0d233a]">
-                        {abo.plan_nom}
+                        <div>{abo.plan_nom}</div>
+                        {abo.quota_ee_restant !== null && (
+                          <div className="text-[10px] font-normal text-[#64748b]">
+                            EE: {abo.quota_ee_restant ?? 0} • EO: {abo.quota_eo_restant ?? 0} • EB: {abo.quota_examen_blanc_restant ?? 0}
+                          </div>
+                        )}
                       </TableCell>
                       <TableCell className="text-xs font-heading font-extrabold text-[#0d233a]">
                         {(abo.prix_fcfa || 29.99).toFixed(2)} $
@@ -908,6 +943,28 @@ export default function AdminDashboard() {
                         >
                           {abo.statut === 'actif' || abo.statut === 'active' ? 'Actif' : abo.statut}
                         </Badge>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        {abo.user_id && (
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() =>
+                              setManagedSubUser({
+                                id: abo.user_id as string,
+                                prenom: abo.etudiant_prenom,
+                                nom: abo.etudiant_nom_famille,
+                                email: abo.etudiant_email === '—' ? null : abo.etudiant_email,
+                                role: 'etudiant',
+                              })
+                            }
+                            className="h-7 px-2.5 text-[11px] rounded-lg border-[#d3e4fe] text-[#0d233a] hover:bg-[#eff4ff] gap-1"
+                          >
+                            <Sliders className="w-3 h-3 text-[#e53e3e]" />
+                            Gérer
+                          </Button>
+                        )}
                       </TableCell>
                     </TableRow>
                   ))
@@ -1163,6 +1220,15 @@ export default function AdminDashboard() {
           </div>
         </DialogContent>
       </Dialog>
+
+      <AdminSubscriptionQuotaModal
+        open={!!managedSubUser}
+        onOpenChange={(open) => {
+          if (!open) setManagedSubUser(null);
+        }}
+        user={managedSubUser}
+        onUpdated={fetchDashboardData}
+      />
     </div>
   );
 }

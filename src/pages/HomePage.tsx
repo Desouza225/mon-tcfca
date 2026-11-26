@@ -121,7 +121,7 @@ export default function HomePage() {
     bottomPill: string;
   }> = [
     {
-      image: '/images/hero-slide-1-v9.jpg',
+      image: '/images/hero-slide-1-v10.jpg',
       alt: 'Binôme Pédagogique Mon TCF CA',
       topBadge: 'Norme FEI',
       title: 'Double regard expert',
@@ -155,7 +155,7 @@ export default function HomePage() {
       bottomPill: 'Score Immédiat',
     },
     {
-      image: '/images/hero-slide-4-v2.jpg',
+      image: '/images/hero-slide-4-v3.jpg',
       alt: 'Fiches méthodologiques et audios canadiens',
       topBadge: 'Méthode C1/C2',
       title: 'Fiches de cours & Accents québécois',
